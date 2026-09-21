@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
@@ -117,6 +118,15 @@ export default function RootLayout({
   return (
     <html lang="en-IN">
       <body className="min-h-screen bg-white text-slate-950">
+
+        {/* Google AdSense */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4988290120939071"
+          crossOrigin="anonymous"
+          strategy="beforeInteractive"
+        />
+
         <Navbar />
 
         <div className="min-h-screen">
