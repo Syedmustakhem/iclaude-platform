@@ -10,7 +10,7 @@ export const metadata: Metadata = generatePageMetadata({
   title: "About iclaude — Online File Tools",
   description:
     "Learn about iclaude and its goal of making common image, PDF and video file tasks simpler through focused online tools.",
-  path: "/about",
+  path: "/about/",
   keywords: [
     "about iclaude",
     "online file tools",
@@ -98,7 +98,7 @@ export default function AboutPage() {
                 </p>
 
                 <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-                  What we're building around
+                  What we&apos;re building around
                 </h2>
               </div>
 
@@ -157,26 +157,11 @@ export default function AboutPage() {
 
               <ul className="mt-7 space-y-3">
                 {[
-                  [
-                    "Image Compressor",
-                    "/image-compressor",
-                  ],
-                  [
-                    "Image Resizer",
-                    "/image-resizer",
-                  ],
-                  [
-                    "Background Remover",
-                    "/remove-background",
-                  ],
-                  [
-                    "PDF to Word",
-                    "/pdf-to-word",
-                  ],
-                  [
-                    "Video Compressor",
-                    "/video-compressor",
-                  ],
+                  ["Image Compressor", "/image-compressor/"],
+                  ["Image Resizer", "/image-resizer/"],
+                  ["Background Remover", "/remove-background/"],
+                  ["PDF to Word", "/pdf-to-word/"],
+                  ["Video Compressor", "/video-compressor/"],
                 ].map(([name, href]) => (
                   <li key={href}>
                     <Link
@@ -192,7 +177,7 @@ export default function AboutPage() {
               </ul>
 
               <Link
-                href="/tools"
+                href="/tools/"
                 className="mt-7 inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
               >
                 Browse all tools
@@ -215,7 +200,7 @@ export default function AboutPage() {
               </p>
 
               <Link
-                href="/tools"
+                href="/tools/"
                 className="mt-7 inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
               >
                 Explore tools

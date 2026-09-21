@@ -237,9 +237,9 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold text-slate-950">
-                  10. Children's Privacy
-                </h2>
+               <h2 className="text-2xl font-bold text-slate-950">
+  10. Children&apos;s Privacy
+</h2>
 
                 <p className="mt-4 leading-8">
                   iclaude is not intentionally designed to collect

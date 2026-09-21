@@ -1,10 +1,19 @@
-export type ToolCategory = "Images" | "PDF" | "Video";
+export type ToolCategory =
+  | "Images"
+  | "PDF"
+  | "Video"
+  | "AI";
+
+export type ToolStatus =
+  | "available"
+  | "coming-soon";
 
 export type ToolDefinition = {
   slug: string;
   name: string;
   shortName: string;
   category: ToolCategory;
+  status: ToolStatus;
 
   description: string;
   shortDescription: string;
@@ -49,6 +58,8 @@ export const tools: ToolDefinition[] = [
 
     category: "Images",
 
+    status: "available",
+
     description:
       "Compress JPG, PNG and WebP images online while reducing file size and keeping the image quality suitable for web, sharing and everyday use.",
 
@@ -75,7 +86,7 @@ export const tools: ToolDefinition[] = [
 
     icon: "compress",
 
-    href: "/image-compressor",
+    href: "/image-compressor/",
 
     popularSearches: [
       "compress image online",
@@ -168,6 +179,8 @@ export const tools: ToolDefinition[] = [
 
     category: "Images",
 
+    status: "available",
+
     description:
       "Resize images online to specific dimensions for websites, documents, social media, forms and other digital uses.",
 
@@ -193,7 +206,7 @@ export const tools: ToolDefinition[] = [
 
     icon: "resize",
 
-    href: "/image-resizer",
+    href: "/image-resizer/",
 
     popularSearches: [
       "resize image online",
@@ -280,6 +293,8 @@ export const tools: ToolDefinition[] = [
 
     category: "Images",
 
+    status: "available",
+
     description:
       "Remove the background from an image and create a cleaner subject-focused result for products, profiles, designs and creative projects.",
 
@@ -304,7 +319,7 @@ export const tools: ToolDefinition[] = [
 
     icon: "background",
 
-    href: "/remove-background",
+    href: "/remove-background/",
 
     popularSearches: [
       "remove background from image",
@@ -390,6 +405,8 @@ export const tools: ToolDefinition[] = [
 
     category: "PDF",
 
+    status: "available",
+
     description:
       "Convert PDF documents into editable Word-compatible documents for editing, reuse and document workflows.",
 
@@ -414,7 +431,7 @@ export const tools: ToolDefinition[] = [
 
     icon: "pdf-word",
 
-    href: "/pdf-to-word",
+    href: "/pdf-to-word/",
 
     popularSearches: [
       "convert PDF to Word",
@@ -495,6 +512,8 @@ export const tools: ToolDefinition[] = [
 
     category: "Video",
 
+    status: "available",
+
     description:
       "Compress video files to reduce file size for sharing, storage and online publishing while balancing size and visual quality.",
 
@@ -519,7 +538,7 @@ export const tools: ToolDefinition[] = [
 
     icon: "video-compress",
 
-    href: "/video-compressor",
+    href: "/video-compressor/",
 
     popularSearches: [
       "compress video online",
@@ -600,13 +619,17 @@ export const tools: ToolDefinition[] = [
 export function getToolBySlug(
   slug: string,
 ): ToolDefinition | undefined {
-  return tools.find((tool) => tool.slug === slug);
+  return tools.find(
+    (tool) => tool.slug === slug,
+  );
 }
 
 export function getToolsByCategory(
   category: ToolCategory,
 ): ToolDefinition[] {
-  return tools.filter((tool) => tool.category === category);
+  return tools.filter(
+    (tool) => tool.category === category,
+  );
 }
 
 export function getRelatedTools(
@@ -614,16 +637,42 @@ export function getRelatedTools(
 ): ToolDefinition[] {
   return tool.relatedTools
     .map((slug) => getToolBySlug(slug))
-    .filter((related): related is ToolDefinition => Boolean(related));
+    .filter(
+      (related): related is ToolDefinition =>
+        Boolean(related),
+    );
 }
+
+export function getAvailableTools(): ToolDefinition[] {
+  return tools.filter(
+    (tool) => tool.status === "available",
+  );
+}
+
+export function getComingSoonTools(): ToolDefinition[] {
+  return tools.filter(
+    (tool) => tool.status === "coming-soon",
+  );
+}
+
+export function getAvailableToolsByCategory(
+  category: ToolCategory,
+): ToolDefinition[] {
+  return tools.filter(
+    (tool) =>
+      tool.category === category &&
+      tool.status === "available",
+  );
+}
+
 export function getRequiredToolBySlug(
-  slug: string
+  slug: string,
 ): ToolDefinition {
   const tool = getToolBySlug(slug);
 
   if (!tool) {
     throw new Error(
-      `Tool definition not found for slug: ${slug}`
+      `Tool definition not found for slug: ${slug}`,
     );
   }
 

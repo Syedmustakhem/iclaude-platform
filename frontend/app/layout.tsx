@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import StructuredData from "@/components/seo/StructuredData";
+import {
+  generateOrganizationSchema,
+  generateWebsiteSchema,
+} from "@/lib/seo";
+import "./globals.css";
+
 const siteUrl = "https://iclaude.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
 
   title: {
-    default: "iclaude — Free Online Tools for Images, PDF, Video & More",
+    default:
+      "iclaude — Free Online Tools for Images, PDF & Video",
     template: "%s | iclaude",
   },
 
   description:
-    "Free online tools to compress, resize, convert and process images, PDFs and videos. Simple file tools designed to work quickly without unnecessary steps.",
+    "Free online tools to compress, resize, convert and process images, PDFs and videos. Simple, fast and easy-to-use tools for everyday digital work.",
 
   applicationName: "iclaude",
 
@@ -28,15 +35,15 @@ export const metadata: Metadata = {
   publisher: "iclaude",
 
   keywords: [
-    "online tools",
-    "file tools",
+    "free online tools",
+    "online file tools",
     "image tools",
     "PDF tools",
     "video tools",
     "image compressor",
     "image resizer",
     "background remover",
-    "PDF to Word",
+    "PDF to Word converter",
     "video compressor",
   ],
 
@@ -62,16 +69,33 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: siteUrl,
     siteName: "iclaude",
-    title: "iclaude — Free Online Tools for Images, PDF, Video & More",
+
+    title:
+      "iclaude — Free Online Tools for Images, PDF & Video",
+
     description:
       "Compress, resize, convert and process your files with simple online tools.",
+
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "iclaude — Free online file tools",
+      },
+    ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "iclaude — Free Online Tools for Images, PDF, Video & More",
+
+    title:
+      "iclaude — Free Online Tools for Images, PDF & Video",
+
     description:
-      "Simple online tools for images, PDFs, videos and other digital files.",
+      "Simple online tools for images, PDFs, videos and digital files.",
+
+    images: ["/og-image.png"],
   },
 
   category: "technology",
@@ -87,34 +111,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "iclaude",
-    url: siteUrl,
-    description:
-      "Online tools for compressing, resizing, converting and processing digital files.",
-    inLanguage: "en-IN",
-  };
+  const websiteSchema = generateWebsiteSchema();
+  const organizationSchema = generateOrganizationSchema();
 
   return (
     <html lang="en-IN">
-      <body>
-  <Navbar />
+      <body className="min-h-screen bg-white text-slate-950">
+        <Navbar />
 
-  <div className="min-h-screen">
-    {children}
-  </div>
+        <div className="min-h-screen">
+          {children}
+        </div>
 
-  <Footer />
+        <Footer />
 
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify(structuredData),
-    }}
-  />
-</body>
+        <StructuredData data={websiteSchema} />
+        <StructuredData data={organizationSchema} />
+      </body>
     </html>
   );
 }

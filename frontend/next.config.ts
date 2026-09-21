@@ -6,12 +6,17 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
 
-  // Static export for Cloudflare Workers Static Assets
+  // Static export for Cloudflare Static Assets.
   output: "export",
 
-  // Export /tools as /tools/index.html so Cloudflare
-  // can serve the clean /tools/ URL correctly.
+  // Generate /tools/index.html etc.
   trailingSlash: true,
+
+  // Static export cannot use Next.js server-side
+  // Image Optimization API.
+  images: {
+    unoptimized: true,
+  },
 
   turbopack: {
     root: path.resolve(__dirname, ".."),
