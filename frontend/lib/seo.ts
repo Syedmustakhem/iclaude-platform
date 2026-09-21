@@ -4,12 +4,6 @@ import type { ToolDefinition } from "./tools";
 export const SITE_URL = "https://iclaude.in";
 export const SITE_NAME = "iclaude";
 
-/**
- * Current brand asset.
- *
- * This is used for favicon/brand identity and as a temporary
- * social image until a dedicated 1200x630 OG image is added.
- */
 export const DEFAULT_OG_IMAGE = "/iclaude-og-image.png";
 
 export type BreadcrumbItem = {
@@ -20,8 +14,8 @@ export type BreadcrumbItem = {
 /**
  * Converts a relative path into the site's canonical absolute URL.
  *
- * The project uses Next.js trailingSlash: true, so internal
- * page URLs are normalized to end with "/".
+ * Page URLs use trailingSlash: true.
+ * Static assets keep their original filename without a trailing slash.
  */
 export function absoluteUrl(path: string): string {
   if (path.startsWith("http://") || path.startsWith("https://")) {
@@ -32,9 +26,18 @@ export function absoluteUrl(path: string): string {
     return `${SITE_URL}/`;
   }
 
-  const normalizedPath = `/${path.replace(/^\/+/, "").replace(/\/+$/, "")}`;
+  const normalizedPath = `/${path.replace(/^\/+/, "")}`;
 
-  return `${SITE_URL}${normalizedPath}/`;
+  const isAsset =
+    /\.(png|jpe?g|gif|svg|webp|ico|avif|pdf|txt|xml)$/i.test(
+      normalizedPath,
+    );
+
+  if (isAsset) {
+    return `${SITE_URL}${normalizedPath}`;
+  }
+
+  return `${SITE_URL}${normalizedPath.replace(/\/+$/, "")}/`;
 }
 
 /**
@@ -43,7 +46,6 @@ export function absoluteUrl(path: string): string {
 const robotsConfig = {
   index: true,
   follow: true,
-
   googleBot: {
     index: true,
     follow: true,
@@ -62,9 +64,7 @@ export function generateToolMetadata(tool: ToolDefinition): Metadata {
 
   return {
     title: tool.seoTitle,
-
     description: tool.seoDescription,
-
     keywords: tool.keywords,
 
     alternates: {
@@ -80,11 +80,12 @@ export function generateToolMetadata(tool: ToolDefinition): Metadata {
       siteName: SITE_NAME,
       title: tool.seoTitle,
       description: tool.seoDescription,
-
       images: [
         {
           url: imageUrl,
           alt: `${tool.name} - ${SITE_NAME}`,
+          width: 1200,
+          height: 630,
         },
       ],
     },
@@ -119,9 +120,7 @@ export function generatePageMetadata({
 
   return {
     title,
-
     description,
-
     keywords,
 
     alternates: {
@@ -137,11 +136,12 @@ export function generatePageMetadata({
       siteName: SITE_NAME,
       title,
       description,
-
       images: [
         {
           url: imageUrl,
           alt: `${title} - ${SITE_NAME}`,
+          width: 1200,
+          height: 630,
         },
       ],
     },
@@ -162,7 +162,6 @@ export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-
     itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -244,6 +243,7 @@ export function generateOrganizationSchema() {
 
     name: SITE_NAME,
     url: `${SITE_URL}/`,
+
     logo: absoluteUrl(DEFAULT_OG_IMAGE),
   };
 }
