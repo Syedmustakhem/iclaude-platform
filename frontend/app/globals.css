@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* ============================================================
+   iclaude Design System
+   ============================================================ */
+
 :root {
   --iclaude-primary: #2563eb;
   --iclaude-primary-dark: #1d4ed8;
@@ -42,6 +46,9 @@
   --iclaude-shadow-lg:
     0 24px 70px rgba(15, 23, 42, 0.12);
 
+  --iclaude-shadow-primary:
+    0 12px 32px rgba(37, 99, 235, 0.18);
+
   --iclaude-gradient:
     linear-gradient(
       135deg,
@@ -68,6 +75,10 @@
     sans-serif;
 }
 
+/* ============================================================
+   Base
+   ============================================================ */
+
 *,
 *::before,
 *::after {
@@ -82,14 +93,11 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-
   background: var(--iclaude-background);
   color: var(--iclaude-text);
-
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.6;
-
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -123,17 +131,24 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
+
 :focus-visible {
   outline: 3px solid rgba(37, 99, 235, 0.28);
   outline-offset: 3px;
 }
+
+/* ============================================================
+   Layout
+   ============================================================ */
 
 .iclaude-container {
   width: min(
     calc(100% - 40px),
     var(--iclaude-container)
   );
-
   margin-inline: auto;
 }
 
@@ -142,9 +157,12 @@ button {
     calc(100% - 40px),
     var(--iclaude-content)
   );
-
   margin-inline: auto;
 }
+
+/* ============================================================
+   Brand utilities
+   ============================================================ */
 
 .iclaude-gradient-text {
   background: var(--iclaude-gradient);
@@ -157,28 +175,9 @@ button {
   background: var(--iclaude-gradient-soft);
 }
 
-.iclaude-card {
-  border: 1px solid var(--iclaude-border);
-  border-radius: var(--iclaude-radius-lg);
-  background: #ffffff;
-  box-shadow: var(--iclaude-shadow-sm);
-
-  transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease;
-}
-
-.iclaude-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--iclaude-border-strong);
-  box-shadow: var(--iclaude-shadow-md);
-}
-
 .iclaude-glass {
   border: 1px solid rgba(226, 232, 240, 0.8);
   background: rgba(255, 255, 255, 0.78);
-
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 }
@@ -194,9 +193,466 @@ button {
       rgba(148, 163, 184, 0.08) 1px,
       transparent 1px
     );
-
   background-size: 32px 32px;
 }
+
+.iclaude-dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(15, 23, 42, 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 26px 26px;
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    rgba(0, 0, 0, 0.7) 45%,
+    transparent 100%
+  );
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+
+.iclaude-card {
+  border: 1px solid var(--iclaude-border);
+  border-radius: var(--iclaude-radius-lg);
+  background: #ffffff;
+  box-shadow: var(--iclaude-shadow-sm);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.iclaude-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--iclaude-border-strong);
+  box-shadow: var(--iclaude-shadow-md);
+}
+
+.iclaude-card-static {
+  border: 1px solid var(--iclaude-border);
+  border-radius: var(--iclaude-radius-lg);
+  background: #ffffff;
+  box-shadow: var(--iclaude-shadow-sm);
+}
+
+.iclaude-card-soft {
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: var(--iclaude-radius-lg);
+  background: var(--iclaude-surface);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.iclaude-button-primary {
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.2),
+    0 10px 30px rgba(15, 23, 42, 0.12);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.iclaude-button-primary:hover {
+  box-shadow:
+    0 2px 4px rgba(15, 23, 42, 0.2),
+    0 16px 40px rgba(15, 23, 42, 0.16);
+}
+
+/* ============================================================
+   Tool page system
+   ============================================================ */
+
+.iclaude-tool-shell {
+  min-height: calc(100vh - 72px);
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(37, 99, 235, 0.08),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 90% 5%,
+      rgba(6, 182, 212, 0.07),
+      transparent 28%
+    ),
+    #ffffff;
+}
+
+.iclaude-tool-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.75);
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f8fbff 100%
+  );
+}
+
+.iclaude-tool-panel {
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: var(--iclaude-radius-xl);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--iclaude-shadow-lg);
+}
+
+.iclaude-tool-icon {
+  display: flex;
+  height: 56px;
+  width: 56px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+  background: #eff6ff;
+  color: var(--iclaude-primary);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.1);
+}
+
+.iclaude-tool-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dbeafe;
+  border-radius: var(--iclaude-radius-full);
+  background: #eff6ff;
+  padding: 7px 13px;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.iclaude-tool-section {
+  border-top: 1px solid var(--iclaude-border);
+  background: #ffffff;
+}
+
+/* ============================================================
+   Upload area
+   ============================================================ */
+
+.iclaude-upload {
+  position: relative;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: var(--iclaude-radius-xl);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(248, 250, 252, 0.95),
+      rgba(255, 255, 255, 0.98)
+    );
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.iclaude-upload:hover {
+  border-color: #93c5fd;
+  background: #f8fbff;
+}
+
+.iclaude-upload:focus-within {
+  border-color: var(--iclaude-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.iclaude-upload-active {
+  border-color: var(--iclaude-primary);
+  background: #eff6ff;
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.08),
+    var(--iclaude-shadow-md);
+}
+
+/* ============================================================
+   Content / SEO sections
+   ============================================================ */
+
+.iclaude-prose {
+  color: var(--iclaude-text-secondary);
+  line-height: 1.8;
+}
+
+.iclaude-prose h2,
+.iclaude-prose h3 {
+  color: var(--iclaude-text);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.iclaude-prose h2 {
+  margin-top: 2.5rem;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+.iclaude-prose h3 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+
+.iclaude-prose p {
+  margin-top: 1rem;
+}
+
+.iclaude-prose ul,
+.iclaude-prose ol {
+  margin-top: 1rem;
+  padding-left: 1.4rem;
+}
+
+.iclaude-prose li + li {
+  margin-top: 0.5rem;
+}
+
+.iclaude-prose strong {
+  color: var(--iclaude-text);
+  font-weight: 700;
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+
+.iclaude-faq {
+  overflow: hidden;
+  border: 1px solid var(--iclaude-border);
+  border-radius: var(--iclaude-radius-lg);
+  background: #ffffff;
+}
+
+.iclaude-faq + .iclaude-faq {
+  margin-top: 12px;
+}
+
+.iclaude-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 22px;
+  color: var(--iclaude-text);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.iclaude-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.iclaude-faq summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  color: var(--iclaude-primary);
+  font-size: 22px;
+  font-weight: 500;
+  transition: transform 180ms ease;
+}
+
+.iclaude-faq[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.iclaude-faq > div {
+  border-top: 1px solid var(--iclaude-border);
+  padding: 18px 22px 22px;
+  color: var(--iclaude-text-secondary);
+  line-height: 1.75;
+}
+
+/* ============================================================
+   Status / feedback
+   ============================================================ */
+
+.iclaude-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: var(--iclaude-radius-md);
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.iclaude-status-success {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.iclaude-status-warning {
+  border: 1px solid #fde68a;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.iclaude-status-error {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+/* ============================================================
+   Form controls
+   ============================================================ */
+
+.iclaude-input {
+  width: 100%;
+  border: 1px solid var(--iclaude-border);
+  border-radius: var(--iclaude-radius-md);
+  background: #ffffff;
+  padding: 12px 14px;
+  color: var(--iclaude-text);
+  outline: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.iclaude-input::placeholder {
+  color: #94a3b8;
+}
+
+.iclaude-input:hover {
+  border-color: var(--iclaude-border-strong);
+}
+
+.iclaude-input:focus {
+  border-color: var(--iclaude-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* ============================================================
+   Motion system
+   ============================================================ */
+
+@keyframes iclaude-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes iclaude-float-reverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, 12px, 0);
+  }
+}
+
+@keyframes iclaude-float-slow {
+  0%,
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-50%, -18px, 0);
+  }
+}
+
+@keyframes iclaude-float-card {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -7px, 0);
+  }
+}
+
+@keyframes iclaude-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes iclaude-pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.72;
+    transform: scale(1.04);
+  }
+}
+
+.iclaude-float {
+  animation: iclaude-float 7s ease-in-out infinite;
+}
+
+.iclaude-float-reverse {
+  animation: iclaude-float-reverse 8s ease-in-out infinite;
+}
+
+.iclaude-float-slow {
+  animation: iclaude-float-slow 10s ease-in-out infinite;
+}
+
+.iclaude-float-card {
+  animation: iclaude-float-card 5s ease-in-out infinite;
+}
+
+.iclaude-reveal {
+  animation:
+    iclaude-reveal
+    700ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.iclaude-pulse-soft {
+  animation: iclaude-pulse-soft 2.4s ease-in-out infinite;
+}
+
+.iclaude-delay-1 {
+  animation-delay: 80ms;
+}
+
+.iclaude-delay-2 {
+  animation-delay: 160ms;
+}
+
+.iclaude-delay-3 {
+  animation-delay: 240ms;
+}
+
+.iclaude-delay-4 {
+  animation-delay: 320ms;
+}
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -215,6 +671,10 @@ button {
   background: #94a3b8;
 }
 
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -228,9 +688,50 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .iclaude-float,
+  .iclaude-float-reverse,
+  .iclaude-float-slow,
+  .iclaude-float-card,
+  .iclaude-reveal,
+  .iclaude-pulse-soft {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 76px;
+  }
+
+  .iclaude-container,
+  .iclaude-content {
+    width: min(
+      calc(100% - 32px),
+      var(--iclaude-container)
+    );
+  }
+
+  .iclaude-tool-panel {
+    border-radius: var(--iclaude-radius-lg);
+  }
+
+  .iclaude-tool-icon {
+    height: 50px;
+    width: 50px;
+    border-radius: 14px;
+  }
 }
 
 @media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+
   .iclaude-container,
   .iclaude-content {
     width: min(
@@ -239,7 +740,24 @@ button {
     );
   }
 
-  body {
-    font-size: 15px;
+  .iclaude-card:hover {
+    transform: none;
+  }
+
+  .iclaude-tool-panel {
+    border-radius: 18px;
+    box-shadow: var(--iclaude-shadow-md);
+  }
+
+  .iclaude-upload {
+    border-radius: 18px;
+  }
+
+  .iclaude-faq summary {
+    padding: 17px 18px;
+  }
+
+  .iclaude-faq > div {
+    padding: 16px 18px 18px;
   }
 }
