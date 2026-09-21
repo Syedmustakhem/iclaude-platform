@@ -79,7 +79,9 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: "/icon.png",
+        url: "/iclaude-og-image.png",
+        width: 1200,
+        height: 630,
         alt: "iclaude — Free online file tools",
       },
     ],
@@ -93,7 +95,7 @@ export const metadata: Metadata = {
     description:
       "Simple online tools for images, PDFs, videos and digital files.",
 
-    images: ["/icon.png"],
+    images: ["/iclaude-og-image.png"],
   },
 
   category: "technology",
