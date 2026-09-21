@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import Navbar from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
 const siteUrl = "https://iclaude.in";
 
 export const metadata: Metadata = {
@@ -99,15 +100,21 @@ export default function RootLayout({
   return (
     <html lang="en-IN">
       <body>
-        {children}
+  <Navbar />
 
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
-      </body>
+  <div className="min-h-screen">
+    {children}
+  </div>
+
+  <Footer />
+
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify(structuredData),
+    }}
+  />
+</body>
     </html>
   );
 }

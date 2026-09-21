@@ -616,3 +616,16 @@ export function getRelatedTools(
     .map((slug) => getToolBySlug(slug))
     .filter((related): related is ToolDefinition => Boolean(related));
 }
+export function getRequiredToolBySlug(
+  slug: string
+): ToolDefinition {
+  const tool = getToolBySlug(slug);
+
+  if (!tool) {
+    throw new Error(
+      `Tool definition not found for slug: ${slug}`
+    );
+  }
+
+  return tool;
+}
