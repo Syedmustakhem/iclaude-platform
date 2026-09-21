@@ -97,9 +97,9 @@ export default function AboutPage() {
                   Principles
                 </p>
 
-                <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-                  What we're building around
-                </h2>
+               <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
+  What we're building around
+</h2>
               </div>
 
               <div className="mt-10 grid gap-5 md:grid-cols-3">
