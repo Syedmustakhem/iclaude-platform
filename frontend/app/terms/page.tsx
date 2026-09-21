@@ -10,7 +10,7 @@ export const metadata: Metadata = generatePageMetadata({
   title: "Privacy Policy — iclaude",
   description:
     "Read the iclaude privacy policy covering website usage, uploaded files, temporary processing data, analytics and user rights.",
-  path: "/privacy",
+  path: "/privacy/",
   keywords: [
     "iclaude privacy policy",
     "file upload privacy",
@@ -238,7 +238,7 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-2xl font-bold text-slate-950">
-                  10. Children's Privacy
+                  10. Children&apos;s Privacy
                 </h2>
 
                 <p className="mt-4 leading-8">
@@ -267,7 +267,7 @@ export default function PrivacyPage() {
                   To ask a privacy-related question or request,
                   contact us through the{" "}
                   <Link
-                    href="/contact"
+                    href="/contact/"
                     className="font-medium text-blue-600 hover:text-blue-700"
                   >
                     contact page
@@ -305,7 +305,7 @@ export default function PrivacyPage() {
                 </p>
 
                 <Link
-                  href="/contact"
+                  href="/contact/"
                   className="mt-5 inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
                 >
                   Contact iclaude

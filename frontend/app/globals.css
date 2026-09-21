@@ -1,83 +1,52 @@
 @import "tailwindcss";
 
 :root {
-  /* ========================================
-     iclaude Brand Colors
-     ======================================== */
-
   --iclaude-primary: #2563eb;
   --iclaude-primary-dark: #1d4ed8;
-  --iclaude-primary-light: #60a5fa;
+  --iclaude-primary-soft: #eff6ff;
 
-  --iclaude-indigo: #4f46e5;
-  --iclaude-purple: #7c3aed;
-  --iclaude-violet: #8b5cf6;
-
+  --iclaude-accent: #7c3aed;
   --iclaude-cyan: #06b6d4;
-
-  /* ========================================
-     Neutral Colors
-     ======================================== */
 
   --iclaude-background: #ffffff;
   --iclaude-surface: #f8fafc;
-  --iclaude-surface-secondary: #f1f5f9;
+  --iclaude-surface-muted: #f1f5f9;
 
   --iclaude-text: #0f172a;
   --iclaude-text-secondary: #475569;
   --iclaude-text-muted: #64748b;
 
   --iclaude-border: #e2e8f0;
-  --iclaude-border-light: #f1f5f9;
-
-  /* ========================================
-     Status Colors
-     ======================================== */
+  --iclaude-border-strong: #cbd5e1;
 
   --iclaude-success: #16a34a;
   --iclaude-warning: #f59e0b;
   --iclaude-error: #dc2626;
-  --iclaude-info: #0284c7;
 
-  /* ========================================
-     Layout
-     ======================================== */
+  --iclaude-container: 1240px;
+  --iclaude-content: 820px;
 
-  --iclaude-container: 1280px;
-  --iclaude-content: 900px;
-
-  /* ========================================
-     Border Radius
-     ======================================== */
-
-  --iclaude-radius-sm: 8px;
-  --iclaude-radius-md: 12px;
-  --iclaude-radius-lg: 16px;
+  --iclaude-radius-sm: 10px;
+  --iclaude-radius-md: 14px;
+  --iclaude-radius-lg: 18px;
   --iclaude-radius-xl: 24px;
+  --iclaude-radius-2xl: 32px;
   --iclaude-radius-full: 9999px;
 
-  /* ========================================
-     Shadows
-     ======================================== */
-
   --iclaude-shadow-sm:
-    0 1px 2px rgba(15, 23, 42, 0.05);
+    0 1px 2px rgba(15, 23, 42, 0.04);
 
   --iclaude-shadow-md:
-    0 8px 24px rgba(15, 23, 42, 0.08);
+    0 10px 30px rgba(15, 23, 42, 0.08);
 
   --iclaude-shadow-lg:
-    0 20px 50px rgba(15, 23, 42, 0.12);
-
-  /* ========================================
-     Gradients
-     ======================================== */
+    0 24px 70px rgba(15, 23, 42, 0.12);
 
   --iclaude-gradient:
     linear-gradient(
       135deg,
       #06b6d4 0%,
-      #2563eb 45%,
+      #2563eb 48%,
       #7c3aed 100%
     );
 
@@ -89,19 +58,15 @@
       #faf5ff 100%
     );
 
-  /* ========================================
-     Typography
-     ======================================== */
-
   --font-sans:
-    Arial,
-    Helvetica,
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     sans-serif;
 }
-
-/* ==========================================
-   Box Sizing
-   ========================================== */
 
 *,
 *::before,
@@ -109,66 +74,43 @@
   box-sizing: border-box;
 }
 
-/* ==========================================
-   HTML
-   ========================================== */
-
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 88px;
 }
-
-/* ==========================================
-   Body
-   ========================================== */
 
 body {
   margin: 0;
-
   min-height: 100vh;
 
   background: var(--iclaude-background);
-
   color: var(--iclaude-text);
 
   font-family: var(--font-sans);
-
   font-size: 16px;
-
   line-height: 1.6;
 
   text-rendering: optimizeLegibility;
-
   -webkit-font-smoothing: antialiased;
-
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ==========================================
-   Links
-   ========================================== */
+::selection {
+  background: rgba(37, 99, 235, 0.16);
+  color: var(--iclaude-text);
+}
 
 a {
   color: inherit;
-
   text-decoration: none;
 }
-
-/* ==========================================
-   Images
-   ========================================== */
 
 img,
 svg,
 video {
   display: block;
-
   max-width: 100%;
 }
-
-/* ==========================================
-   Buttons / Inputs
-   ========================================== */
 
 button,
 input,
@@ -177,128 +119,48 @@ select {
   font: inherit;
 }
 
-/* ==========================================
-   Buttons
-   ========================================== */
-
 button {
   cursor: pointer;
 }
 
-/* ==========================================
-   Focus Accessibility
-   ========================================== */
-
 :focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.35);
-
+  outline: 3px solid rgba(37, 99, 235, 0.28);
   outline-offset: 3px;
 }
 
-/* ==========================================
-   Text Selection
-   ========================================== */
-
-::selection {
-  background: rgba(37, 99, 235, 0.18);
-
-  color: var(--iclaude-text);
-}
-
-/* ==========================================
-   Scrollbar
-   ========================================== */
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--iclaude-surface);
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-
-  border-radius: var(--iclaude-radius-full);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* ==========================================
-   Utility: Container
-   ========================================== */
-
 .iclaude-container {
   width: min(
-    calc(100% - 32px),
+    calc(100% - 40px),
     var(--iclaude-container)
   );
 
   margin-inline: auto;
 }
 
-/* ==========================================
-   Utility: Content Width
-   ========================================== */
-
 .iclaude-content {
   width: min(
-    calc(100% - 32px),
+    calc(100% - 40px),
     var(--iclaude-content)
   );
 
   margin-inline: auto;
 }
 
-/* ==========================================
-   Gradient Text
-   ========================================== */
-
 .iclaude-gradient-text {
   background: var(--iclaude-gradient);
-
-  -webkit-background-clip: text;
   background-clip: text;
-
+  -webkit-background-clip: text;
   color: transparent;
 }
-
-/* ==========================================
-   Gradient Surface
-   ========================================== */
 
 .iclaude-gradient-surface {
   background: var(--iclaude-gradient-soft);
 }
 
-/* ==========================================
-   Glass Surface
-   ========================================== */
-
-.iclaude-glass {
-  background: rgba(255, 255, 255, 0.8);
-
-  border: 1px solid rgba(226, 232, 240, 0.8);
-
-  backdrop-filter: blur(16px);
-
-  -webkit-backdrop-filter: blur(16px);
-}
-
-/* ==========================================
-   Card Base
-   ========================================== */
-
 .iclaude-card {
-  background: var(--iclaude-background);
-
   border: 1px solid var(--iclaude-border);
-
   border-radius: var(--iclaude-radius-lg);
-
+  background: #ffffff;
   box-shadow: var(--iclaude-shadow-sm);
 
   transition:
@@ -308,16 +170,50 @@ button {
 }
 
 .iclaude-card:hover {
-  transform: translateY(-2px);
-
-  border-color: #cbd5e1;
-
+  transform: translateY(-3px);
+  border-color: var(--iclaude-border-strong);
   box-shadow: var(--iclaude-shadow-md);
 }
 
-/* ==========================================
-   Reduced Motion
-   ========================================== */
+.iclaude-glass {
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.iclaude-grid-pattern {
+  background-image:
+    linear-gradient(
+      rgba(148, 163, 184, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(148, 163, 184, 0.08) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: #cbd5e1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -328,29 +224,22 @@ button {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
-
     animation-iteration-count: 1 !important;
-
     transition-duration: 0.01ms !important;
-
     scroll-behavior: auto !important;
   }
 }
 
-/* ==========================================
-   Mobile Adjustments
-   ========================================== */
-
 @media (max-width: 640px) {
-  body {
-    font-size: 15px;
-  }
-
   .iclaude-container,
   .iclaude-content {
     width: min(
-      calc(100% - 24px),
+      calc(100% - 28px),
       var(--iclaude-container)
     );
+  }
+
+  body {
+    font-size: 15px;
   }
 }
