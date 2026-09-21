@@ -121,7 +121,7 @@ export default function UploadArea({
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-0 max-w-full">
       <input
         ref={inputRef}
         type="file"
@@ -143,8 +143,8 @@ export default function UploadArea({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={[
-          "iclaude-upload group relative overflow-hidden",
-          "min-h-[300px] cursor-pointer px-6 py-10 sm:min-h-[340px] sm:px-10 sm:py-14",
+          "iclaude-upload group relative w-full min-w-0 max-w-full overflow-hidden",
+          "min-h-[280px] cursor-pointer px-4 py-8 sm:min-h-[320px] sm:px-8 sm:py-12",
           "transition-all duration-300",
           "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100",
           isDragging ? "iclaude-upload-active" : "",
@@ -153,24 +153,25 @@ export default function UploadArea({
         {/* Decorative glow */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-0 h-52 w-52 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-200/50 blur-3xl transition-transform duration-500 group-hover:scale-125"
+          className="pointer-events-none absolute left-1/2 top-0 h-52 w-52 max-w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-200/50 blur-3xl transition-transform duration-500 group-hover:scale-125"
         />
 
+        {/* Decorative dots */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         >
-          <div className="absolute left-8 top-8 h-2 w-2 rounded-full bg-blue-400" />
-          <div className="absolute right-12 top-16 h-1.5 w-1.5 rounded-full bg-blue-300" />
-          <div className="absolute bottom-12 left-16 h-1.5 w-1.5 rounded-full bg-blue-300" />
+          <div className="absolute left-5 top-6 h-2 w-2 rounded-full bg-blue-400 sm:left-8 sm:top-8" />
+          <div className="absolute right-6 top-10 h-1.5 w-1.5 rounded-full bg-blue-300 sm:right-12 sm:top-16" />
+          <div className="absolute bottom-8 left-10 h-1.5 w-1.5 rounded-full bg-blue-300 sm:bottom-12 sm:left-16" />
         </div>
 
-        <div className="relative z-10 mx-auto flex max-w-xl flex-col items-center">
+        <div className="relative z-10 mx-auto flex w-full max-w-xl min-w-0 flex-col items-center text-center">
           {/* Upload icon */}
           <div
             aria-hidden="true"
             className={[
-              "flex h-16 w-16 items-center justify-center rounded-2xl",
+              "flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl sm:h-16 sm:w-16",
               "border border-blue-100 bg-white text-blue-600 shadow-sm",
               "transition-all duration-300",
               isDragging
@@ -181,7 +182,7 @@ export default function UploadArea({
             <svg
               viewBox="0 0 24 24"
               fill="none"
-              className="h-7 w-7"
+              className="h-6 w-6 sm:h-7 sm:w-7"
               stroke="currentColor"
               strokeWidth="1.8"
               aria-hidden="true"
@@ -201,7 +202,7 @@ export default function UploadArea({
 
           <span
             className={[
-              "mt-6 inline-flex rounded-full px-3 py-1 text-xs font-semibold",
+              "mt-5 inline-flex rounded-full px-3 py-1 text-xs font-semibold sm:mt-6",
               isDragging
                 ? "bg-blue-100 text-blue-700"
                 : "bg-slate-100 text-slate-600",
@@ -210,25 +211,34 @@ export default function UploadArea({
             {isDragging ? "Release to upload" : "Secure file selection"}
           </span>
 
-          <h3 className="mt-4 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+          <h3 className="mt-3 text-lg font-bold tracking-tight text-slate-950 sm:mt-4 sm:text-2xl">
             {isDragging ? "Drop your file here" : "Upload your file"}
           </h3>
 
           <p
             id="upload-help"
-            className="mt-3 max-w-lg text-sm leading-7 text-slate-600"
+            className="mt-2 max-w-lg px-2 text-sm leading-6 text-slate-600 sm:mt-3 sm:leading-7"
           >
             Drag and drop your {multiple ? "files" : "file"} here, or choose{" "}
             {multiple ? "files" : "a file"} from your device.
           </p>
 
+          {/* Styled file picker */}
           <button
             type="button"
             onClick={(event) => {
               event.stopPropagation();
               openFilePicker();
             }}
-            className="iclaude-button-primary mt-7"
+            className={[
+              "mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl",
+              "bg-blue-600 px-5 py-3 text-sm font-semibold text-white",
+              "shadow-[0_10px_24px_rgba(37,99,235,0.20)]",
+              "transition-all duration-200",
+              "hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-[0_14px_30px_rgba(37,99,235,0.25)]",
+              "active:translate-y-0",
+              "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100",
+            ].join(" ")}
           >
             <svg
               viewBox="0 0 24 24"
@@ -244,11 +254,12 @@ export default function UploadArea({
                 d="M12 5v14m-7-7h14"
               />
             </svg>
+
             Choose {multiple ? "files" : "file"}
           </button>
 
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-500">
-            <span>{formatLabel || "Supported formats"}</span>
+          <div className="mt-4 flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 px-2 text-xs text-slate-500 sm:mt-5">
+            <span className="break-words">{formatLabel || "Supported formats"}</span>
             <span aria-hidden="true">•</span>
             <span>Maximum {maxFileSizeMB} MB</span>
           </div>
@@ -259,7 +270,7 @@ export default function UploadArea({
       {error && (
         <div
           role="alert"
-          className="mt-4 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5 text-sm text-red-700"
+          className="mt-4 flex min-w-0 items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5 text-sm text-red-700"
         >
           <span
             aria-hidden="true"
@@ -268,24 +279,25 @@ export default function UploadArea({
             !
           </span>
 
-          <p className="pt-0.5 leading-6">{error}</p>
+          <p className="min-w-0 pt-0.5 leading-6">{error}</p>
         </div>
       )}
 
       {/* Selected files */}
       {selectedFiles.length > 0 && (
-        <div className="mt-7">
+        <div className="mt-7 min-w-0">
           <div className="mb-4 flex items-center justify-between gap-4">
-            <div>
+            <div className="min-w-0">
               <h4 className="text-sm font-bold text-slate-950">
                 Selected {multiple ? "files" : "file"}
               </h4>
+
               <p className="mt-1 text-xs text-slate-500">
                 Ready for processing
               </p>
             </div>
 
-            <span className="rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
+            <span className="shrink-0 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
               {selectedFiles.length}{" "}
               {selectedFiles.length === 1 ? "file" : "files"}
             </span>
@@ -295,7 +307,7 @@ export default function UploadArea({
             {selectedFiles.map((file, index) => (
               <div
                 key={`${file.name}-${file.size}-${file.lastModified}-${index}`}
-                className="iclaude-card-static flex items-center gap-3 p-4 sm:gap-4"
+                className="iclaude-card-static flex min-w-0 items-center gap-3 p-4 sm:gap-4"
               >
                 <div
                   aria-hidden="true"
@@ -375,14 +387,14 @@ export default function UploadArea({
                 d="M10.3 3.8 2.9 17a2 2 0 0 0 1.75 3h14.7a2 2 0 0 0 1.75-3L13.7 3.8a2 2 0 0 0-3.4 0Z"
               />
             </svg>
+
             Processing service unavailable
           </button>
         </div>
       )}
 
-      <p className="mt-5 text-center text-xs leading-5 text-slate-500">
-        Your selected file stays in your browser until processing is
-        connected.
+      <p className="mt-5 px-2 text-center text-xs leading-5 text-slate-500">
+        Your selected file stays in your browser until processing is connected.
       </p>
     </div>
   );
