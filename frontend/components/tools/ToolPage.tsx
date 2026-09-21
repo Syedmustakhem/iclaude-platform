@@ -4,7 +4,7 @@ import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import StructuredData from "@/components/seo/StructuredData";
 import ToolCard from "@/components/tools/ToolCard";
 import UploadArea from "@/components/tools/UploadArea";
-
+import ImageCompressor from "@/components/tools/ImageCompressor";
 import {
   generateBreadcrumbSchema,
   generateToolSchema,
@@ -140,11 +140,15 @@ export default function ToolPage({
                   </p>
                 </div>
 
-                <UploadArea
-                  acceptedFormats={tool.supportedFormats}
-                  maxFileSizeMB={50}
-                  multiple={false}
-                />
+                {tool.slug === "image-compressor" ? (
+  <ImageCompressor />
+) : (
+  <UploadArea
+    acceptedFormats={tool.supportedFormats}
+    maxFileSizeMB={50}
+    multiple={false}
+  />
+)}
 
                 <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-slate-500">
                   <span>Maximum file size: 50 MB</span>
