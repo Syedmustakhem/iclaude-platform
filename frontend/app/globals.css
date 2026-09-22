@@ -719,6 +719,142 @@ button:disabled {
   background: #94a3b8;
 }
 
+
+
+/* ============================================================
+   Premium Mobile Homepage Polish
+   Keeps desktop styling unchanged.
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Keep the animated background atmosphere subtle on smaller screens. */
+  .iclaude-hero-orb {
+    opacity: 0.65;
+    filter: blur(48px);
+    transform: scale(0.78);
+  }
+
+  .iclaude-float-slow,
+  .iclaude-float-reverse {
+    opacity: 0.7;
+    filter: blur(52px);
+  }
+
+  /* Reduce the visual weight of decorative motion while preserving life. */
+  .iclaude-hero-orb {
+    animation-duration: 16s;
+  }
+
+  .iclaude-float-slow {
+    animation-duration: 13s;
+  }
+
+  .iclaude-float-reverse {
+    animation-duration: 11s;
+  }
+
+  .iclaude-float-card {
+    animation-duration: 7s;
+  }
+
+  /* Prevent the homepage browser mockup from feeling oversized. */
+  main > section:first-child .max-w-\[470px\] {
+    max-width: 430px;
+  }
+
+  main > section:first-child .iclaude-reveal.relative {
+    box-shadow: 0 24px 70px -28px rgba(15, 23, 42, 0.24);
+  }
+
+  /* Give homepage sections a little more breathing room without changing
+     their desktop rhythm. */
+  main > section {
+    scroll-margin-top: 76px;
+  }
+
+  /* Make primary actions comfortably tappable. */
+  .iclaude-button-primary {
+    min-height: 52px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Narrower side gutters give the homepage more usable screen width. */
+  .iclaude-container,
+  .iclaude-content {
+    width: min(calc(100% - 28px), var(--iclaude-container));
+  }
+
+  /* Keep the hero compact and readable above the fold. */
+  main > section:first-child .iclaude-container > .grid {
+    min-height: auto;
+    gap: 2.25rem;
+    padding-top: 2.75rem;
+    padding-bottom: 3.5rem;
+  }
+
+  main > section:first-child h1 {
+    font-size: clamp(2.65rem, 12vw, 3.65rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+  }
+
+  main > section:first-child p {
+    line-height: 1.7;
+  }
+
+  /* Stack hero CTAs naturally and keep them easy to tap. */
+  main > section:first-child .iclaude-button-primary,
+  main > section:first-child a[href="#tools"] {
+    width: 100%;
+  }
+
+  /* Reduce the mock browser padding on very narrow screens. */
+  main > section:first-child .iclaude-reveal.relative {
+    border-radius: 24px;
+    padding: 0.65rem;
+  }
+
+  main > section:first-child .iclaude-reveal.relative > div {
+    border-radius: 18px;
+  }
+
+  /* Hide purely decorative floating hero cards on narrow screens. */
+  main > section:first-child .iclaude-float-card {
+    display: none;
+  }
+
+  /* Keep the marquee useful without making it visually heavy. */
+  .iclaude-marquee {
+    animation-duration: 40s;
+  }
+
+  /* Reduce large blurred decorative shapes that can dominate small screens. */
+  main > section .iclaude-dot-grid {
+    opacity: 0.55;
+  }
+
+  /* Improve card tap feedback on touch devices. */
+  .iclaude-card,
+  .iclaude-button-primary {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent long labels from creating accidental horizontal overflow. */
+  h1,
+  h2,
+  h3,
+  p,
+  a {
+    overflow-wrap: anywhere;
+  }
+
+  /* Comfortable FAQ interaction on phones. */
+  .iclaude-faq summary {
+    min-height: 56px;
+  }
+}
+
 /* ============================================================
    Reduced motion
    ============================================================ */

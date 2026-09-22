@@ -322,14 +322,14 @@ export default function ImageCompressor() {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-200/40 blur-3xl transition-transform duration-500 group-hover:scale-125"
+            className="pointer-events-none absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-200/35 blur-3xl transition-transform duration-700 group-hover:scale-125"
           />
 
-          <div className="relative z-10 flex max-w-lg flex-col items-center">
+          <div className="relative z-10 flex w-full max-w-lg flex-col items-center">
             <div
               className={[
-                "flex h-16 w-16 items-center justify-center",
-                "rounded-2xl border shadow-sm transition-all",
+                "flex h-16 w-16 items-center justify-center rounded-[18px]",
+                "border shadow-[0_12px_30px_rgba(15,23,42,0.08)] transition-all duration-300",
                 isDragging
                   ? "border-blue-500 bg-blue-600 text-white scale-110"
                   : "border-blue-100 bg-white text-blue-600 group-hover:-translate-y-1 group-hover:scale-105",
@@ -356,19 +356,19 @@ export default function ImageCompressor() {
               </svg>
             </div>
 
-            <span className="mt-5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+            <span className="mt-5 rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600">
               {isDragging
                 ? "Release to upload"
                 : "Private browser processing"}
             </span>
 
-            <h3 className="mt-4 text-2xl font-black tracking-tight text-slate-950">
+            <h3 className="mt-4 text-[1.45rem] font-black tracking-[-0.03em] text-slate-950 sm:text-2xl">
               {isDragging
                 ? "Drop your image here"
                 : "Upload an image"}
             </h3>
 
-            <p className="mt-3 text-sm leading-6 text-slate-500">
+            <p className="mt-3 max-w-md text-[13px] leading-6 text-slate-500 sm:text-sm">
               Drag and drop your image here, or choose
               one from your device.
             </p>
@@ -379,45 +379,50 @@ export default function ImageCompressor() {
                 event.stopPropagation();
                 inputRef.current?.click();
               }}
-              className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] transition hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
+              className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] transition duration-200 hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100 active:scale-[0.98] sm:w-auto"
             >
               Choose image
             </button>
 
-            <p className="mt-4 text-xs text-slate-500">
+            <p className="mt-4 text-[11px] font-medium text-slate-500 sm:text-xs">
               JPG, PNG, WebP • Maximum 50 MB
             </p>
           </div>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50">
-              <div className="flex min-h-[300px] items-center justify-center p-4 sm:min-h-[420px]">
+            <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 shadow-sm">
+              <div className="flex min-h-[280px] items-center justify-center p-4 sm:min-h-[420px]">
                 <img
                   src={previewUrl}
                   alt={`Preview of ${file.name}`}
-                  className="max-h-[420px] max-w-full rounded-2xl object-contain shadow-sm"
+                  className="max-h-[420px] max-w-full rounded-2xl object-contain shadow-[0_18px_50px_rgba(15,23,42,0.10)]"
                 />
               </div>
 
-              <div className="border-t border-slate-200 bg-white px-5 py-4">
+              <div className="border-t border-slate-200 bg-white px-4 py-4 sm:px-5">
                 <p className="truncate text-sm font-bold text-slate-900">
                   {file.name}
                 </p>
 
-                <p className="mt-1 text-xs text-slate-500">
-                  Original size: {formatFileSize(file.size)}
-                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-500">
+                  <span className="rounded-full bg-slate-100 px-2.5 py-1">
+                    Original · {formatFileSize(file.size)}
+                  </span>
+                  <span className="rounded-full bg-blue-50 px-2.5 py-1 text-blue-700">
+                    {file.type.split("/")[1]?.toUpperCase() ?? "IMAGE"}
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:p-6">
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-600">
                 Compression
               </p>
 
-              <h3 className="mt-2 text-xl font-black text-slate-950">
+              <h3 className="mt-2 text-xl font-black tracking-[-0.02em] text-slate-950">
                 Choose quality
               </h3>
 
@@ -451,9 +456,14 @@ export default function ImageCompressor() {
                   aria-label="Compression quality"
                 />
 
-                <div className="mt-2 flex justify-between text-xs text-slate-400">
+                <div className="mt-2 flex justify-between gap-3 text-[11px] font-medium text-slate-400">
                   <span>Smaller file</span>
                   <span>Higher quality</span>
+                </div>
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  <span className="rounded-xl bg-slate-50 px-2 py-2 text-center text-[10px] font-bold text-slate-500">Light</span>
+                  <span className="rounded-xl bg-blue-50 px-2 py-2 text-center text-[10px] font-bold text-blue-700">Balanced</span>
+                  <span className="rounded-xl bg-slate-50 px-2 py-2 text-center text-[10px] font-bold text-slate-500">Quality</span>
                 </div>
               </div>
 
@@ -461,7 +471,7 @@ export default function ImageCompressor() {
                 type="button"
                 onClick={compressImage}
                 disabled={isCompressing}
-                className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-7 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] transition duration-200 hover:-translate-y-0.5 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]"
               >
                 {isCompressing ? (
                   <>
@@ -479,7 +489,7 @@ export default function ImageCompressor() {
               <button
                 type="button"
                 onClick={reset}
-                className="mt-3 w-full rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                className="mt-3 min-h-11 w-full rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 active:scale-[0.99]"
               >
                 Choose another image
               </button>
@@ -487,14 +497,14 @@ export default function ImageCompressor() {
           </div>
 
           {result && (
-            <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-5 sm:p-6">
+            <div className="rounded-[28px] border border-emerald-200 bg-emerald-50/60 p-5 shadow-sm sm:p-6">
               <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-700">
                     Compression complete
                   </p>
 
-                  <h3 className="mt-2 text-xl font-black text-slate-950">
+                  <h3 className="mt-2 text-xl font-black tracking-[-0.02em] text-slate-950">
                     Your image is ready
                   </h3>
 
@@ -518,7 +528,7 @@ export default function ImageCompressor() {
                 <button
                   type="button"
                   onClick={downloadResult}
-                  className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+                  className="inline-flex min-h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 active:scale-[0.98] sm:w-auto"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -543,7 +553,7 @@ export default function ImageCompressor() {
                 </button>
               </div>
 
-              <div className="mt-5 overflow-hidden rounded-2xl border border-emerald-100 bg-white">
+              <div className="mt-5 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
                 <img
                   src={result.compressedUrl}
                   alt="Compressed image preview"
@@ -556,7 +566,7 @@ export default function ImageCompressor() {
           {error && (
             <div
               role="alert"
-              className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-sm text-red-700"
+              className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-sm text-red-700 shadow-sm"
             >
               <span
                 aria-hidden="true"
@@ -569,7 +579,7 @@ export default function ImageCompressor() {
             </div>
           )}
 
-          <p className="text-center text-xs leading-5 text-slate-500">
+          <p className="flex items-center justify-center gap-2 text-center text-[11px] leading-5 text-slate-500 sm:text-xs">
             Images are processed locally in your browser. The
             selected image is not uploaded to the iclaude server.
           </p>
