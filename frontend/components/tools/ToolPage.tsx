@@ -10,6 +10,7 @@ import ImageResizer from "@/components/tools/ImageResizer";
 import BackgroundRemover from "@/components/tools/BackgroundRemover";
 import PdfToWord from "@/components/tools/PdfToWord";
 import VideoCompressor from "@/components/tools/VideoCompressor";
+import ImageConverterTool from "@/components/tools/ImageConverterTool";
 
 import {
   generateBreadcrumbSchema,
@@ -215,22 +216,28 @@ export default function ToolPage({ tool }: ToolPageProps) {
               <div className="relative overflow-hidden rounded-[24px] border border-slate-200/90 bg-white p-1.5 shadow-[0_20px_60px_rgba(15,23,42,0.07)] sm:rounded-[30px] sm:p-3 sm:shadow-[0_25px_80px_rgba(15,23,42,0.08)]">
                 <div className="rounded-[19px] border border-slate-100 bg-slate-50/70 p-3 sm:rounded-[24px] sm:p-7">
                   {tool.slug === "image-compressor" ? (
-                    <ImageCompressor />
-                  ) : tool.slug === "image-resizer" ? (
-                    <ImageResizer />
-                  ) : tool.slug === "remove-background" ? (
-                    <BackgroundRemover />
-                  ) : tool.slug === "pdf-to-word" ? (
-                    <PdfToWord />
-                  ) : tool.slug === "video-compressor" ? (
-                    <VideoCompressor />
-                  ) : (
-                    <UploadArea
-                      acceptedFormats={tool.supportedFormats}
-                      maxFileSizeMB={50}
-                      multiple={false}
-                    />
-                  )}
+  <ImageCompressor />
+) : tool.slug === "image-resizer" ? (
+  <ImageResizer />
+) : tool.slug === "remove-background" ? (
+  <BackgroundRemover />
+) : tool.slug === "pdf-to-word" ? (
+  <PdfToWord />
+) : tool.slug === "video-compressor" ? (
+  <VideoCompressor />
+) : tool.slug === "jpg-to-png" ? (
+  <ImageConverterTool type="jpg-to-png" />
+) : tool.slug === "png-to-jpg" ? (
+  <ImageConverterTool type="png-to-jpg" />
+) : tool.slug === "heic-to-jpg" ? (
+  <ImageConverterTool type="heic-to-jpg" />
+) : (
+  <UploadArea
+    acceptedFormats={tool.supportedFormats}
+    maxFileSizeMB={50}
+    multiple={false}
+  />
+)}
                 </div>
               </div>
 
