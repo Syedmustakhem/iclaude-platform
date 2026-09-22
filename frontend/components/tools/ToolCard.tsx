@@ -6,6 +6,56 @@ type ToolCardProps = {
   tool: ToolDefinition;
 };
 
+export function ToolIcon({ icon }: { icon: ToolDefinition["icon"] }) {
+  const shared = {
+    viewBox: "0 0 24 24",
+    className: "h-6 w-6",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.8",
+    "aria-hidden": true,
+  } as const;
+
+  if (icon === "compress" || icon === "video-compress") {
+    return (
+      <svg {...shared}>
+        <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3" />
+        {icon === "video-compress" ? (
+          <path d="m10 9 5 3-5 3z" />
+        ) : (
+          <path d="M8 12h8M12 8v8" />
+        )}
+      </svg>
+    );
+  }
+
+  if (icon === "resize") {
+    return (
+      <svg {...shared}>
+        <path d="M5 9V5h4M15 5h4v4M19 15v4h-4M9 19H5v-4" />
+        <path d="M5 5l5 5m9-5-5 5m5 9-5-5m-9 5 5-5" />
+      </svg>
+    );
+  }
+
+  if (icon === "background") {
+    return (
+      <svg {...shared}>
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <circle cx="9" cy="9" r="1.5" />
+        <path d="m20 16-4.5-4.5L9 18m-5 2 4-4" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...shared}>
+      <path d="M6 3h8l4 4v14H6z" />
+      <path d="M14 3v5h5M9 13h6M9 17h4" />
+    </svg>
+  );
+}
+
 export default function ToolCard({ tool }: ToolCardProps) {
   return (
     <Link
@@ -27,7 +77,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
               aria-hidden="true"
               className="flex h-12 w-12 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-2xl transition-transform duration-300 group-hover:scale-105"
             >
-              {tool.icon}
+              <ToolIcon icon={tool.icon} />
             </div>
 
             <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-500">

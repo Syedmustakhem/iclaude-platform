@@ -2,9 +2,11 @@ import Link from "next/link";
 
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import StructuredData from "@/components/seo/StructuredData";
-import ToolCard from "@/components/tools/ToolCard";
+import ToolCard, { ToolIcon } from "@/components/tools/ToolCard";
 import UploadArea from "@/components/tools/UploadArea";
 import ImageCompressor from "@/components/tools/ImageCompressor";
+import ImageResizer from "@/components/tools/ImageResizer";
+import BackgroundRemover from "@/components/tools/BackgroundRemover";
 import {
   generateBreadcrumbSchema,
   generateToolSchema,
@@ -79,7 +81,7 @@ export default function ToolPage({
                   className="iclaude-tool-icon mx-auto h-16 w-16 rounded-2xl text-3xl"
                   aria-hidden="true"
                 >
-                  {tool.icon}
+                  <ToolIcon icon={tool.icon} />
                 </div>
               </div>
 
@@ -134,14 +136,17 @@ export default function ToolPage({
                   </h2>
 
                   <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
-                    Select a supported file below. The current workspace
-                    provides the upload experience while processing is
-                    connected to the tool service.
+                    Add a supported file below to begin a clear, focused
+                    workflow for this task.
                   </p>
                 </div>
 
                 {tool.slug === "image-compressor" ? (
   <ImageCompressor />
+) : tool.slug === "image-resizer" ? (
+  <ImageResizer />
+) : tool.slug === "remove-background" ? (
+  <BackgroundRemover />
 ) : (
   <UploadArea
     acceptedFormats={tool.supportedFormats}
