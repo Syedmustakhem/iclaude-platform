@@ -411,10 +411,10 @@ export default function ImageResizer() {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           className={[
-            "group relative flex min-h-[300px] cursor-pointer",
-            "items-center justify-center overflow-hidden rounded-3xl",
-            "border-2 border-dashed px-6 py-10 text-center",
-            "transition-all duration-300",
+            "group relative flex min-h-[290px] cursor-pointer sm:min-h-[320px]",
+            "items-center justify-center overflow-hidden rounded-[28px] sm:rounded-3xl",
+            "border-2 border-dashed px-4 py-8 text-center sm:px-6 sm:py-10",
+            "transition-all duration-300 ease-out",
             "focus-visible:outline-none focus-visible:ring-4",
             "focus-visible:ring-blue-100",
             isDragging
@@ -424,14 +424,14 @@ export default function ImageResizer() {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-200/40 blur-3xl transition-transform duration-500 group-hover:scale-125"
+            className="pointer-events-none absolute left-1/2 top-0 h-52 w-52 max-w-[65vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-200/40 blur-3xl transition-transform duration-700 group-hover:scale-125"
           />
 
           <div className="relative z-10 flex max-w-lg flex-col items-center">
             <div
               className={[
-                "flex h-16 w-16 items-center justify-center",
-                "rounded-2xl border shadow-sm transition-all",
+                "flex h-14 w-14 items-center justify-center rounded-[18px] sm:h-16 sm:w-16",
+                "border border-blue-100 bg-white text-blue-600 shadow-[0_10px_30px_rgba(15,23,42,0.08)] transition-all",
                 isDragging
                   ? "scale-110 border-blue-500 bg-blue-600 text-white"
                   : "border-blue-100 bg-white text-blue-600 group-hover:-translate-y-1 group-hover:scale-105",
@@ -464,13 +464,13 @@ export default function ImageResizer() {
                 : "Private browser processing"}
             </span>
 
-            <h3 className="mt-4 text-2xl font-black tracking-tight text-slate-950">
+            <h3 className="mt-4 text-[1.25rem] font-black tracking-[-0.025em] text-slate-950 sm:text-2xl">
               {isDragging
                 ? "Drop your image here"
                 : "Upload an image"}
             </h3>
 
-            <p className="mt-3 text-sm leading-6 text-slate-500">
+            <p className="mt-3 max-w-md text-[13px] leading-6 text-slate-500 sm:text-sm">
               Drag and drop your image here, or choose
               one from your device.
             </p>
@@ -481,7 +481,7 @@ export default function ImageResizer() {
                 event.stopPropagation();
                 inputRef.current?.click();
               }}
-              className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] transition hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100"
+              className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] transition hover:-translate-y-0.5 hover:bg-blue-700 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100 sm:w-auto"
             >
               Choose image
             </button>
@@ -493,13 +493,13 @@ export default function ImageResizer() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50">
-              <div className="flex min-h-[300px] items-center justify-center p-4 sm:min-h-[420px]">
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-6">
+            <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:rounded-3xl">
+              <div className="flex min-h-[270px] items-center justify-center p-3 sm:min-h-[420px] sm:p-4">
                 <img
                   src={previewUrl}
                   alt={`Preview of ${file.name}`}
-                  className="max-h-[420px] max-w-full rounded-2xl object-contain shadow-sm"
+                  className="max-h-[420px] max-w-full rounded-2xl object-contain shadow-[0_12px_35px_rgba(15,23,42,0.08)]"
                 />
               </div>
 
@@ -516,20 +516,20 @@ export default function ImageResizer() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:rounded-3xl sm:p-5">
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-600">
                 Resize
               </p>
 
-              <h3 className="mt-2 text-xl font-black text-slate-950">
+              <h3 className="mt-2 text-[1.2rem] font-black tracking-[-0.02em] text-slate-950 sm:text-xl">
                 Set dimensions
               </h3>
 
-              <p className="mt-2 text-sm leading-6 text-slate-500">
+              <p className="mt-2 text-[13px] leading-6 text-slate-500 sm:text-sm">
                 Enter the exact pixel dimensions you need.
               </p>
 
-              <div className="mt-6 grid grid-cols-2 gap-3">
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <label className="block">
                   <span className="text-xs font-bold text-slate-600">
                     Width
@@ -543,7 +543,7 @@ export default function ImageResizer() {
                     onChange={(event) =>
                       updateWidth(event.target.value)
                     }
-                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                    className="mt-2 min-h-12 w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                   />
                 </label>
 
@@ -560,7 +560,7 @@ export default function ImageResizer() {
                     onChange={(event) =>
                       updateHeight(event.target.value)
                     }
-                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                    className="mt-2 min-h-12 w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                   />
                 </label>
               </div>
@@ -571,7 +571,7 @@ export default function ImageResizer() {
                   setLockAspectRatio((current) => !current)
                 }
                 className={[
-                  "mt-4 flex w-full items-center justify-between rounded-xl",
+                  "mt-4 flex min-h-14 w-full items-center justify-between rounded-2xl",
                   "border px-4 py-3 text-left transition",
                   lockAspectRatio
                     ? "border-blue-200 bg-blue-50"
@@ -611,7 +611,7 @@ export default function ImageResizer() {
                 type="button"
                 onClick={resizeImage}
                 disabled={isResizing}
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] transition hover:-translate-y-0.5 hover:bg-blue-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isResizing ? (
                   <>
@@ -629,7 +629,7 @@ export default function ImageResizer() {
               <button
                 type="button"
                 onClick={reset}
-                className="mt-3 w-full rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                className="mt-3 min-h-12 w-full rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 active:scale-[0.98]"
               >
                 Choose another image
               </button>
@@ -637,14 +637,14 @@ export default function ImageResizer() {
           </div>
 
           {result && (
-            <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-5 sm:p-6">
+            <div className="rounded-[28px] border border-emerald-200 bg-emerald-50/60 p-4 shadow-[0_18px_50px_rgba(16,185,129,0.08)] sm:rounded-3xl sm:p-6">
               <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-700">
                     Resize complete
                   </p>
 
-                  <h3 className="mt-2 text-xl font-black text-slate-950">
+                  <h3 className="mt-2 text-[1.2rem] font-black tracking-[-0.02em] text-slate-950 sm:text-xl">
                     Your resized image is ready
                   </h3>
 
@@ -668,7 +668,7 @@ export default function ImageResizer() {
                 <button
                   type="button"
                   onClick={downloadResult}
-                  className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+                  className="inline-flex min-h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 active:scale-[0.98] sm:w-auto"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -693,7 +693,7 @@ export default function ImageResizer() {
                 </button>
               </div>
 
-              <div className="mt-5 overflow-hidden rounded-2xl border border-emerald-100 bg-white">
+              <div className="mt-5 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
                 <img
                   src={result.url}
                   alt={`Resized image at ${result.width} by ${result.height} pixels`}
@@ -719,7 +719,8 @@ export default function ImageResizer() {
             </div>
           )}
 
-          <p className="text-center text-xs leading-5 text-slate-500">
+          <p className="flex items-center justify-center gap-2 text-center text-[11px] leading-5 text-slate-500 sm:text-xs">
+            <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
             Images are resized locally in your browser. Your
             selected image is not uploaded to the iclaude server.
           </p>

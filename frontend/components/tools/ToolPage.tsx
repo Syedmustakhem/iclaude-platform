@@ -2,11 +2,15 @@ import Link from "next/link";
 
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import StructuredData from "@/components/seo/StructuredData";
+
 import ToolCard, { ToolIcon } from "@/components/tools/ToolCard";
 import UploadArea from "@/components/tools/UploadArea";
 import ImageCompressor from "@/components/tools/ImageCompressor";
 import ImageResizer from "@/components/tools/ImageResizer";
 import BackgroundRemover from "@/components/tools/BackgroundRemover";
+import PdfToWord from "@/components/tools/PdfToWord";
+import VideoCompressor from "@/components/tools/VideoCompressor";
+
 import {
   generateBreadcrumbSchema,
   generateToolSchema,
@@ -21,9 +25,7 @@ type ToolPageProps = {
   tool: ToolDefinition;
 };
 
-export default function ToolPage({
-  tool,
-}: ToolPageProps) {
+export default function ToolPage({ tool }: ToolPageProps) {
   const breadcrumbs = [
     {
       name: "Home",
@@ -58,259 +60,356 @@ export default function ToolPage({
 
       <Breadcrumbs items={breadcrumbs} />
 
-      <main className="iclaude-tool-shell">
-        {/* ======================================================
-            Hero
-            ====================================================== */}
+      <main className="overflow-hidden bg-white">
+        {/* =========================================================
+            PREMIUM HERO
+            ========================================================= */}
 
-        <section className="iclaude-tool-hero">
+        <section className="relative isolate overflow-hidden border-b border-slate-200 bg-[#f8fafc]">
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.12),transparent_32%),radial-gradient(circle_at_top_right,rgba(6,182,212,0.10),transparent_30%)]"
-          />
+            className="absolute inset-0 -z-10"
+          >
+            <div className="absolute left-[-12%] top-[-30%] h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-3xl" />
+            <div className="absolute right-[-12%] top-[-20%] h-[460px] w-[460px] rounded-full bg-cyan-400/10 blur-3xl" />
+            <div className="absolute bottom-[-35%] left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-indigo-500/5 blur-3xl" />
+          </div>
 
           <div
             aria-hidden="true"
-            className="iclaude-dot-grid absolute inset-x-0 top-0 h-80 opacity-40"
+            className="absolute inset-0 opacity-[0.035]"
+            style={{
+              backgroundImage:
+                "linear-gradient(#0f172a 1px, transparent 1px), linear-gradient(90deg, #0f172a 1px, transparent 1px)",
+              backgroundSize: "44px 44px",
+              maskImage:
+                "linear-gradient(to bottom, black, transparent 80%)",
+            }}
           />
 
-          <div className="iclaude-container relative py-16 sm:py-20 lg:py-24">
-            <div className="mx-auto max-w-4xl text-center">
-              <div className="iclaude-reveal">
-                <div
-                  className="iclaude-tool-icon mx-auto h-16 w-16 rounded-2xl text-3xl"
-                  aria-hidden="true"
-                >
+          <div className="iclaude-container relative py-10 sm:py-18 lg:py-24">
+            <div className="mx-auto max-w-5xl text-center tool-page-hero-content">
+              {/* Status */}
+              <div className="iclaude-reveal flex justify-center">
+                <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-bold text-slate-600 shadow-sm backdrop-blur">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+
+                  Free online tool
+                </div>
+              </div>
+
+              {/* Icon */}
+              <div className="iclaude-reveal iclaude-delay-1 mt-7">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[20px] sm:h-20 sm:w-20 sm:rounded-[24px] border border-white bg-white text-4xl shadow-[0_20px_50px_rgba(15,23,42,0.10)] ring-1 ring-slate-200/70">
                   <ToolIcon icon={tool.icon} />
                 </div>
               </div>
 
-              <p className="iclaude-reveal iclaude-delay-1 mt-6 text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
+              {/* Category */}
+              <p className="iclaude-reveal iclaude-delay-1 mt-7 text-xs font-black uppercase tracking-[0.2em] text-blue-600">
                 {tool.category} tool
               </p>
 
-              <h1 className="iclaude-reveal iclaude-delay-2 mt-3 text-4xl font-black tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">
+              {/* Heading */}
+              <h1 className="iclaude-reveal iclaude-delay-2 mx-auto mt-3 max-w-4xl text-[2.45rem] leading-[1.02] font-black sm:text-5xl lg:text-7xl tracking-[-0.055em] text-slate-950">
                 {tool.name}
               </h1>
 
-              <p className="iclaude-reveal iclaude-delay-3 mx-auto mt-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
+              {/* Description */}
+              <p className="iclaude-reveal iclaude-delay-3 mx-auto mt-5 max-w-3xl text-[15px] leading-7 sm:mt-6 sm:text-lg sm:leading-8 text-slate-600">
                 {tool.description}
               </p>
 
-              <div className="iclaude-reveal iclaude-delay-4 mt-8 flex flex-wrap justify-center gap-2">
+              {/* Formats */}
+              <div className="iclaude-reveal iclaude-delay-4 mt-7 flex flex-wrap justify-center gap-2">
                 {tool.supportedFormats.map((format) => (
                   <span
                     key={format}
-                    className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 shadow-sm"
+                    className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm"
                   >
                     {format}
                   </span>
                 ))}
               </div>
+
+              {/* Hero CTA */}
+              <div className="iclaude-reveal iclaude-delay-4 mt-7 flex flex-col items-stretch justify-center gap-3 sm:mt-9 sm:flex-row sm:items-center">
+                <Link
+                  href="#tool"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-950/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl"
+                >
+                  Start using {tool.shortName}
+                  <span aria-hidden="true">↓</span>
+                </Link>
+
+                <span className="text-xs font-medium text-slate-400">
+                  No installation required
+                </span>
+              </div>
+
+              {/* Trust row */}
+              <div className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2.5 text-[11px] font-semibold text-slate-500 sm:mt-10 sm:gap-x-6 sm:gap-y-3 sm:text-xs">
+                <span className="flex items-center gap-2">
+                  <span className="text-emerald-500">✓</span>
+                  Simple workflow
+                </span>
+
+                <span className="flex items-center gap-2">
+                  <span className="text-emerald-500">✓</span>
+                  Browser-friendly
+                </span>
+
+                <span className="flex items-center gap-2">
+                  <span className="text-emerald-500">✓</span>
+                  Built for everyday use
+                </span>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ======================================================
-            Tool workspace
-            ====================================================== */}
+        {/* =========================================================
+            WORKSPACE
+            ========================================================= */}
 
         <section
           id="tool"
-          className="scroll-mt-28 bg-slate-50/70 py-12 sm:py-16"
+          className="scroll-mt-20 border-b border-slate-200 bg-slate-50 py-10 sm:scroll-mt-24 sm:py-20"
         >
           <div className="iclaude-container">
-            <div className="mx-auto max-w-4xl">
-              <div className="iclaude-tool-panel p-5 sm:p-8">
-                <div className="mb-7 text-center">
-                  <div className="iclaude-tool-badge mx-auto">
-                    <span
-                      aria-hidden="true"
-                      className="h-2 w-2 rounded-full bg-blue-600"
-                    />
-                    Upload your file
+            <div className="mx-auto max-w-6xl">
+              <div className="mb-6 flex flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-end">
+                <div>
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700">
+                    <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                    Tool workspace
                   </div>
 
-                  <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                    Start with your {tool.category.toLowerCase()} file
+                  <h2 className="text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                    Get started in seconds
                   </h2>
 
-                  <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
-                    Add a supported file below to begin a clear, focused
-                    workflow for this task.
+                  <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
+                    Upload your file and follow the focused workflow designed
+                    for {tool.shortName.toLowerCase()}.
                   </p>
                 </div>
 
-                {tool.slug === "image-compressor" ? (
-  <ImageCompressor />
-) : tool.slug === "image-resizer" ? (
-  <ImageResizer />
-) : tool.slug === "remove-background" ? (
-  <BackgroundRemover />
-) : (
-  <UploadArea
-    acceptedFormats={tool.supportedFormats}
-    maxFileSizeMB={50}
-    multiple={false}
-  />
-)}
+                <div className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-500 shadow-sm sm:flex">
+                  <span className="text-emerald-500">●</span>
+                  Ready to use
+                </div>
+              </div>
 
-                <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-slate-500">
-                  <span>Maximum file size: 50 MB</span>
-                  <span aria-hidden="true">•</span>
-                  <span>
-                    Supported: {tool.supportedFormats.join(", ")}
-                  </span>
+              <div className="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-1.5 shadow-[0_20px_60px_rgba(15,23,42,0.07)] sm:rounded-[30px] sm:p-3 sm:shadow-[0_25px_80px_rgba(15,23,42,0.08)]">
+                <div className="rounded-[19px] border border-slate-100 bg-slate-50/70 p-3 sm:rounded-[24px] sm:p-7">
+                  {tool.slug === "image-compressor" ? (
+                    <ImageCompressor />
+                  ) : tool.slug === "image-resizer" ? (
+                    <ImageResizer />
+                  ) : tool.slug === "remove-background" ? (
+                    <BackgroundRemover />
+                  ) : tool.slug === "pdf-to-word" ? (
+                    <PdfToWord />
+                  ) : tool.slug === "video-compressor" ? (
+                    <VideoCompressor />
+                  ) : (
+                    <UploadArea
+                      acceptedFormats={tool.supportedFormats}
+                      maxFileSizeMB={50}
+                      multiple={false}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-2 text-[11px] font-medium text-slate-400 sm:mt-4 sm:gap-x-6 sm:text-xs">
+                <span>Maximum file size: 50 MB</span>
+                <span className="hidden sm:inline">•</span>
+                <span>
+                  Supported: {tool.supportedFormats.join(", ")}
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================
+            INTRO
+            ========================================================= */}
+
+        <section className="bg-white py-16 sm:py-24">
+          <div className="iclaude-container">
+            <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">
+                  About the tool
+                </p>
+
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                  Everything you need for {tool.shortName.toLowerCase()}
+                </h2>
+
+                <div className="mt-6 h-1 w-16 rounded-full bg-slate-950" />
+              </div>
+
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
+                <p className="text-base leading-8 text-slate-600 sm:text-lg">
+                  {tool.content.introduction}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================
+            HOW IT WORKS
+            ========================================================= */}
+
+        <section className="border-y border-slate-200 bg-[#f8fafc] py-16 sm:py-24">
+          <div className="iclaude-container">
+            <div className="mx-auto max-w-6xl">
+              <div className="max-w-2xl">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">
+                  Workflow
+                </p>
+
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                  How {tool.shortName} works
+                </h2>
+
+                <p className="mt-4 leading-7 text-slate-600">
+                  A straightforward workflow designed to keep every step clear.
+                </p>
+              </div>
+
+              <div className="mt-10 grid gap-4 md:grid-cols-3">
+                {tool.content.howItWorks.map((step, index) => (
+                  <article
+                    key={step}
+                    className="group relative overflow-hidden rounded-[22px] border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl sm:rounded-3xl sm:p-6"
+                  >
+                    <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-blue-500/5 blur-2xl transition group-hover:bg-blue-500/10" />
+
+                    <div className="relative">
+                      <div className="flex items-center justify-between">
+                        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-sm font-black text-white">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+
+                        <span className="text-xs font-bold text-slate-300">
+                          STEP {String(index + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+
+                      <p className="mt-7 text-sm font-semibold leading-7 text-slate-700">
+                        {step}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================
+            BENEFITS
+            ========================================================= */}
+
+        <section className="bg-white py-16 sm:py-24">
+          <div className="iclaude-container">
+            <div className="mx-auto max-w-6xl">
+              <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">
+                    Why iclaude
+                  </p>
+
+                  <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                    Built around the task, not the complexity
+                  </h2>
+
+                  <p className="mt-5 max-w-lg leading-8 text-slate-600">
+                    {tool.shortName} is designed to keep the experience focused,
+                    understandable and practical.
+                  </p>
+
+                  <Link
+                    href="#tool"
+                    className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700"
+                  >
+                    Start with your file
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {tool.benefits.map((benefit, index) => (
+                    <article
+                      key={benefit}
+                      className="group rounded-2xl border border-slate-200 bg-slate-50 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white hover:shadow-lg"
+                    >
+                      <div className="flex items-start gap-4">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-sm font-black text-emerald-600 transition group-hover:bg-emerald-100">
+                          ✓
+                        </span>
+
+                        <div>
+                          <span className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                            Benefit {String(index + 1).padStart(2, "0")}
+                          </span>
+
+                          <p className="text-sm font-semibold leading-6 text-slate-700">
+                            {benefit}
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ======================================================
-            Introduction
-            ====================================================== */}
+        {/* =========================================================
+            USE CASES
+            ========================================================= */}
 
-        <section className="bg-white py-14 sm:py-20">
+        <section className="bg-slate-950 py-16 sm:py-24">
           <div className="iclaude-container">
-            <article className="iclaude-prose mx-auto max-w-4xl">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                About this tool
-              </p>
-
-              <h2>
-                What is {tool.name}?
-              </h2>
-
-              <p className="text-base sm:text-lg">
-                {tool.content.introduction}
-              </p>
-            </article>
-          </div>
-        </section>
-
-        {/* ======================================================
-            How it works
-            ====================================================== */}
-
-        <section className="bg-slate-50 py-14 sm:py-20">
-          <div className="iclaude-container">
-            <div className="mx-auto max-w-5xl">
-              <div className="text-center">
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                  Simple process
+            <div className="mx-auto max-w-6xl">
+              <div className="max-w-2xl">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-300">
+                  Use cases
                 </p>
 
-                <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
-                  How to use {tool.shortName}
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-white sm:text-4xl">
+                  Useful in real-world workflows
                 </h2>
 
-                <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
-                  Follow the steps below to complete the workflow.
+                <p className="mt-4 leading-7 text-slate-400">
+                  Common situations where {tool.shortName.toLowerCase()} can
+                  make file work simpler.
                 </p>
               </div>
-
-              <div className="mt-10 grid gap-5 md:grid-cols-3">
-                {tool.content.howItWorks.map(
-                  (step, index) => (
-                    <article
-                      key={step}
-                      className="iclaude-card p-6"
-                    >
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-950 text-sm font-bold text-white">
-                        {String(index + 1).padStart(2, "0")}
-                      </div>
-
-                      <p className="mt-5 text-sm leading-7 text-slate-600">
-                        {step}
-                      </p>
-                    </article>
-                  ),
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ======================================================
-            Benefits
-            ====================================================== */}
-
-        <section className="bg-white py-14 sm:py-20">
-          <div className="iclaude-container">
-            <div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-2 md:items-center">
-              <div>
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                  Why use it
-                </p>
-
-                <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
-                  Designed for practical file workflows
-                </h2>
-
-                <p className="mt-5 leading-8 text-slate-600">
-                  iclaude focuses on clear tools and straightforward
-                  workflows so you can get to the file task without
-                  unnecessary complexity.
-                </p>
-              </div>
-
-              <ul className="space-y-3">
-                {tool.benefits.map((benefit) => (
-                  <li
-                    key={benefit}
-                    className="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-slate-300 hover:bg-white"
-                  >
-                    <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-sm font-bold text-emerald-600"
-                      aria-hidden="true"
-                    >
-                      ✓
-                    </span>
-
-                    <span className="text-sm leading-6 text-slate-700">
-                      {benefit}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* ======================================================
-            Use cases
-            ====================================================== */}
-
-        <section className="bg-slate-50 py-14 sm:py-20">
-          <div className="iclaude-container">
-            <div className="mx-auto max-w-5xl">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                Use cases
-              </p>
-
-              <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
-                Common uses for {tool.shortName}
-              </h2>
-
-              <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-                Here are some common situations where this type of
-                file workflow can be useful.
-              </p>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
-                {tool.content.useCases.map((useCase) => (
+                {tool.content.useCases.map((useCase, index) => (
                   <article
                     key={useCase}
-                    className="iclaude-card-static p-5"
+                    className="group rounded-[22px] border border-white/10 bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.07] sm:rounded-3xl sm:p-6"
                   >
-                    <div className="flex gap-3">
-                      <span
-                        aria-hidden="true"
-                        className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600"
-                      />
+                    <div className="flex gap-4">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-xs font-black text-slate-950">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
 
-                      <p className="text-sm leading-7 text-slate-700">
+                      <p className="pt-1 text-sm leading-7 text-slate-300">
                         {useCase}
                       </p>
                     </div>
@@ -321,35 +420,46 @@ export default function ToolPage({
           </div>
         </section>
 
-        {/* ======================================================
-            Supported formats
-            ====================================================== */}
+        {/* =========================================================
+            FORMATS
+            ========================================================= */}
 
-        <section className="bg-white py-14 sm:py-20">
+        <section className="bg-white py-16 sm:py-24">
           <div className="iclaude-container">
-            <div className="mx-auto max-w-4xl">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                Compatibility
-              </p>
+            <div className="mx-auto max-w-6xl">
+              <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">
+                    Compatibility
+                  </p>
 
-              <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
-                Supported file formats
-              </h2>
+                  <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                    Supported formats
+                  </h2>
+                </div>
 
-              <p className="mt-4 leading-7 text-slate-600">
-                The current tool configuration is designed around the
-                following supported formats.
-              </p>
+                <p className="max-w-md text-sm leading-7 text-slate-500">
+                  Use the formats listed below with this tool configuration.
+                </p>
+              </div>
 
-              <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                 {tool.supportedFormats.map((format) => (
                   <div
                     key={format}
-                    className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center transition hover:border-blue-200 hover:bg-blue-50/50"
+                    className="group rounded-2xl border border-slate-200 bg-slate-50 p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-blue-50/40 hover:shadow-lg sm:p-5"
                   >
-                    <span className="text-lg font-black text-slate-900">
+                    <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-white text-xs font-black text-slate-400 shadow-sm transition group-hover:text-blue-600">
+                      FILE
+                    </div>
+
+                    <p className="mt-4 text-lg font-black text-slate-900">
                       {format}
-                    </span>
+                    </p>
+
+                    <p className="mt-1 text-[11px] font-medium text-slate-400">
+                      Supported format
+                    </p>
                   </div>
                 ))}
               </div>
@@ -357,71 +467,91 @@ export default function ToolPage({
           </div>
         </section>
 
-        {/* ======================================================
-            Tips
-            ====================================================== */}
+        {/* =========================================================
+            TIPS
+            ========================================================= */}
 
-        <section className="bg-slate-50 py-14 sm:py-20">
+        <section className="border-y border-slate-200 bg-slate-50 py-16 sm:py-24">
           <div className="iclaude-container">
-            <div className="mx-auto max-w-4xl">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                Helpful tips
-              </p>
+            <div className="mx-auto max-w-6xl">
+              <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">
+                    Helpful tips
+                  </p>
 
-              <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
-                Tips for better results
-              </h2>
+                  <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                    Get better results
+                  </h2>
 
-              <div className="mt-8 space-y-3">
-                {tool.content.tips.map((tip, index) => (
-                  <article
-                    key={tip}
-                    className="iclaude-card-static p-5"
-                  >
-                    <div className="flex gap-4">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-xs font-black text-blue-600">
+                  <p className="mt-5 max-w-md leading-8 text-slate-600">
+                    A few practical things to keep in mind before processing
+                    your file.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {tool.content.tips.map((tip, index) => (
+                    <article
+                      key={tip}
+                      className="group flex gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:-translate-x-1 hover:border-slate-300 hover:shadow-md sm:gap-4 sm:p-5"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-xs font-black text-blue-600">
                         {String(index + 1).padStart(2, "0")}
                       </span>
 
-                      <p className="text-sm leading-7 text-slate-700">
+                      <p className="pt-1 text-sm leading-7 text-slate-700">
                         {tip}
                       </p>
-                    </div>
-                  </article>
-                ))}
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ======================================================
+        {/* =========================================================
             FAQ
-            ====================================================== */}
+            ========================================================= */}
 
-        <section className="bg-white py-14 sm:py-20">
+        <section className="bg-white py-16 sm:py-24">
           <div className="iclaude-container">
             <div className="mx-auto max-w-4xl">
               <div className="text-center">
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                  Questions
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">
+                  FAQ
                 </p>
 
-                <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">
                   Frequently asked questions
                 </h2>
+
+                <p className="mx-auto mt-4 max-w-xl leading-7 text-slate-500">
+                  Quick answers about using {tool.shortName.toLowerCase()}.
+                </p>
               </div>
 
-              <div className="mt-10">
-                {tool.faq.map((item) => (
+              <div className="mt-10 space-y-3">
+                {tool.faq.map((item, index) => (
                   <details
                     key={item.question}
-                    className="iclaude-faq"
+                    className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:border-slate-300 hover:shadow-sm"
                   >
-                    <summary>
-                      <span>{item.question}</span>
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 text-sm font-bold text-slate-900 sm:px-6">
+                      <span>
+                        <span className="mr-3 text-xs text-blue-600">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        {item.question}
+                      </span>
+
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-500 transition group-open:rotate-45">
+                        +
+                      </span>
                     </summary>
 
-                    <div>
+                    <div className="border-t border-slate-100 px-5 pb-5 pt-4 text-sm leading-7 text-slate-600 sm:px-6">
                       {item.answer}
                     </div>
                   </details>
@@ -431,33 +561,33 @@ export default function ToolPage({
           </div>
         </section>
 
-        {/* ======================================================
-            Related tools
-            ====================================================== */}
+        {/* =========================================================
+            RELATED TOOLS
+            ========================================================= */}
 
         {relatedTools.length > 0 && (
-          <section className="bg-slate-50 py-14 sm:py-20">
+          <section className="bg-slate-50 py-16 sm:py-24">
             <div className="iclaude-container">
               <div className="mx-auto max-w-6xl">
-                <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+                <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
                   <div>
-                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                      Explore more
+                    <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-600">
+                      Continue exploring
                     </p>
 
-                    <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
-                      Related tools
+                    <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">
+                      More tools for your workflow
                     </h2>
 
-                    <p className="mt-3 max-w-xl leading-7 text-slate-600">
-                      Continue with another tool that may fit your
-                      workflow.
+                    <p className="mt-3 max-w-xl leading-7 text-slate-500">
+                      Discover other tools that can help with everyday digital
+                      file tasks.
                     </p>
                   </div>
 
                   <Link
                     href="/tools/"
-                    className="inline-flex w-fit items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700"
                   >
                     View all tools
                     <span aria-hidden="true">→</span>
@@ -477,54 +607,54 @@ export default function ToolPage({
           </section>
         )}
 
-        {/* ======================================================
-            Final CTA
-            ====================================================== */}
+        {/* =========================================================
+            FINAL CTA
+            ========================================================= */}
 
-        <section className="bg-white py-14 sm:py-20">
+        <section className="bg-white py-16 sm:py-24">
           <div className="iclaude-container">
-            <div className="relative overflow-hidden rounded-3xl bg-slate-950 px-6 py-12 text-center shadow-[0_24px_70px_rgba(15,23,42,0.18)] sm:px-12">
+            <div className="relative isolate overflow-hidden rounded-[26px] bg-slate-950 px-5 py-12 text-center shadow-[0_24px_70px_rgba(15,23,42,0.16)] sm:rounded-[32px] sm:px-12 sm:py-20">
               <div
                 aria-hidden="true"
-                className="absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/20 blur-3xl"
+                className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/20 blur-3xl"
               />
 
               <div
                 aria-hidden="true"
-                className="absolute bottom-0 left-0 h-40 w-40 -translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/10 blur-3xl"
+                className="absolute bottom-0 right-0 h-64 w-64 translate-x-1/3 translate-y-1/3 rounded-full bg-cyan-400/10 blur-3xl"
               />
 
               <div className="relative">
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-300">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-2xl ring-1 ring-white/10">
+                  <ToolIcon icon={tool.icon} />
+                </div>
+
+                <p className="mt-7 text-xs font-black uppercase tracking-[0.2em] text-blue-300">
                   Ready when you are
                 </p>
 
-                <h2 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
-                  Ready to use {tool.shortName}?
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl">
+                  Start with {tool.shortName}
                 </h2>
 
-                <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-400">
-                  Return to the workspace and continue with your file
-                  workflow.
+                <p className="mx-auto mt-5 max-w-2xl leading-8 text-slate-400">
+                  Jump back to the workspace and complete your file workflow
+                  with a clean, focused experience.
                 </p>
 
                 <Link
                   href="#tool"
-                  className="iclaude-button-primary mt-8 inline-flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-slate-100"
+                  className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-black text-slate-950 shadow-xl transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-100"
                 >
-                  Start using the tool
-                  <span
-                    aria-hidden="true"
-                    className="ml-2"
-                  >
-                    ↑
-                  </span>
+                  Open tool
+                  <span aria-hidden="true">↑</span>
                 </Link>
               </div>
             </div>
           </div>
         </section>
       </main>
+      
     </>
   );
 }

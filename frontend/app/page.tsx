@@ -149,6 +149,22 @@ const faqs = [
     answer:
       "Supported file types depend on the tool. Each tool page lists the formats and the workflow it supports before you start.",
   },
+
+  {
+    question: "Can I find all the tools in one place?",
+    answer:
+      "Yes. The toolbox brings the currently available iclaude workflows together so you can choose a task without searching through unrelated software.",
+  },
+  {
+    question: "Are more tools planned?",
+    answer:
+      "Yes. iclaude is designed to grow into a broader collection of focused file workflows. Planned ideas are shown separately from tools that are currently available.",
+  },
+  {
+    question: "Where can I get help?",
+    answer:
+      "Use the Contact page to reach the iclaude support workflow, report a problem or share an idea.",
+  },
 ];
 
 function ArrowIcon() {
@@ -295,7 +311,7 @@ export default function HomePage() {
           />
 
           <div className="iclaude-container">
-            <div className="grid min-h-[720px] items-center gap-14 py-16 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:py-24">
+            <div className="grid min-h-[620px] items-center gap-12 py-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-14 lg:py-20">
               <div className="max-w-2xl">
                 <div className="iclaude-reveal inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/85 px-3.5 py-2 text-xs font-bold text-slate-600 shadow-sm backdrop-blur">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-white">
@@ -352,9 +368,9 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="relative mx-auto w-full max-w-[580px] lg:ml-auto">
+              <div className="relative mx-auto w-full max-w-[470px] lg:ml-auto">
                 <div
-                  className="absolute -inset-10 rounded-[48px] bg-gradient-to-br from-blue-500/15 via-violet-500/5 to-cyan-400/15 blur-3xl"
+                  className="absolute -inset-7 rounded-[40px] bg-gradient-to-br from-blue-500/15 via-violet-500/5 to-cyan-400/15 blur-3xl"
                   aria-hidden="true"
                 />
 
@@ -500,6 +516,37 @@ export default function HomePage() {
           </div>
         </section>
 
+
+        <section className="border-b border-slate-200 bg-white py-10 sm:py-12">
+          <div className="iclaude-container">
+            <div className="grid overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50/80 sm:grid-cols-4">
+              {[
+                ["05", "Live tools", "Ready to explore today"],
+                ["04", "File moments", "Built around real tasks"],
+                ["03", "Core formats", "Images, PDF & video"],
+              ].map(([value, label, detail], index) => (
+                <div
+                  key={label}
+                  className={`group p-5 transition duration-300 hover:bg-white sm:p-6 ${
+                    index !== 0 ? "border-t border-slate-200 sm:border-l sm:border-t-0" : ""
+                  }`}
+                >
+                  <span className="text-2xl font-black tracking-[-0.05em] text-slate-950">
+                    {value}
+                  </span>
+                  <p className="mt-2 text-sm font-bold text-slate-900">{label}</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-500">{detail}</p>
+                </div>
+              ))}
+              <div className="border-t border-slate-200 p-5 sm:border-l sm:border-t-0 sm:p-6">
+                <span className="text-2xl font-black tracking-[-0.05em] text-blue-600">24/7</span>
+                <p className="mt-2 text-sm font-bold text-slate-900">Browser access</p>
+                <p className="mt-1 text-xs leading-5 text-slate-500">No desktop app required</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="tools" className="scroll-mt-20 py-24 sm:py-28">
           <div className="iclaude-container">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -530,6 +577,63 @@ export default function HomePage() {
               {popularTools.map((tool) => (
                 <ToolCard key={tool!.slug} tool={tool!} />
               ))}
+            </div>
+          </div>
+        </section>
+
+
+        <section className="relative overflow-hidden bg-slate-950 py-24 text-white sm:py-32">
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="iclaude-float-slow absolute left-[-10rem] top-[-14rem] h-[30rem] w-[30rem] rounded-full bg-blue-600/20 blur-3xl" />
+            <div className="iclaude-float-reverse absolute bottom-[-15rem] right-[-8rem] h-[34rem] w-[34rem] rounded-full bg-cyan-500/15 blur-3xl" />
+            <div className="iclaude-dot-grid absolute inset-0 opacity-10" />
+          </div>
+
+          <div className="iclaude-container relative">
+            <div className="grid gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+              <div className="max-w-xl">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">
+                  Your file command center
+                </p>
+                <h2 className="mt-4 text-4xl font-bold tracking-[-0.055em] sm:text-6xl">
+                  One place to prepare files for what comes next.
+                </h2>
+                <p className="mt-6 text-base leading-8 text-slate-300 sm:text-lg">
+                  Keep simple jobs simple. Pick the action, follow the focused
+                  workflow and move straight to the next step.
+                </p>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[
+                  ["Compress", "Make large files easier to store, send and publish.", ImageIcon],
+                  ["Resize", "Get visuals into the dimensions your next destination needs.", GridIcon],
+                  ["Convert", "Move a fixed document toward an editable workflow.", FileIcon],
+                  ["Transform", "Prepare media and assets for the way you plan to use them.", VideoIcon],
+                ].map(([title, detail, Icon], index) => {
+                  const ToolIcon = Icon as typeof ImageIcon;
+                  return (
+                    <div
+                      key={String(title)}
+                      className="group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.06] p-6 backdrop-blur-sm transition duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.09]"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-cyan-200">
+                          <ToolIcon />
+                        </span>
+                        <span className="text-[10px] font-black tracking-[0.18em] text-white/35">
+                          0{index + 1}
+                        </span>
+                      </div>
+                      <h3 className="mt-7 text-xl font-bold">{String(title)}</h3>
+                      <p className="mt-3 text-sm leading-7 text-slate-300">{String(detail)}</p>
+                      <div className="mt-6 h-1 overflow-hidden rounded-full bg-white/10">
+                        <div className="h-full w-1/2 rounded-full bg-gradient-to-r from-cyan-300 to-blue-500 transition-all duration-700 group-hover:w-full" />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
@@ -692,7 +796,52 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-24 sm:py-28">
+
+        <section className="relative overflow-hidden border-y border-slate-200 bg-[#f8fbff] py-24 sm:py-32">
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="iclaude-hero-orb absolute right-[-10rem] top-[-8rem] h-[28rem] w-[28rem] rounded-full bg-blue-300/20 blur-3xl" />
+            <div className="iclaude-float-slow absolute bottom-[-12rem] left-[-8rem] h-[25rem] w-[25rem] rounded-full bg-violet-300/15 blur-3xl" />
+          </div>
+
+          <div className="iclaude-container relative">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
+                Think about the destination
+              </p>
+              <h2 className="mt-4 text-3xl font-bold tracking-[-0.05em] text-slate-950 sm:text-5xl">
+                What does your file need to become?
+              </h2>
+              <p className="mt-5 text-base leading-8 text-slate-600">
+                Start from the outcome you want, then jump directly into the workflow that matches it.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {[
+                ["01", "Lighter", "Reduce image or video size before sending, uploading or publishing.", "/image-compressor/", "Compress a file"],
+                ["02", "Right-sized", "Adjust an image to fit a profile, marketplace, website or form.", "/image-resizer/", "Resize an image"],
+                ["03", "Editable", "Turn a fixed PDF into a Word-compatible workflow when editing comes next.", "/pdf-to-word/", "Convert a PDF"],
+              ].map(([number, title, description, href, label]) => (
+                <Link
+                  key={number}
+                  href={href}
+                  className="group relative overflow-hidden rounded-[28px] border border-slate-200 bg-white p-7 shadow-sm transition duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-900/10"
+                >
+                  <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-violet-500 to-cyan-400" />
+                  <span className="text-xs font-black tracking-[0.2em] text-blue-600">{number}</span>
+                  <h3 className="mt-12 text-2xl font-bold tracking-tight text-slate-950">{title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">{description}</p>
+                  <span className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-blue-600">
+                    {label}
+                    <ArrowIcon />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="how-it-works" className="scroll-mt-24 py-24 sm:py-28">
           <div className="iclaude-container">
             <div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
               <div>
