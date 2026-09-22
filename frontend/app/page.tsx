@@ -167,14 +167,16 @@ const faqs = [
   },
 ];
 
-function ArrowIcon() {
+function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 20 20"
-      className="h-4 w-4"
+      className={className}
       fill="none"
       stroke="currentColor"
       strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden="true"
     >
       <path d="M4 10h11" />
@@ -295,45 +297,35 @@ export default function HomePage() {
       <StructuredData data={organizationSchema} />
 
       <main className="overflow-hidden">
-        <section className="relative isolate overflow-hidden bg-[#fbfdff]">
-          <div
-            className="pointer-events-none absolute inset-0 -z-20"
-            aria-hidden="true"
-          >
-            <div className="iclaude-hero-orb absolute left-[-12rem] top-20 h-[28rem] w-[28rem] rounded-full bg-cyan-300/30 blur-3xl" />
-            <div className="iclaude-float-slow absolute left-1/2 top-[-20rem] h-[46rem] w-[62rem] -translate-x-1/2 rounded-full bg-blue-300/20 blur-3xl" />
-            <div className="iclaude-float-reverse absolute right-[-12rem] top-12 h-[32rem] w-[32rem] rounded-full bg-violet-300/25 blur-3xl" />
+        <section className="relative isolate overflow-hidden bg-[#f8fbff]">
+          <div className="pointer-events-none absolute inset-0 -z-20" aria-hidden="true">
+            <div className="iclaude-hero-orb absolute -left-48 top-16 h-[30rem] w-[30rem] rounded-full bg-cyan-300/25 blur-3xl" />
+            <div className="iclaude-float-slow absolute left-1/2 top-[-24rem] h-[52rem] w-[70rem] -translate-x-1/2 rounded-full bg-blue-300/20 blur-3xl" />
+            <div className="iclaude-float-reverse absolute -right-48 top-20 h-[34rem] w-[34rem] rounded-full bg-violet-300/20 blur-3xl" />
           </div>
 
-          <div
-            className="pointer-events-none absolute inset-0 -z-10 iclaude-dot-grid opacity-55"
-            aria-hidden="true"
-          />
+          <div className="pointer-events-none absolute inset-0 -z-10 iclaude-dot-grid opacity-45" aria-hidden="true" />
 
           <div className="iclaude-container">
-            <div className="grid min-h-[620px] items-center gap-12 py-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-14 lg:py-20">
+            <div className="grid min-h-[650px] items-center gap-14 py-14 sm:py-20 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:py-24">
               <div className="max-w-2xl">
-                <div className="iclaude-reveal inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/85 px-3.5 py-2 text-xs font-bold text-slate-600 shadow-sm backdrop-blur">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-white">
+                <div className="iclaude-reveal inline-flex items-center gap-2 rounded-full border border-blue-100/90 bg-white/80 px-3.5 py-2 text-xs font-bold text-slate-600 shadow-[0_8px_30px_rgba(37,99,235,0.07)] backdrop-blur-xl">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm">
                     <SparkIcon />
                   </span>
-                  A smarter home for everyday files
+                  Simple tools for everyday file work
                 </div>
 
-                <h1 className="iclaude-reveal iclaude-delay-1 mt-7 text-5xl font-bold leading-[0.98] tracking-[-0.06em] text-slate-950 sm:text-6xl lg:text-[76px]">
+                <h1 className="iclaude-reveal iclaude-delay-1 mt-7 max-w-3xl text-[clamp(3.2rem,7vw,5.5rem)] font-black leading-[0.93] tracking-[-0.065em] text-slate-950">
                   Get every file
-                  <span className="block iclaude-gradient-text">
-                    ready for what&apos;s next.
-                  </span>
+                  <span className="block iclaude-gradient-text">ready for what&apos;s next.</span>
                 </h1>
 
-                <p className="iclaude-reveal iclaude-delay-2 mt-7 max-w-xl text-lg leading-8 text-slate-600 sm:text-xl">
-                  Clean, focused tools for compressing, resizing,
-                  converting and transforming the files that keep your work
-                  moving.
+                <p className="iclaude-reveal iclaude-delay-2 mt-7 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+                  Compress, resize, convert and transform files with focused online tools designed to help you finish the job without the clutter of a full software suite.
                 </p>
 
-                <div className="iclaude-reveal iclaude-delay-3 mt-9 flex flex-col gap-3 sm:flex-row">
+                <div className="iclaude-reveal iclaude-delay-3 mt-8 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/tools/"
                     className="iclaude-button-primary group inline-flex min-h-13 items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-bold text-white"
@@ -346,122 +338,98 @@ export default function HomePage() {
 
                   <Link
                     href="#tools"
-                    className="inline-flex min-h-13 items-center justify-center rounded-xl border border-slate-200 bg-white/90 px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white"
+                    className="inline-flex min-h-13 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white/90 px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white"
                   >
-                    See the toolbox
+                    Browse popular tools
                   </Link>
                 </div>
 
-                <div className="iclaude-reveal iclaude-delay-4 mt-8 flex flex-wrap gap-x-5 gap-y-3 text-sm font-medium text-slate-600">
+                <div className="iclaude-reveal iclaude-delay-4 mt-8 grid max-w-xl grid-cols-1 gap-3 text-sm sm:grid-cols-3 sm:gap-4">
                   {[
-                    "No installation needed",
-                    "Straightforward workflows",
-                    "Built for modern browsers",
-                  ].map((item) => (
-                    <span key={item} className="inline-flex items-center gap-2">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
-                        <CheckIcon />
-                      </span>
-                      {item}
-                    </span>
+                    ["01", "Pick a task", "Start with what you need to do."],
+                    ["02", "Add a file", "Use a focused upload workspace."],
+                    ["03", "Get it done", "Download and keep moving."],
+                  ].map(([number, title, text]) => (
+                    <div key={number} className="rounded-2xl border border-slate-200/80 bg-white/70 p-3.5 backdrop-blur-sm">
+                      <span className="text-[10px] font-black tracking-[0.18em] text-blue-600">{number}</span>
+                      <p className="mt-2 text-xs font-extrabold text-slate-900">{title}</p>
+                      <p className="mt-1 text-[10px] leading-4 text-slate-500">{text}</p>
+                    </div>
                   ))}
                 </div>
               </div>
 
-              <div className="relative mx-auto w-full max-w-[470px] lg:ml-auto">
-                <div
-                  className="absolute -inset-7 rounded-[40px] bg-gradient-to-br from-blue-500/15 via-violet-500/5 to-cyan-400/15 blur-3xl"
-                  aria-hidden="true"
-                />
+              <div className="relative mx-auto w-full max-w-[510px] lg:ml-auto">
+                <div className="absolute -inset-8 rounded-[44px] bg-gradient-to-br from-blue-500/20 via-violet-500/8 to-cyan-400/20 blur-3xl" aria-hidden="true" />
 
-                <div className="iclaude-reveal iclaude-delay-2 relative rounded-[30px] border border-white/80 bg-white/85 p-3 shadow-[0_30px_100px_-30px_rgba(15,23,42,0.28)] backdrop-blur-sm sm:p-4">
-                  <div className="overflow-hidden rounded-[22px] border border-slate-200 bg-slate-50">
-                    <div className="flex h-11 items-center border-b border-slate-200 bg-white px-4">
-                      <span className="h-2.5 w-2.5 rounded-full bg-rose-200" />
-                      <span className="ml-1.5 h-2.5 w-2.5 rounded-full bg-amber-200" />
-                      <span className="ml-1.5 h-2.5 w-2.5 rounded-full bg-emerald-200" />
-                      <div className="ml-5 h-6 flex-1 rounded-md bg-slate-50" />
+                <div className="iclaude-reveal iclaude-delay-2 relative rounded-[30px] border border-white/90 bg-white/75 p-2.5 shadow-[0_35px_110px_-35px_rgba(15,23,42,0.3)] backdrop-blur-2xl sm:p-3.5">
+                  <div className="overflow-hidden rounded-[23px] border border-slate-200 bg-slate-50">
+                    <div className="flex h-11 items-center border-b border-slate-200 bg-white/95 px-4">
+                      <div className="flex items-center gap-1.5" aria-hidden="true">
+                        <span className="h-2.5 w-2.5 rounded-full bg-rose-200" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-amber-200" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-emerald-200" />
+                      </div>
+                      <div className="ml-5 flex h-6 flex-1 items-center rounded-md bg-slate-50 px-3">
+                        <span className="text-[9px] font-semibold text-slate-400">iclaude.in/tools</span>
+                      </div>
                     </div>
 
-                    <div className="p-5 sm:p-7">
-                      <div className="flex items-center justify-between gap-4">
+                    <div className="p-4 sm:p-6">
+                      <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
+                          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-blue-300 shadow-lg shadow-slate-950/10">
                             <GridIcon />
                           </span>
                           <div>
-                            <p className="text-sm font-bold text-slate-950">
-                              Your file workspace
-                            </p>
-                            <p className="mt-0.5 text-xs text-slate-500">
-                              Choose a task and get it done.
-                            </p>
+                            <p className="text-sm font-extrabold text-slate-950">Your file workspace</p>
+                            <p className="mt-0.5 text-xs text-slate-500">Choose one focused action.</p>
                           </div>
                         </div>
-                        <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold text-emerald-700">
-                          Ready to start
+                        <span className="hidden rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-bold text-emerald-700 sm:inline-flex">
+                          Ready
                         </span>
                       </div>
 
-                      <div className="mt-7 grid gap-3 sm:grid-cols-[1.25fr_0.75fr]">
-                        <div className="relative overflow-hidden rounded-2xl bg-slate-950 p-5 text-white">
-                          <div
-                            className="iclaude-shine absolute -inset-y-8 -left-20 w-16 rotate-12 bg-white/15 blur-xl"
-                            aria-hidden="true"
-                          />
-                          <div className="relative">
-                            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-cyan-200">
-                              <ImageIcon />
-                            </span>
-                            <p className="mt-6 text-sm font-bold">
-                              Image Compressor
-                            </p>
-                            <p className="mt-1 text-xs leading-5 text-slate-300">
-                              Reduce file size without extra steps.
-                            </p>
-                            <div className="mt-5 flex items-center gap-2 text-xs font-bold text-cyan-200">
-                              <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 iclaude-pulse-soft" />
-                              Processing ready
-                            </div>
-                          </div>
+                      <div className="mt-6 rounded-[22px] border border-slate-200 bg-white p-3 shadow-sm">
+                        <div className="flex items-center justify-between px-1">
+                          <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Popular workflows</p>
+                          <span className="text-[10px] font-bold text-blue-600">5 tools</span>
                         </div>
 
-                        <div className="space-y-3">
-                          <div className="rounded-2xl border border-violet-100 bg-violet-50 p-4">
-                            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-violet-600 shadow-sm">
-                              <FileIcon />
-                            </span>
-                            <p className="mt-4 text-xs font-bold text-slate-950">
-                              PDF to Word
-                            </p>
-                            <p className="mt-1 text-[11px] leading-4 text-slate-500">
-                              Make documents editable.
-                            </p>
-                          </div>
-                          <div className="rounded-2xl border border-cyan-100 bg-cyan-50 p-4">
-                            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-cyan-600 shadow-sm">
-                              <VideoIcon />
-                            </span>
-                            <p className="mt-4 text-xs font-bold text-slate-950">
-                              Video Compressor
-                            </p>
-                          </div>
+                        <div className="mt-3 grid gap-2">
+                          {[
+                            ["Image Compressor", "Reduce image file size", ImageIcon, "bg-blue-50 text-blue-600"],
+                            ["Image Resizer", "Resize images quickly", GridIcon, "bg-violet-50 text-violet-600"],
+                            ["PDF to Word", "Make documents editable", FileIcon, "bg-amber-50 text-amber-600"],
+                            ["Video Compressor", "Reduce video file size", VideoIcon, "bg-cyan-50 text-cyan-600"],
+                          ].map(([title, detail, Icon, tone]) => {
+                            const WorkflowIcon = Icon as typeof ImageIcon;
+                            return (
+                              <div key={String(title)} className="group flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-3 transition duration-300 hover:border-blue-100 hover:bg-white hover:shadow-sm">
+                                <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${String(tone)}`}>
+                                  <WorkflowIcon />
+                                </span>
+                                <div className="min-w-0 flex-1">
+                                  <p className="truncate text-xs font-extrabold text-slate-900">{String(title)}</p>
+                                  <p className="mt-0.5 truncate text-[10px] text-slate-500">{String(detail)}</p>
+                                </div>
+                                <ArrowIcon className="h-3.5 w-3.5 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-blue-500" />
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
 
-                      <div className="mt-4 grid grid-cols-3 gap-3 rounded-2xl border border-slate-200 bg-white p-3">
+                      <div className="mt-3 grid grid-cols-3 gap-2">
                         {[
-                          ["Image", "3 tools"],
+                          ["Images", "3 tools"],
                           ["PDF", "1 tool"],
                           ["Video", "1 tool"],
                         ].map(([label, detail]) => (
-                          <div key={label} className="rounded-xl bg-slate-50 px-3 py-2.5">
-                            <p className="text-[11px] font-bold text-slate-950">
-                              {label}
-                            </p>
-                            <p className="mt-0.5 text-[10px] text-slate-500">
-                              {detail}
-                            </p>
+                          <div key={label} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+                            <p className="text-[10px] font-extrabold text-slate-900">{label}</p>
+                            <p className="mt-0.5 text-[9px] text-slate-500">{detail}</p>
                           </div>
                         ))}
                       </div>
@@ -474,12 +442,20 @@ export default function HomePage() {
                     <CheckIcon />
                   </span>
                   <div>
-                    <p className="text-xs font-bold text-slate-950">
-                      A clearer workflow
-                    </p>
-                    <p className="mt-0.5 text-[11px] text-slate-500">
-                      Less clutter. More done.
-                    </p>
+                    <p className="text-xs font-bold text-slate-950">Less clutter</p>
+                    <p className="mt-0.5 text-[11px] text-slate-500">One task. One clear workflow.</p>
+                  </div>
+                </div>
+
+                <div className="absolute -right-3 -top-4 hidden rounded-2xl border border-blue-100 bg-white/95 px-3.5 py-3 shadow-xl shadow-blue-950/10 backdrop-blur sm:block">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                      <SparkIcon />
+                    </span>
+                    <div>
+                      <p className="text-[10px] font-extrabold text-slate-900">Browser ready</p>
+                      <p className="text-[9px] text-slate-500">No installation needed</p>
+                    </div>
                   </div>
                 </div>
               </div>

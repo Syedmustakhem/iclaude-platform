@@ -14,6 +14,7 @@ import VideoCompressor from "@/components/tools/VideoCompressor";
 import {
   generateBreadcrumbSchema,
   generateToolSchema,
+  generateWebPageSchema,
 } from "@/lib/seo";
 
 import {
@@ -47,6 +48,12 @@ export default function ToolPage({ tool }: ToolPageProps) {
     })),
   );
 
+  const webPageSchema = generateWebPageSchema({
+    name: tool.name,
+    description: tool.description,
+    path: tool.href,
+  });
+
   const toolSchema = generateToolSchema(tool);
 
   const relatedTools = getRelatedTools(tool).filter(
@@ -56,6 +63,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
   return (
     <>
       <StructuredData data={breadcrumbSchema} />
+      <StructuredData data={webPageSchema} />
       <StructuredData data={toolSchema} />
 
       <Breadcrumbs items={breadcrumbs} />
@@ -87,7 +95,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
             }}
           />
 
-          <div className="iclaude-container relative py-10 sm:py-18 lg:py-24">
+          <div className="iclaude-container relative py-12 sm:py-20 lg:py-28">
             <div className="mx-auto max-w-5xl text-center tool-page-hero-content">
               {/* Status */}
               <div className="iclaude-reveal flex justify-center">
@@ -103,7 +111,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
 
               {/* Icon */}
               <div className="iclaude-reveal iclaude-delay-1 mt-7">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[20px] sm:h-20 sm:w-20 sm:rounded-[24px] border border-white bg-white text-4xl shadow-[0_20px_50px_rgba(15,23,42,0.10)] ring-1 ring-slate-200/70">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[20px] border border-white bg-white text-4xl shadow-[0_20px_50px_rgba(15,23,42,0.10)] ring-1 ring-slate-200/70 sm:h-20 sm:w-20 sm:rounded-[24px]">
                   <ToolIcon icon={tool.icon} />
                 </div>
               </div>
@@ -114,12 +122,12 @@ export default function ToolPage({ tool }: ToolPageProps) {
               </p>
 
               {/* Heading */}
-              <h1 className="iclaude-reveal iclaude-delay-2 mx-auto mt-3 max-w-4xl text-[2.45rem] leading-[1.02] font-black sm:text-5xl lg:text-7xl tracking-[-0.055em] text-slate-950">
+              <h1 className="iclaude-reveal iclaude-delay-2 mx-auto mt-3 max-w-4xl text-[2.45rem] leading-[1.02] font-black tracking-[-0.055em] text-slate-950 sm:text-5xl lg:text-7xl">
                 {tool.name}
               </h1>
 
               {/* Description */}
-              <p className="iclaude-reveal iclaude-delay-3 mx-auto mt-5 max-w-3xl text-[15px] leading-7 sm:mt-6 sm:text-lg sm:leading-8 text-slate-600">
+              <p className="iclaude-reveal iclaude-delay-3 mx-auto mt-5 max-w-3xl text-[15px] leading-7 text-slate-600 sm:mt-6 sm:text-lg sm:leading-8">
                 {tool.description}
               </p>
 
@@ -136,10 +144,10 @@ export default function ToolPage({ tool }: ToolPageProps) {
               </div>
 
               {/* Hero CTA */}
-              <div className="iclaude-reveal iclaude-delay-4 mt-7 flex flex-col items-stretch justify-center gap-3 sm:mt-9 sm:flex-row sm:items-center">
+              <div className="iclaude-reveal iclaude-delay-4 mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-9 sm:flex-row sm:items-center">
                 <Link
                   href="#tool"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-950/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-950/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                 >
                   Start using {tool.shortName}
                   <span aria-hidden="true">↓</span>
@@ -204,7 +212,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-1.5 shadow-[0_20px_60px_rgba(15,23,42,0.07)] sm:rounded-[30px] sm:p-3 sm:shadow-[0_25px_80px_rgba(15,23,42,0.08)]">
+              <div className="relative overflow-hidden rounded-[24px] border border-slate-200/90 bg-white p-1.5 shadow-[0_20px_60px_rgba(15,23,42,0.07)] sm:rounded-[30px] sm:p-3 sm:shadow-[0_25px_80px_rgba(15,23,42,0.08)]">
                 <div className="rounded-[19px] border border-slate-100 bg-slate-50/70 p-3 sm:rounded-[24px] sm:p-7">
                   {tool.slug === "image-compressor" ? (
                     <ImageCompressor />
@@ -538,7 +546,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
                     key={item.question}
                     className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:border-slate-300 hover:shadow-sm"
                   >
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 text-sm font-bold text-slate-900 sm:px-6">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 text-sm font-bold text-slate-900 outline-none marker:hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 sm:px-6">
                       <span>
                         <span className="mr-3 text-xs text-blue-600">
                           {String(index + 1).padStart(2, "0")}
@@ -587,7 +595,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
 
                   <Link
                     href="/tools/"
-                    className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700"
+                    className="inline-flex items-center gap-2 rounded-lg text-sm font-bold text-blue-600 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                   >
                     View all tools
                     <span aria-hidden="true">→</span>
@@ -654,7 +662,6 @@ export default function ToolPage({ tool }: ToolPageProps) {
           </div>
         </section>
       </main>
-      
     </>
   );
 }

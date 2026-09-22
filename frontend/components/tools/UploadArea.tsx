@@ -24,6 +24,7 @@ export default function UploadArea({
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [error, setError] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
 
   const acceptAttribute = acceptedFormats
     .map((format) => `.${format.trim().replace(".", "").toLowerCase()}`)
@@ -100,7 +101,13 @@ export default function UploadArea({
 
     setIsDragging(false);
 
-    validateFiles(Array.from(event.dataTransfer.files));
+    const droppedFiles = Array.from(event.dataTransfer.files);
+    if (droppedFiles.length === 0) {
+      setError("No file was detected. Try dropping the file again.");
+      return;
+    }
+
+    validateFiles(droppedFiles);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -267,6 +274,14 @@ export default function UploadArea({
             <span aria-hidden="true">•</span>
             <span>Maximum {maxFileSizeMB} MB</span>
           </div>
+
+          <div className="mt-4 flex items-center justify-center gap-2 text-[11px] font-semibold text-slate-400">
+            <span
+              aria-hidden="true"
+              className="h-1.5 w-1.5 rounded-full bg-emerald-500"
+            />
+            Browser-first file selection
+          </div>
         </div>
       </div>
 
@@ -311,7 +326,7 @@ export default function UploadArea({
             {selectedFiles.map((file, index) => (
               <div
                 key={`${file.name}-${file.size}-${file.lastModified}-${index}`}
-                className="iclaude-card-static group/file flex min-w-0 items-center gap-3 rounded-2xl p-3.5 sm:gap-4 sm:p-4"
+                className="iclaude-card-static group/file flex min-w-0 items-center gap-3 rounded-2xl p-3.5 transition-shadow duration-300 hover:shadow-md sm:gap-4 sm:p-4"
               >
                 <div
                   aria-hidden="true"
@@ -352,7 +367,7 @@ export default function UploadArea({
                   type="button"
                   onClick={() => removeFile(index)}
                   aria-label={`Remove ${file.name}`}
-                  className="min-h-10 shrink-0 rounded-xl px-3 py-2 text-xs font-bold text-slate-500 transition hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-4 focus:ring-red-100 active:scale-95"
+                  className="min-h-10 shrink-0 rounded-xl px-3 py-2 text-xs font-bold text-slate-500 transition hover:bg-red-50 hover:text-red-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-100 active:scale-95"
                 >
                   Remove
                 </button>
@@ -360,12 +375,11 @@ export default function UploadArea({
             ))}
           </div>
 
-          {/* Processing state */}
-          <button
-            type="button"
-            disabled
-            aria-disabled="true"
-            className="mt-5 flex min-h-12 w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-bold text-white opacity-55"
+          {/* Processing placeholder */}
+          <div
+            role="status"
+            aria-live="polite"
+            className="mt-5 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-100 px-6 py-3.5 text-sm font-bold text-slate-500"
           >
             <svg
               viewBox="0 0 24 24"
@@ -393,7 +407,7 @@ export default function UploadArea({
             </svg>
 
             Processing service unavailable
-          </button>
+          </div>
         </div>
       )}
 

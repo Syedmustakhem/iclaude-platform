@@ -61,7 +61,7 @@ export const tools: ToolDefinition[] = [
     status: "available",
 
     description:
-      "Compress JPG, PNG and WebP images online while reducing file size and keeping the image quality suitable for web, sharing and everyday use.",
+      "Compress JPG, PNG and WebP images online to reduce file size while keeping practical image quality for websites, email, forms and everyday sharing.",
 
     shortDescription:
       "Reduce image file size quickly without unnecessary steps.",
@@ -70,13 +70,14 @@ export const tools: ToolDefinition[] = [
       "Image Compressor Online — Compress JPG, PNG & WebP",
 
     seoDescription:
-      "Compress JPG, PNG and WebP images online. Reduce image file size for websites, email, WhatsApp and sharing while keeping useful image quality.",
+      "Compress JPG, PNG and WebP images online and reduce image file size for websites, email, forms and sharing while keeping useful visual quality.",
 
     keywords: [
       "image compressor",
       "compress image",
       "compress image online",
       "reduce image size",
+      "reduce image file size",
       "reduce JPG size",
       "compress JPG",
       "compress PNG",
@@ -91,11 +92,13 @@ export const tools: ToolDefinition[] = [
     popularSearches: [
       "compress image online",
       "reduce image size",
-      "compress JPG to smaller size",
+      "compress JPG online",
       "compress PNG online",
+      "compress WebP online",
       "reduce photo file size",
       "compress image for website",
       "compress image for email",
+      "make image file smaller",
     ],
 
     supportedFormats: [
@@ -110,6 +113,7 @@ export const tools: ToolDefinition[] = [
       "Keep useful visual quality",
       "Works with common image formats",
       "Useful for websites and sharing",
+      "Helpful for file-size limits",
       "Simple upload and download workflow",
     ],
 
@@ -120,12 +124,12 @@ export const tools: ToolDefinition[] = [
 
     content: {
       introduction:
-        "Large image files can slow websites, consume storage and make sharing inconvenient. iclaude's image compressor is designed to make image files smaller while preserving practical image quality for everyday use.",
+        "Large image files can slow page loads, consume storage and make uploading or sharing inconvenient. iclaude's image compressor helps reduce image file size while maintaining practical visual quality for everyday digital workflows.",
 
       howItWorks: [
         "Choose an image from your device.",
         "Upload the image to the compressor.",
-        "The image is processed according to the selected compression settings.",
+        "The image is processed according to the available compression settings.",
         "Preview the result and compare the file size.",
         "Download the compressed image.",
       ],
@@ -136,6 +140,7 @@ export const tools: ToolDefinition[] = [
         "Making images easier to share through messaging applications.",
         "Reducing storage requirements for image collections.",
         "Preparing images for online forms with file-size limits.",
+        "Creating smaller image copies for digital projects.",
       ],
 
       tips: [
@@ -143,6 +148,7 @@ export const tools: ToolDefinition[] = [
         "Use JPG for many photographic images.",
         "Use PNG when transparency or lossless quality is important.",
         "Use WebP when your workflow supports modern web image formats.",
+        "Compare file size and visual quality before replacing the original.",
       ],
     },
 
@@ -155,7 +161,7 @@ export const tools: ToolDefinition[] = [
       {
         question: "Which image formats can I compress?",
         answer:
-          "The initial iclaude image compressor is designed for common formats including JPG, JPEG, PNG and WebP.",
+          "The iclaude image compressor supports common formats including JPG, JPEG, PNG and WebP.",
       },
       {
         question: "Why should I compress images?",
@@ -182,26 +188,28 @@ export const tools: ToolDefinition[] = [
     status: "available",
 
     description:
-      "Resize images online to specific dimensions for websites, documents, social media, forms and other digital uses.",
+      "Resize JPG, PNG and WebP images online by changing their width and height for websites, documents, forms, social media and other digital uses.",
 
     shortDescription:
       "Change image dimensions quickly while keeping the workflow simple.",
 
     seoTitle:
-      "Image Resizer Online — Resize JPG, PNG & WebP Images",
+      "Image Resizer Online — Resize JPG, PNG & WebP",
 
     seoDescription:
-      "Resize images online by width and height. Change JPG, PNG and WebP image dimensions for websites, documents, forms and digital projects.",
+      "Resize JPG, PNG and WebP images online by width and height. Change image dimensions for websites, documents, forms and digital projects.",
 
     keywords: [
       "image resizer",
       "resize image online",
-      "resize photo",
+      "resize photo online",
       "change image dimensions",
       "resize JPG",
       "resize PNG",
       "resize WebP",
       "image size changer",
+      "change photo size",
+      "resize image to specific size",
     ],
 
     icon: "resize",
@@ -210,12 +218,15 @@ export const tools: ToolDefinition[] = [
 
     popularSearches: [
       "resize image online",
-      "resize photo to specific size",
+      "resize photo online",
+      "resize image to specific size",
       "change image dimensions",
       "resize JPG image",
       "resize PNG image",
+      "resize WebP image",
       "resize image for website",
       "resize image for form",
+      "make image smaller",
     ],
 
     supportedFormats: [
@@ -230,6 +241,7 @@ export const tools: ToolDefinition[] = [
       "Resize common image formats",
       "Useful for websites and documents",
       "Prepare images for digital forms",
+      "Create smaller image versions",
       "Simple upload and download workflow",
     ],
 
@@ -240,14 +252,14 @@ export const tools: ToolDefinition[] = [
 
     content: {
       introduction:
-        "Different websites, documents and applications often require images with specific dimensions. An image resizer lets you change the width and height of an image to fit those requirements.",
+        "Different websites, documents and applications often require images with specific dimensions. An image resizer lets you change the width and height of an image to fit those requirements while keeping the workflow straightforward.",
 
       howItWorks: [
         "Choose an image.",
         "Upload it to the image resizer.",
         "Enter the desired width and height.",
         "Process the image.",
-        "Download the resized result.",
+        "Preview and download the resized result.",
       ],
 
       useCases: [
@@ -256,12 +268,14 @@ export const tools: ToolDefinition[] = [
         "Resizing images for online forms.",
         "Preparing photos for documents.",
         "Creating smaller versions of large images.",
+        "Preparing images for digital publishing.",
       ],
 
       tips: [
         "Keep the aspect ratio when you want to avoid distortion.",
-        "Use the original image when possible.",
-        "Choose dimensions based on the destination where the image will be used.",
+        "Use the original image whenever possible.",
+        "Choose dimensions based on where the image will be used.",
+        "Avoid enlarging small images excessively because it can reduce visual quality.",
       ],
     },
 
@@ -274,7 +288,12 @@ export const tools: ToolDefinition[] = [
       {
         question: "Can I resize JPG and PNG images?",
         answer:
-          "Yes. The initial iclaude image resizer supports common formats such as JPG, JPEG, PNG and WebP.",
+          "Yes. The iclaude image resizer supports common formats such as JPG, JPEG, PNG and WebP.",
+      },
+      {
+        question: "Can I resize an image to specific dimensions?",
+        answer:
+          "Yes. The tool is designed to let you specify the desired image width and height.",
       },
       {
         question: "Will resizing reduce image quality?",
@@ -296,16 +315,16 @@ export const tools: ToolDefinition[] = [
     status: "available",
 
     description:
-      "Remove the background from an image and create a cleaner subject-focused result for products, profiles, designs and creative projects.",
+      "Remove backgrounds from JPG, PNG and WebP images online and isolate people, products or objects for designs, profiles, presentations and creative projects.",
 
     shortDescription:
       "Remove image backgrounds and isolate the main subject.",
 
     seoTitle:
-      "Remove Background From Image Online — Free Background Remover",
+      "Remove Background From Image Online — Free Tool",
 
     seoDescription:
-      "Remove backgrounds from images online and isolate people, products or objects. Create cleaner transparent-background images for designs and projects.",
+      "Remove backgrounds from images online and isolate people, products or objects. Create cleaner subject-focused images for designs, profiles and projects.",
 
     keywords: [
       "background remover",
@@ -315,6 +334,8 @@ export const tools: ToolDefinition[] = [
       "transparent background",
       "remove photo background",
       "image background remover",
+      "remove background online",
+      "cut out image",
     ],
 
     icon: "background",
@@ -328,6 +349,8 @@ export const tools: ToolDefinition[] = [
       "background remover online",
       "remove background from product photo",
       "cut out image background",
+      "remove background from JPG",
+      "remove background from PNG",
     ],
 
     supportedFormats: [
@@ -342,6 +365,7 @@ export const tools: ToolDefinition[] = [
       "Create transparent-background images",
       "Useful for product images",
       "Useful for profile and creative designs",
+      "Prepare images for presentations",
       "Simple upload and download workflow",
     ],
 
@@ -352,7 +376,7 @@ export const tools: ToolDefinition[] = [
 
     content: {
       introduction:
-        "Removing an image background can help isolate a person, product or other subject from its original surroundings. This is useful for product photography, presentations, profile images and graphic design.",
+        "Removing an image background can help isolate a person, product or other subject from its original surroundings. This is useful for product photography, presentations, profile images, marketing materials and graphic design.",
 
       howItWorks: [
         "Choose an image containing the subject you want to isolate.",
@@ -368,12 +392,14 @@ export const tools: ToolDefinition[] = [
         "Marketing materials.",
         "Presentation graphics.",
         "Creative design projects.",
+        "Online product listings.",
       ],
 
       tips: [
         "Use an image where the main subject is clearly visible.",
         "Images with good contrast between the subject and background can be easier to process.",
         "Check fine details such as hair, transparent objects and thin edges after processing.",
+        "Keep the original image so you can make changes later if necessary.",
       ],
     },
 
@@ -392,6 +418,11 @@ export const tools: ToolDefinition[] = [
         question: "What types of images work well?",
         answer:
           "Images with a clearly visible main subject and reasonable separation between the subject and background generally provide better conditions for background removal.",
+      },
+      {
+        question: "Can I remove the background from a product photo?",
+        answer:
+          "Yes. Product photography is a common use case for isolating a product from its original background.",
       },
     ],
   },
@@ -414,7 +445,7 @@ export const tools: ToolDefinition[] = [
       "Turn PDF documents into editable Word-compatible files.",
 
     seoTitle:
-      "PDF to Word Converter Online — Convert PDF to Editable Word",
+      "PDF to Word Converter Online — Convert PDF to Word",
 
     seoDescription:
       "Convert PDF files to editable Word-compatible documents online. Extract document content for editing and reuse with a simple upload workflow.",
@@ -427,6 +458,8 @@ export const tools: ToolDefinition[] = [
       "PDF converter",
       "editable PDF",
       "turn PDF into Word",
+      "convert PDF online",
+      "PDF to editable Word",
     ],
 
     icon: "pdf-word",
@@ -440,6 +473,7 @@ export const tools: ToolDefinition[] = [
       "make PDF editable",
       "convert PDF document to Word",
       "turn PDF into editable document",
+      "convert PDF to Word online",
     ],
 
     supportedFormats: [
@@ -449,6 +483,7 @@ export const tools: ToolDefinition[] = [
     benefits: [
       "Convert PDF documents into editable files",
       "Useful for document editing workflows",
+      "Reuse content from existing PDFs",
       "Simple upload-based process",
       "Download the converted result",
     ],
@@ -459,7 +494,7 @@ export const tools: ToolDefinition[] = [
 
     content: {
       introduction:
-        "PDF files are useful for sharing and preserving document layouts, but they are not always convenient to edit. A PDF to Word converter can transform document content into an editable Word-compatible format.",
+        "PDF files are useful for sharing and preserving document layouts, but they are not always convenient to edit. A PDF to Word converter can transform document content into an editable Word-compatible format for further editing and reuse.",
 
       howItWorks: [
         "Choose a PDF document.",
@@ -481,6 +516,7 @@ export const tools: ToolDefinition[] = [
         "Text-based PDFs generally provide better conversion conditions than scanned documents.",
         "Complex layouts, tables and unusual fonts may require additional review after conversion.",
         "Always review important documents after conversion before publishing or submitting them.",
+        "Keep the original PDF so the source document remains available.",
       ],
     },
 
@@ -500,6 +536,11 @@ export const tools: ToolDefinition[] = [
         answer:
           "Scanned PDFs may require OCR technology to recognize text before it can be converted into an editable document.",
       },
+      {
+        question: "Can I edit the converted Word document?",
+        answer:
+          "The purpose of the conversion is to produce an editable Word-compatible document that can be reviewed and edited after conversion.",
+      },
     ],
   },
 
@@ -515,25 +556,28 @@ export const tools: ToolDefinition[] = [
     status: "available",
 
     description:
-      "Compress video files to reduce file size for sharing, storage and online publishing while balancing size and visual quality.",
+      "Compress MP4, MOV, WebM and MKV videos online to reduce file size for sharing, storage and online publishing while balancing size and visual quality.",
 
     shortDescription:
       "Reduce video file size for sharing, storage and online use.",
 
     seoTitle:
-      "Video Compressor Online — Reduce Video File Size",
+      "Video Compressor Online — Compress MP4 & Reduce Size",
 
     seoDescription:
-      "Compress video files online and reduce file size for sharing, storage and websites. Balance video quality and file size with a simple workflow.",
+      "Compress videos online and reduce MP4, MOV, WebM and MKV file sizes for sharing, storage and websites while balancing video quality and file size.",
 
     keywords: [
       "video compressor",
       "compress video",
       "compress video online",
       "reduce video size",
+      "reduce video file size",
       "reduce MP4 size",
       "video size reducer",
       "compress MP4",
+      "compress MOV",
+      "compress WebM",
     ],
 
     icon: "video-compress",
@@ -548,6 +592,7 @@ export const tools: ToolDefinition[] = [
       "make video smaller",
       "compress video for sharing",
       "compress video for website",
+      "reduce MOV file size",
     ],
 
     supportedFormats: [
@@ -563,6 +608,7 @@ export const tools: ToolDefinition[] = [
       "Reduce storage requirements",
       "Useful for websites and uploads",
       "Balance file size and visual quality",
+      "Create smaller copies for everyday use",
     ],
 
     relatedTools: [
@@ -571,7 +617,7 @@ export const tools: ToolDefinition[] = [
 
     content: {
       introduction:
-        "Video files can become very large because they contain many frames and often use high resolutions and bitrates. Video compression reduces the amount of data needed to store or transmit a video.",
+        "Video files can become very large because they contain many frames and often use high resolutions and bitrates. Video compression reduces the amount of data needed to store or transmit a video, making it more practical for sharing, storage and online publishing.",
 
       howItWorks: [
         "Choose a supported video file.",
@@ -591,8 +637,9 @@ export const tools: ToolDefinition[] = [
 
       tips: [
         "Higher resolution and bitrate generally produce larger files.",
-        "Choose the output settings based on where the video will be used.",
+        "Choose output settings based on where the video will be used.",
         "Keep an original copy before performing destructive compression.",
+        "Review the final video after compression to make sure the quality is suitable.",
       ],
     },
 
@@ -611,6 +658,11 @@ export const tools: ToolDefinition[] = [
         question: "Which video formats are supported?",
         answer:
           "The initial tool is designed around common formats such as MP4, MOV, WebM and MKV, with final processing support determined by the backend worker.",
+      },
+      {
+        question: "Why should I compress a video?",
+        answer:
+          "A smaller video can be easier to upload, share and store, especially when a platform or service has file-size limits.",
       },
     ],
   },
