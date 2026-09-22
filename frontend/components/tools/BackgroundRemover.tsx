@@ -236,6 +236,7 @@ export default function BackgroundRemover() {
           <div className="grid gap-5 lg:grid-cols-2 lg:gap-6">
             <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:rounded-3xl">
               <div className="flex min-h-[270px] items-center justify-center p-3 sm:min-h-[400px] sm:p-5">
+                {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
                 <img
                   src={previewUrl}
                   alt={`Preview of ${file.name}`}

@@ -394,6 +394,7 @@ export default function ImageCompressor() {
           <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 shadow-sm">
               <div className="flex min-h-[280px] items-center justify-center p-4 sm:min-h-[420px]">
+                {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
                 <img
                   src={previewUrl}
                   alt={`Preview of ${file.name}`}
@@ -554,6 +555,7 @@ export default function ImageCompressor() {
               </div>
 
               <div className="mt-5 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
+                {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
                 <img
                   src={result.compressedUrl}
                   alt="Compressed image preview"
