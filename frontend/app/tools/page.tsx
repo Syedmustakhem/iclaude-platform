@@ -5,7 +5,6 @@ import ToolCard from "@/components/tools/ToolCard";
 import {
   getAvailableTools,
   getAvailableToolsByCategory,
-  tools,
   type ToolCategory,
 } from "@/lib/tools";
 

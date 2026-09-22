@@ -207,7 +207,7 @@ export default function Navbar() {
         >
           <nav aria-label="Mobile navigation" className="border-t border-slate-100 pb-5 pt-3">
             <div className="grid gap-1 rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_12px_35px_rgba(15,23,42,0.06)]">
-              {navigation.map((item, index) => (
+              {navigation.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

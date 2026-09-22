@@ -496,6 +496,7 @@ export default function ImageResizer() {
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-6">
             <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:rounded-3xl">
               <div className="flex min-h-[270px] items-center justify-center p-3 sm:min-h-[420px] sm:p-4">
+                {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
                 <img
                   src={previewUrl}
                   alt={`Preview of ${file.name}`}
@@ -694,6 +695,7 @@ export default function ImageResizer() {
               </div>
 
               <div className="mt-5 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
+                {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
                 <img
                   src={result.url}
                   alt={`Resized image at ${result.width} by ${result.height} pixels`}
