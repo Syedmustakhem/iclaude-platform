@@ -4,12 +4,12 @@ import { getRequiredToolBySlug } from "@/lib/tools";
 import { generateToolMetadata } from "@/lib/seo";
 
 const tool = getRequiredToolBySlug(
-  "image-resizer"
+  "pdf-to-word"
 );
 
 export const metadata: Metadata =
   generateToolMetadata(tool);
 
-export default function ImageResizerPage() {
+export default function PdfToWordPage() {
   return <ToolPage tool={tool} />;
 }

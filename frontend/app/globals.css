@@ -79,6 +79,8 @@
    Base
    ============================================================ */
 
+@layer base {
+
 *,
 *::before,
 *::after {
@@ -138,6 +140,8 @@ button:disabled {
 :focus-visible {
   outline: 3px solid rgba(37, 99, 235, 0.28);
   outline-offset: 3px;
+}
+
 }
 
 /* ============================================================
@@ -606,6 +610,38 @@ button:disabled {
   }
 }
 
+@keyframes iclaude-hero-orb {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(32px, -18px, 0) scale(1.08);
+  }
+}
+
+@keyframes iclaude-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes iclaude-shine {
+  0% {
+    transform: translateX(-110%) rotate(12deg);
+  }
+
+  62%,
+  100% {
+    transform: translateX(640%) rotate(12deg);
+  }
+}
+
 .iclaude-float {
   animation: iclaude-float 7s ease-in-out infinite;
 }
@@ -632,6 +668,18 @@ button:disabled {
 
 .iclaude-pulse-soft {
   animation: iclaude-pulse-soft 2.4s ease-in-out infinite;
+}
+
+.iclaude-hero-orb {
+  animation: iclaude-hero-orb 12s ease-in-out infinite;
+}
+
+.iclaude-marquee {
+  animation: iclaude-marquee 34s linear infinite;
+}
+
+.iclaude-shine {
+  animation: iclaude-shine 5.5s ease-in-out infinite;
 }
 
 .iclaude-delay-1 {
@@ -694,7 +742,10 @@ button:disabled {
   .iclaude-float-slow,
   .iclaude-float-card,
   .iclaude-reveal,
-  .iclaude-pulse-soft {
+  .iclaude-pulse-soft,
+  .iclaude-hero-orb,
+  .iclaude-marquee,
+  .iclaude-shine {
     animation: none;
   }
 }
