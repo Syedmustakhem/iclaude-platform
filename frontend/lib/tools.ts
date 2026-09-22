@@ -51,13 +51,9 @@ export type ToolDefinition = {
 export const tools: ToolDefinition[] = [
   {
     slug: "image-compressor",
-
     name: "Image Compressor",
-
     shortName: "Compress Image",
-
     category: "Images",
-
     status: "available",
 
     description:
@@ -120,6 +116,9 @@ export const tools: ToolDefinition[] = [
     relatedTools: [
       "image-resizer",
       "remove-background",
+      "jpg-to-png",
+      "png-to-jpg",
+      "heic-to-jpg",
     ],
 
     content: {
@@ -178,13 +177,9 @@ export const tools: ToolDefinition[] = [
 
   {
     slug: "image-resizer",
-
     name: "Image Resizer",
-
     shortName: "Resize Image",
-
     category: "Images",
-
     status: "available",
 
     description:
@@ -248,6 +243,8 @@ export const tools: ToolDefinition[] = [
     relatedTools: [
       "image-compressor",
       "remove-background",
+      "jpg-to-png",
+      "png-to-jpg",
     ],
 
     content: {
@@ -305,13 +302,9 @@ export const tools: ToolDefinition[] = [
 
   {
     slug: "remove-background",
-
     name: "Background Remover",
-
     shortName: "Remove Background",
-
     category: "Images",
-
     status: "available",
 
     description:
@@ -372,6 +365,8 @@ export const tools: ToolDefinition[] = [
     relatedTools: [
       "image-compressor",
       "image-resizer",
+      "jpg-to-png",
+      "png-to-jpg",
     ],
 
     content: {
@@ -429,13 +424,9 @@ export const tools: ToolDefinition[] = [
 
   {
     slug: "pdf-to-word",
-
     name: "PDF to Word Converter",
-
     shortName: "PDF to Word",
-
     category: "PDF",
-
     status: "available",
 
     description:
@@ -490,6 +481,7 @@ export const tools: ToolDefinition[] = [
 
     relatedTools: [
       "image-compressor",
+      "jpg-to-pdf",
     ],
 
     content: {
@@ -546,13 +538,9 @@ export const tools: ToolDefinition[] = [
 
   {
     slug: "video-compressor",
-
     name: "Video Compressor",
-
     shortName: "Compress Video",
-
     category: "Video",
-
     status: "available",
 
     description:
@@ -663,6 +651,352 @@ export const tools: ToolDefinition[] = [
         question: "Why should I compress a video?",
         answer:
           "A smaller video can be easier to upload, share and store, especially when a platform or service has file-size limits.",
+      },
+    ],
+  },
+
+  // ------------------------------------------------------------
+  // TRAFFIC ENGINE — IMAGE CONVERSION
+  // ------------------------------------------------------------
+
+  {
+    slug: "jpg-to-png",
+    name: "JPG to PNG Converter",
+    shortName: "JPG to PNG",
+    category: "Images",
+    status: "available",
+
+    description:
+      "Convert JPG and JPEG images to PNG format online when you need a PNG version for editing, graphics, transparency workflows or digital projects.",
+
+    shortDescription:
+      "Convert JPG images to PNG format in a simple browser workflow.",
+
+    seoTitle:
+      "JPG to PNG Converter Online — Convert JPG to PNG",
+
+    seoDescription:
+      "Convert JPG and JPEG images to PNG online. Create PNG versions of photos and graphics for editing, design and digital workflows.",
+
+    keywords: [
+      "JPG to PNG",
+      "JPG to PNG converter",
+      "convert JPG to PNG",
+      "JPEG to PNG",
+      "convert JPEG to PNG",
+      "JPG PNG converter online",
+      "image converter",
+    ],
+
+    icon: "jpg-png",
+
+    href: "/jpg-to-png/",
+
+    popularSearches: [
+      "JPG to PNG converter",
+      "convert JPG to PNG online",
+      "JPEG to PNG",
+      "change JPG to PNG",
+      "JPG PNG converter",
+    ],
+
+    supportedFormats: [
+      "JPG",
+      "JPEG",
+      "PNG",
+    ],
+
+    benefits: [
+      "Convert JPG images to PNG",
+      "Useful for graphics and editing workflows",
+      "Create PNG copies without changing the original",
+      "Simple browser-based workflow",
+      "Useful for digital design projects",
+    ],
+
+    relatedTools: [
+      "png-to-jpg",
+      "image-compressor",
+      "image-resizer",
+      "remove-background",
+    ],
+
+    content: {
+      introduction:
+        "JPG is widely used for photographs, while PNG is commonly used for graphics and workflows where PNG compatibility is useful. A JPG to PNG converter creates a PNG version of an existing JPG image.",
+
+      howItWorks: [
+        "Choose a JPG or JPEG image.",
+        "Upload the image.",
+        "Convert the image to PNG.",
+        "Preview the resulting image.",
+        "Download the PNG copy.",
+      ],
+
+      useCases: [
+        "Preparing images for graphic-design workflows.",
+        "Creating PNG copies of JPG images.",
+        "Preparing images for applications that expect PNG files.",
+        "Working with digital graphics.",
+        "Preparing assets for editing or publishing.",
+      ],
+
+      tips: [
+        "Converting JPG to PNG does not restore image information already lost through JPG compression.",
+        "Keep the original JPG when you may need it later.",
+        "Use PNG when its format characteristics fit the destination workflow.",
+        "Check the resulting file size because PNG can sometimes be larger than JPG.",
+      ],
+    },
+
+    faq: [
+      {
+        question: "What is a JPG to PNG converter?",
+        answer:
+          "It converts an existing JPG or JPEG image into a PNG file.",
+      },
+      {
+        question: "Will JPG to PNG improve image quality?",
+        answer:
+          "Converting a JPG to PNG does not restore detail that was already lost during JPG compression. It changes the file format rather than recreating missing image information.",
+      },
+      {
+        question: "Why convert JPG to PNG?",
+        answer:
+          "PNG can be useful for certain graphics, editing workflows and applications where PNG format compatibility is preferred.",
+      },
+      {
+        question: "Will the PNG always be smaller?",
+        answer:
+          "No. PNG files can be larger than JPG files, especially for photographs.",
+      },
+    ],
+  },
+
+  {
+    slug: "png-to-jpg",
+    name: "PNG to JPG Converter",
+    shortName: "PNG to JPG",
+    category: "Images",
+    status: "coming-soon",
+
+    description:
+      "Convert PNG images to JPG format online when you need smaller photographic files for websites, uploads, sharing and everyday digital use.",
+
+    shortDescription:
+      "Convert PNG images to JPG for compatible, compact image workflows.",
+
+    seoTitle:
+      "PNG to JPG Converter Online — Convert PNG to JPG",
+
+    seoDescription:
+      "Convert PNG images to JPG online. Create JPG versions for websites, uploads, sharing and workflows that require JPEG images.",
+
+    keywords: [
+      "PNG to JPG",
+      "PNG to JPG converter",
+      "convert PNG to JPG",
+      "PNG JPEG converter",
+      "PNG to JPEG",
+      "convert PNG online",
+      "image converter",
+    ],
+
+    icon: "png-jpg",
+
+    href: "/png-to-jpg/",
+
+    popularSearches: [
+      "PNG to JPG converter",
+      "convert PNG to JPG online",
+      "PNG to JPEG",
+      "change PNG to JPG",
+      "PNG JPG converter",
+    ],
+
+    supportedFormats: [
+      "PNG",
+      "JPG",
+      "JPEG",
+    ],
+
+    benefits: [
+      "Convert PNG images to JPG",
+      "Create compact photographic copies",
+      "Useful for websites and uploads",
+      "Useful for sharing and storage",
+      "Simple browser-based workflow",
+    ],
+
+    relatedTools: [
+      "jpg-to-png",
+      "image-compressor",
+      "image-resizer",
+    ],
+
+    content: {
+      introduction:
+        "PNG is useful for graphics, transparency and crisp visual elements, while JPG is commonly used for photographs and compact image delivery. Converting PNG to JPG can be useful when the destination expects a JPEG image.",
+
+      howItWorks: [
+        "Choose a PNG image.",
+        "Upload the image.",
+        "Convert the image to JPG.",
+        "Preview the resulting image.",
+        "Download the JPG copy.",
+      ],
+
+      useCases: [
+        "Preparing images for websites.",
+        "Creating JPG versions for uploads.",
+        "Reducing the size of photographic PNG files.",
+        "Preparing images for services that require JPG.",
+        "Creating compact copies for sharing.",
+      ],
+
+      tips: [
+        "JPG does not support transparency in the same way PNG does.",
+        "Transparent areas may need an appropriate background when converting to JPG.",
+        "Keep the original PNG if transparency or lossless editing may be needed later.",
+        "Check the final image for quality and file size.",
+      ],
+    },
+
+    faq: [
+      {
+        question: "What is a PNG to JPG converter?",
+        answer:
+          "It converts a PNG image into a JPG or JPEG image.",
+      },
+      {
+        question: "Does PNG to JPG reduce file size?",
+        answer:
+          "It can, particularly for photographic images, but the resulting size depends on the image and encoding settings.",
+      },
+      {
+        question: "What happens to transparency?",
+        answer:
+          "JPG does not preserve transparency in the same way PNG does, so transparent areas need an appropriate background in the converted image.",
+      },
+      {
+        question: "Will the converted JPG look identical?",
+        answer:
+          "The visual result depends on the source image and JPG encoding. Because JPG is commonly used as a lossy format, some visual differences may occur.",
+      },
+    ],
+  },
+
+  {
+    slug: "heic-to-jpg",
+    name: "HEIC to JPG Converter",
+    shortName: "HEIC to JPG",
+    category: "Images",
+    status: "coming-soon",
+
+    description:
+      "Convert HEIC images to JPG format for broader compatibility with websites, apps, documents, uploads and devices that do not accept HEIC files.",
+
+    shortDescription:
+      "Convert HEIC photos to widely compatible JPG images.",
+
+    seoTitle:
+      "HEIC to JPG Converter Online — Convert HEIC to JPEG",
+
+    seoDescription:
+      "Convert HEIC and HEIF images to JPG online for broader compatibility with websites, apps, documents, uploads and everyday sharing.",
+
+    keywords: [
+      "HEIC to JPG",
+      "HEIC to JPG converter",
+      "convert HEIC to JPG",
+      "HEIF to JPG",
+      "HEIC JPEG converter",
+      "iPhone photo to JPG",
+      "convert HEIC online",
+    ],
+
+    icon: "heic-jpg",
+
+    href: "/heic-to-jpg/",
+
+    popularSearches: [
+      "HEIC to JPG converter",
+      "convert HEIC to JPG online",
+      "HEIC to JPEG",
+      "iPhone HEIC to JPG",
+      "HEIF to JPG",
+      "change HEIC to JPG",
+    ],
+
+    supportedFormats: [
+      "HEIC",
+      "HEIF",
+      "JPG",
+      "JPEG",
+    ],
+
+    benefits: [
+      "Convert HEIC photos to JPG",
+      "Improve compatibility with JPG-only services",
+      "Useful for uploads and documents",
+      "Useful for sharing with unsupported platforms",
+      "Keep the original HEIC file available",
+    ],
+
+    relatedTools: [
+      "jpg-to-png",
+      "image-compressor",
+      "image-resizer",
+    ],
+
+    content: {
+      introduction:
+        "HEIC and HEIF images are commonly associated with modern mobile photography and can provide efficient image storage. However, some websites, applications and upload systems expect JPG or JPEG files instead. Converting HEIC to JPG creates a more broadly compatible copy.",
+
+      howItWorks: [
+        "Choose a HEIC or HEIF image.",
+        "Upload the image.",
+        "Convert the image to JPG.",
+        "Review the converted image.",
+        "Download the JPG version.",
+      ],
+
+      useCases: [
+        "Uploading iPhone photos to services that require JPG.",
+        "Sharing images with systems that do not support HEIC.",
+        "Preparing photos for documents.",
+        "Using mobile photos in older applications.",
+        "Creating broadly compatible image copies.",
+      ],
+
+      tips: [
+        "Keep the original HEIC file when you may want its original format later.",
+        "Check the converted JPG before using it for important documents.",
+        "JPG may use more storage than HEIC for comparable photographic content.",
+        "Compress the JPG afterward if the destination has a strict file-size limit.",
+      ],
+    },
+
+    faq: [
+      {
+        question: "What is HEIC?",
+        answer:
+          "HEIC is an image container format commonly used for efficient storage of photographs on modern devices.",
+      },
+      {
+        question: "Why convert HEIC to JPG?",
+        answer:
+          "JPG is supported by many websites, applications, document systems and upload services that may not accept HEIC.",
+      },
+      {
+        question: "Can I convert iPhone photos from HEIC to JPG?",
+        answer:
+          "Yes. HEIC is commonly used for photos captured on compatible iPhone and Apple-device workflows, and those images can be converted to JPG when broader compatibility is needed.",
+      },
+      {
+        question: "Should I delete the original HEIC file?",
+        answer:
+          "It is generally useful to keep the original until you have confirmed that the converted JPG works for your intended purpose.",
       },
     ],
   },
