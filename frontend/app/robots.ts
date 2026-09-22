@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 
-export const dynamic = "force-static";
+import { SITE_URL } from "@/lib/seo";
 
-const siteUrl = "https://iclaude.in";
+export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -16,7 +16,9 @@ export default function robots(): MetadataRoute.Robots {
         "/account/",
       ],
     },
-    sitemap: `${siteUrl}/sitemap.xml`,
-    host: siteUrl,
+
+    sitemap: `${SITE_URL}/sitemap.xml`,
+
+    host: SITE_URL,
   };
 }

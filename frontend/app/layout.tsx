@@ -8,38 +8,39 @@ import StructuredData from "@/components/seo/StructuredData";
 import {
   generateOrganizationSchema,
   generateWebsiteSchema,
+  SITE_NAME,
+  SITE_URL,
 } from "@/lib/seo";
 
 import "./globals.css";
 
-const siteUrl = "https://iclaude.in";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(`${siteUrl}/`),
+  metadataBase: new URL(`${SITE_URL}/`),
 
   title: {
-    default: "iclaude — Free Online Tools for Images, PDF & Video",
+    default: "Free Online Tools for Images, PDF & Video | iclaude",
     template: "%s | iclaude",
   },
 
   description:
-    "Free online tools to compress, resize, convert and process images, PDFs and videos. Simple, fast and easy-to-use tools for everyday digital work.",
+    "Free online tools to compress, resize, convert and transform images, PDFs and videos. Fast, simple browser-based tools for everyday digital work.",
 
-  applicationName: "iclaude",
+  applicationName: SITE_NAME,
 
   authors: [
     {
-      name: "iclaude",
-      url: siteUrl,
+      name: SITE_NAME,
+      url: SITE_URL,
     },
   ],
 
-  creator: "iclaude",
-  publisher: "iclaude",
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
 
   keywords: [
     "free online tools",
     "online file tools",
+    "free file tools",
     "image tools",
     "PDF tools",
     "video tools",
@@ -48,10 +49,14 @@ export const metadata: Metadata = {
     "background remover",
     "PDF to Word converter",
     "video compressor",
+    "compress image online",
+    "resize image online",
+    "convert PDF to Word online",
+    "compress video online",
   ],
 
   alternates: {
-    canonical: `${siteUrl}/`,
+    canonical: "/",
   },
 
   robots: {
@@ -67,23 +72,31 @@ export const metadata: Metadata = {
     },
   },
 
+  referrer: "origin-when-cross-origin",
+
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+  },
+
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: `${siteUrl}/`,
-    siteName: "iclaude",
+    url: "/",
+    siteName: SITE_NAME,
 
-    title: "iclaude — Free Online Tools for Images, PDF & Video",
+    title: "Free Online Tools for Images, PDF & Video | iclaude",
 
     description:
-      "Compress, resize, convert and process your files with simple online tools.",
+      "Free online tools to compress, resize, convert and transform images, PDFs and videos.",
 
     images: [
       {
         url: "/iclaude-og-image.png",
         width: 1200,
         height: 630,
-        alt: "iclaude — Free online file tools",
+        alt: "iclaude — Free online tools for images, PDF and video",
       },
     ],
   },
@@ -91,10 +104,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
 
-    title: "iclaude — Free Online Tools for Images, PDF & Video",
+    title: "Free Online Tools for Images, PDF & Video | iclaude",
 
     description:
-      "Simple online tools for images, PDFs, videos and digital files.",
+      "Free browser-based tools for compressing, resizing, converting and transforming your files.",
 
     images: ["/iclaude-og-image.png"],
   },
@@ -118,7 +131,6 @@ export default function RootLayout({
   return (
     <html lang="en-IN">
       <body className="min-h-screen bg-white text-slate-950">
-
         {/* Google AdSense */}
         <Script
           async
