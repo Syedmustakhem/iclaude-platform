@@ -1,0 +1,46 @@
+{
+  "name": "iclaude-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-22",
+
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+
+  "observability": {
+    "enabled": true
+  },
+
+  "vars": {
+    "R2_ENDPOINT": "https://88326b15310646a8e4f21d10ed9b5789.r2.cloudflarestorage.com"
+  },
+
+  "secrets": {
+    "required": [
+      "MONGODB_URI",
+      "R2_ACCESS_KEY_ID",
+      "R2_SECRET_ACCESS_KEY"
+    ]
+  },
+
+  "r2_buckets": [
+    {
+      "bucket_name": "iclaude-files",
+      "binding": "iclaude_files",
+      "remote": true
+    }
+  ],
+"queues": {
+  "producers": [
+    {
+      "queue": "iclaude-processing",
+      "binding": "iclaude_processing"
+    }
+  ],
+  "consumers": [
+    {
+      "queue": "iclaude-processing"
+    }
+  ]
+}
+}
