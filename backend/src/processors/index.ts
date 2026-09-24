@@ -1,12 +1,9 @@
 import type { ToolProcessor } from "./types";
+
 import { processImageCompression } from "./image-compressor";
+import { processImageResize } from "./image-resizer";
 
 const processors = new Map<string, ToolProcessor>();
-
-registerProcessor(
-  "image-compressor",
-  processImageCompression,
-);
 
 export function registerProcessor(
   tool: string,
@@ -20,3 +17,13 @@ export function getProcessor(
 ): ToolProcessor | undefined {
   return processors.get(tool);
 }
+
+registerProcessor(
+  "image-compressor",
+  processImageCompression,
+);
+
+registerProcessor(
+  "image-resizer",
+  processImageResize,
+);

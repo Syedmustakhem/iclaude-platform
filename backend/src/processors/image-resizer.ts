@@ -1,3 +1,4 @@
+
 import type {
   ProcessorContext,
   ProcessorResult,
@@ -8,19 +9,18 @@ import { getObject } from "../lib/r2";
 import { transformImage } from "./image-transform";
 import { writeProcessorOutput } from "./output";
 
-function getOutputKey(
-  jobId: string,
-): string {
-  return `outputs/${jobId}/compressed.webp`;
+function getOutputKey(jobId: string): string {
+  return `outputs/${jobId}/resized.webp`;
 }
 
-export async function processImageCompression(
+export async function processImageResize(
   context: ProcessorContext,
 ): Promise<ProcessorResult> {
   const {
     env,
     job,
     inputFile,
+    options,
   } = context;
 
   const jobId = job._id?.toString();
@@ -32,8 +32,27 @@ export async function processImageCompression(
     );
   }
 
+  const resize = options?.resize;
+
+  if (!resize) {
+    throw new ProcessorError(
+      "RESIZE_OPTIONS_REQUIRED",
+      "Resize options are required.",
+    );
+  }
+
+  if (
+    resize.width === undefined &&
+    resize.height === undefined
+  ) {
+    throw new ProcessorError(
+      "RESIZE_DIMENSIONS_REQUIRED",
+      "At least width or height is required.",
+    );
+  }
+
   console.log(
-    `Image compression started for job ${jobId}.`,
+    `Image resize started for job ${jobId}.`,
   );
 
   console.log(
@@ -74,17 +93,26 @@ export async function processImageCompression(
     outputBytes = await transformImage(
       env,
       inputBytes,
-      {},
+      {
+        width: resize.width,
+        height: resize.height,
+        fit: resize.fit,
+      },
     );
-  } catch (error) {
+   } catch (error) {
     console.error(
-      `Image transformation failed for job ${jobId}:`,
+      `Image resize failed for job ${jobId}:`,
       error,
     );
 
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : String(error);
+
     throw new ProcessorError(
-      "IMAGE_TRANSFORMATION_FAILED",
-      "The image could not be transformed.",
+      "IMAGE_RESIZE_FAILED",
+      `The image could not be resized: ${errorMessage}`,
     );
   }
 
@@ -92,7 +120,7 @@ export async function processImageCompression(
 
   const result: ProcessorResult = {
     outputKey,
-    outputName: "compressed.webp",
+    outputName: "resized.webp",
     contentType: "image/webp",
     size: outputBytes.byteLength,
   };
@@ -104,7 +132,7 @@ export async function processImageCompression(
   );
 
   console.log(
-    `Image compression completed for job ${jobId}.`,
+    `Image resize completed for job ${jobId}.`,
   );
 
   return result;

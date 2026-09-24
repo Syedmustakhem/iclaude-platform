@@ -37,6 +37,29 @@ export async function getFileById(
   });
 }
 
+export async function getFileByStorageKey(
+  env: Env,
+  key: string,
+): Promise<FileDocument | null> {
+  const collections = await getCollections(env);
+
+  return collections.files.findOne({
+    "storage.key": key,
+  });
+}
+
+export async function getOutputFileByJobId(
+  env: Env,
+  jobId: ObjectId,
+): Promise<FileDocument | null> {
+  const collections = await getCollections(env);
+
+  return collections.files.findOne({
+    jobId,
+    type: "output",
+  });
+}
+
 export async function updateFile(
   env: Env,
   fileId: string,
@@ -59,16 +82,7 @@ export async function updateFile(
 
   return result.matchedCount > 0;
 }
-export async function getFileByStorageKey(
-  env: Env,
-  key: string,
-): Promise<FileDocument | null> {
-  const collections = await getCollections(env);
 
-  return collections.files.findOne({
-    "storage.key": key,
-  });
-}
 export async function deleteFileRecord(
   env: Env,
   fileId: string,

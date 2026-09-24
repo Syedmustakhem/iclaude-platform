@@ -44,6 +44,7 @@ export async function updateJobStatus(
   jobId: string,
   status: JobDocument["status"],
   progress?: number,
+  error?: JobDocument["error"],
 ): Promise<boolean> {
   const collections = await getCollections(env);
 
@@ -56,6 +57,7 @@ export async function updateJobStatus(
     progress?: number;
     startedAt?: Date;
     completedAt?: Date;
+    error?: JobDocument["error"];
   } = {
     status,
   };
@@ -72,12 +74,41 @@ export async function updateJobStatus(
     update.completedAt = new Date();
   }
 
+  if (error !== undefined) {
+    update.error = error;
+  }
+
   const result = await collections.jobs.updateOne(
     {
       _id: new ObjectId(jobId),
     },
     {
       $set: update,
+    },
+  );
+
+  return result.matchedCount > 0;
+}
+
+export async function setJobOutputFile(
+  env: Env,
+  jobId: string,
+  outputFileId: ObjectId,
+): Promise<boolean> {
+  const collections = await getCollections(env);
+
+  if (!ObjectId.isValid(jobId)) {
+    return false;
+  }
+
+  const result = await collections.jobs.updateOne(
+    {
+      _id: new ObjectId(jobId),
+    },
+    {
+      $set: {
+        outputFileId,
+      },
     },
   );
 

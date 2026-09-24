@@ -5,10 +5,11 @@ export async function putObject(
     | string
     | ArrayBuffer
     | ArrayBufferView
-    | ReadableStream,
+    | ReadableStream
+    | Blob,
   options?: R2HTTPMetadata,
-): Promise<void> {
-  await env.iclaude_files.put(key, body, {
+): Promise<R2Object | null> {
+  return env.iclaude_files.put(key, body, {
     httpMetadata: options,
   });
 }

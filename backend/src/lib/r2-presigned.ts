@@ -1,4 +1,5 @@
 import {
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
@@ -29,6 +30,23 @@ export async function createPresignedUploadUrl(
     Bucket: R2_BUCKET_NAME,
     Key: key,
     ContentType: contentType,
+  });
+
+  return getSignedUrl(client, command, {
+    expiresIn,
+  });
+}
+
+export async function createPresignedDownloadUrl(
+  env: Env,
+  key: string,
+  expiresIn = 900,
+): Promise<string> {
+  const client = getR2Client(env);
+
+  const command = new GetObjectCommand({
+    Bucket: R2_BUCKET_NAME,
+    Key: key,
   });
 
   return getSignedUrl(client, command, {

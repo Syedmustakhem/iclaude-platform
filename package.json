@@ -5,8 +5,7 @@
   "description": "iclaude - All-in-one online utility platform",
   "workspaces": [
     "frontend",
-    "backend",
-    "worker"
+    "backend"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=frontend",

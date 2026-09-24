@@ -1,18 +1,52 @@
 import type { ObjectId } from "mongodb";
 
+/**
+ * Supported image resize fitting strategies.
+ */
+export type ResizeFit =
+  | "scale-down"
+  | "contain"
+  | "cover"
+  | "crop"
+  | "pad";
+
+/**
+ * Image resizer configuration.
+ */
+export type ImageResizeOptions = {
+  width?: number;
+  height?: number;
+  fit?: ResizeFit;
+};
+
+/**
+ * Tool-specific processing options.
+ */
+export type JobOptions = {
+  resize?: ImageResizeOptions;
+};
+
+/**
+ * User document.
+ */
 export type UserDocument = {
   _id?: ObjectId;
 
   email?: string;
+
   name?: string;
 
   // Will be used when authentication is added.
   authProvider?: "email" | "google" | "github";
 
   createdAt: Date;
+
   updatedAt: Date;
 };
 
+/**
+ * File stored in R2 and tracked in MongoDB.
+ */
 export type FileDocument = {
   _id?: ObjectId;
 
@@ -24,7 +58,9 @@ export type FileDocument = {
   jobId?: ObjectId;
 
   originalName: string;
+
   mimeType: string;
+
   size: number;
 
   storage: {
@@ -36,9 +72,13 @@ export type FileDocument = {
   type: "input" | "output";
 
   createdAt: Date;
+
   expiresAt?: Date;
 };
 
+/**
+ * Processing job document.
+ */
 export type JobDocument = {
   _id?: ObjectId;
 
@@ -61,7 +101,11 @@ export type JobDocument = {
     | "failed";
 
   inputFileId?: ObjectId;
+
   outputFileId?: ObjectId;
+
+  // Tool-specific processing configuration.
+  options?: JobOptions;
 
   progress: number;
 
@@ -71,14 +115,20 @@ export type JobDocument = {
   };
 
   createdAt: Date;
+
   startedAt?: Date;
+
   completedAt?: Date;
 };
 
+/**
+ * Individual tool execution record.
+ */
 export type ToolRunDocument = {
   _id?: ObjectId;
 
   sessionId?: string;
+
   userId?: ObjectId;
 
   jobId: ObjectId;
@@ -100,17 +150,23 @@ export type ToolRunDocument = {
   createdAt: Date;
 };
 
+/**
+ * Daily usage tracking document.
+ */
 export type UsageDocument = {
   _id?: ObjectId;
 
   sessionId?: string;
+
   userId?: ObjectId;
 
   date: string;
 
   toolRuns: number;
+
   totalBytesProcessed: number;
 
   createdAt: Date;
+
   updatedAt: Date;
 };
