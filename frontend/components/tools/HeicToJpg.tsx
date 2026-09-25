@@ -520,7 +520,7 @@ export default function HeicToJpg() {
 
       <p className="text-center text-xs leading-6 text-slate-400">
         HEIC files are converted in your browser. Your original
-        files are not uploaded to a server by this component.
+        files are not uploaded to a server by this components.
       </p>
     </div>
   );
