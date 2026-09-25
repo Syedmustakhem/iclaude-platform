@@ -868,7 +868,7 @@ export default function ToolsDirectory() {
                 }}
                 className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-slate-950 shadow-xl transition hover:-translate-y-1 hover:bg-slate-100"
               >
-                Explore all tools
+                Explore all Tools
 
                 <ArrowIcon className="h-4 w-4 rotate-90" />
               </button>
