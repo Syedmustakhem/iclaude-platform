@@ -9,12 +9,58 @@ import {
 } from "react";
 
 type ResizeResult = {
-  blob: Blob;
   url: string;
   width: number;
   height: number;
   size: number;
+  filename: string;
 };
+
+type ApiResponse<T> = {
+  success: boolean;
+  data?: T;
+  error?: {
+    code?: string;
+    message?: string;
+  };
+};
+
+type PresignResponse = {
+  uploadUrl: string;
+  objectKey: string;
+  expiresIn: number;
+  tool: string;
+  filename: string;
+  contentType: string;
+  size: number;
+};
+
+type ConfirmResponse = {
+  fileId: string;
+  status: string;
+  tool: string;
+  objectKey: string;
+  filename: string;
+  contentType: string;
+  size: number;
+};
+
+type JobResponse = {
+  jobId: string;
+  tool: string;
+  status: "queued" | "processing" | "completed" | "failed";
+  progress: number;
+  inputFileId?: string;
+  outputFileId?: string;
+  error?: {
+    code: string;
+    message: string;
+  };
+};
+
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://127.0.0.1:8787/api";
 
 const ACCEPTED_TYPES = [
   "image/jpeg",
@@ -28,6 +74,7 @@ function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 Bytes";
 
   const units = ["Bytes", "KB", "MB", "GB"];
+
   const index = Math.min(
     Math.floor(Math.log(bytes) / Math.log(1024)),
     units.length - 1,
@@ -38,65 +85,131 @@ function formatFileSize(bytes: number): string {
   return `${value.toFixed(index === 0 ? 0 : 2)} ${units[index]}`;
 }
 
-function getOutputType(
-  type: string,
-): "image/jpeg" | "image/png" | "image/webp" {
-  if (type === "image/png") return "image/png";
-  if (type === "image/webp") return "image/webp";
+function getSessionId(): string {
+  if (typeof window === "undefined") {
+    return "anonymous";
+  }
 
-  return "image/jpeg";
+  const key = "iclaude_session_id";
+
+  const existing = window.localStorage.getItem(key);
+
+  if (existing) {
+    return existing;
+  }
+
+  const sessionId = crypto.randomUUID();
+
+  window.localStorage.setItem(
+    key,
+    sessionId,
+  );
+
+  return sessionId;
 }
 
-function getExtension(type: string): string {
-  if (type === "image/png") return "png";
-  if (type === "image/webp") return "webp";
+async function parseApiResponse<T>(
+  response: Response,
+): Promise<ApiResponse<T>> {
+  let data: ApiResponse<T>;
 
-  return "jpg";
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error(
+      `The server returned an invalid response (${response.status}).`,
+    );
+  }
+
+  if (!response.ok || !data.success) {
+    throw new Error(
+      data.error?.message ||
+        `Request failed with status ${response.status}.`,
+    );
+  }
+
+  return data;
 }
 
 export default function ImageResizer() {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const previewUrlRef = useRef<string | null>(null);
-  const resultUrlRef = useRef<string | null>(null);
+  const inputRef =
+    useRef<HTMLInputElement>(null);
 
-  const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState("");
-  const [originalWidth, setOriginalWidth] = useState(0);
-  const [originalHeight, setOriginalHeight] = useState(0);
+  const previewUrlRef =
+    useRef<string | null>(null);
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
-  const [lockAspectRatio, setLockAspectRatio] = useState(true);
+  const resultUrlRef =
+    useRef<string | null>(null);
 
-  const [isDragging, setIsDragging] = useState(false);
-  const [isResizing, setIsResizing] = useState(false);
-  const [error, setError] = useState("");
-  const [result, setResult] = useState<ResizeResult | null>(null);
+  const [file, setFile] =
+    useState<File | null>(null);
+
+  const [previewUrl, setPreviewUrl] =
+    useState("");
+
+  const [originalWidth, setOriginalWidth] =
+    useState(0);
+
+  const [originalHeight, setOriginalHeight] =
+    useState(0);
+
+  const [width, setWidth] =
+    useState("");
+
+  const [height, setHeight] =
+    useState("");
+
+  const [lockAspectRatio, setLockAspectRatio] =
+    useState(true);
+
+  const [isDragging, setIsDragging] =
+    useState(false);
+
+  const [isResizing, setIsResizing] =
+    useState(false);
+
+  const [progress, setProgress] =
+    useState(0);
+
+  const [error, setError] =
+    useState("");
+
+  const [result, setResult] =
+    useState<ResizeResult | null>(null);
 
   const aspectRatio =
-    originalWidth > 0 && originalHeight > 0
+    originalWidth > 0 &&
+    originalHeight > 0
       ? originalWidth / originalHeight
       : 1;
 
   useEffect(() => {
     return () => {
       if (previewUrlRef.current) {
-        URL.revokeObjectURL(previewUrlRef.current);
+        URL.revokeObjectURL(
+          previewUrlRef.current,
+        );
       }
 
       if (resultUrlRef.current) {
-        URL.revokeObjectURL(resultUrlRef.current);
+        URL.revokeObjectURL(
+          resultUrlRef.current,
+        );
       }
     };
   }, []);
 
   function clearResult() {
     if (resultUrlRef.current) {
-      URL.revokeObjectURL(resultUrlRef.current);
+      URL.revokeObjectURL(
+        resultUrlRef.current,
+      );
+
       resultUrlRef.current = null;
     }
 
     setResult(null);
+    setProgress(0);
   }
 
   function loadImageDimensions(
@@ -106,54 +219,85 @@ export default function ImageResizer() {
     const image = new Image();
 
     image.onload = () => {
-      setOriginalWidth(image.naturalWidth);
-      setOriginalHeight(image.naturalHeight);
+      setOriginalWidth(
+        image.naturalWidth,
+      );
 
-      setWidth(String(image.naturalWidth));
-      setHeight(String(image.naturalHeight));
+      setOriginalHeight(
+        image.naturalHeight,
+      );
+
+      setWidth(
+        String(image.naturalWidth),
+      );
+
+      setHeight(
+        String(image.naturalHeight),
+      );
     };
 
     image.onerror = () => {
-      setError("Unable to read the selected image.");
+      setError(
+        "Unable to read the selected image.",
+      );
     };
 
     image.src = url;
   }
 
-  function handleFile(selectedFile: File) {
+  function handleFile(
+    selectedFile: File,
+  ) {
     setError("");
     clearResult();
 
-    if (!ACCEPTED_TYPES.includes(selectedFile.type)) {
+    if (
+      !ACCEPTED_TYPES.includes(
+        selectedFile.type,
+      )
+    ) {
       setError(
         "Please select a JPG, JPEG, PNG, or WebP image.",
       );
+
       return;
     }
 
-    if (selectedFile.size > MAX_FILE_SIZE) {
-      setError("The maximum supported file size is 50 MB.");
+    if (
+      selectedFile.size > MAX_FILE_SIZE
+    ) {
+      setError(
+        "The maximum supported file size is 50 MB.",
+      );
+
       return;
     }
 
     if (previewUrlRef.current) {
-      URL.revokeObjectURL(previewUrlRef.current);
+      URL.revokeObjectURL(
+        previewUrlRef.current,
+      );
     }
 
-    const url = URL.createObjectURL(selectedFile);
+    const url =
+      URL.createObjectURL(selectedFile);
 
     previewUrlRef.current = url;
 
     setFile(selectedFile);
     setPreviewUrl(url);
 
-    loadImageDimensions(selectedFile, url);
+    loadImageDimensions(
+      selectedFile,
+      url,
+    );
   }
 
   function handleFileChange(
     event: ChangeEvent<HTMLInputElement>,
   ) {
-    const selectedFile = event.target.files?.[0];
+    const selectedFile =
+      event.target.files?.[0];
 
     if (selectedFile) {
       handleFile(selectedFile);
@@ -162,38 +306,52 @@ export default function ImageResizer() {
     event.target.value = "";
   }
 
-  function handleDragOver(event: DragEvent<HTMLDivElement>) {
+  function handleDragOver(
+    event: DragEvent<HTMLDivElement>,
+  ) {
     event.preventDefault();
     event.stopPropagation();
+
     setIsDragging(true);
   }
 
-  function handleDragLeave(event: DragEvent<HTMLDivElement>) {
+  function handleDragLeave(
+    event: DragEvent<HTMLDivElement>,
+  ) {
     event.preventDefault();
     event.stopPropagation();
+
     setIsDragging(false);
   }
 
-  function handleDrop(event: DragEvent<HTMLDivElement>) {
+  function handleDrop(
+    event: DragEvent<HTMLDivElement>,
+  ) {
     event.preventDefault();
     event.stopPropagation();
 
     setIsDragging(false);
 
-    const droppedFile = event.dataTransfer.files?.[0];
+    const droppedFile =
+      event.dataTransfer.files?.[0];
 
     if (droppedFile) {
       handleFile(droppedFile);
     }
   }
 
-  function updateWidth(value: string) {
+  function updateWidth(
+    value: string,
+  ) {
     setWidth(value);
     clearResult();
 
-    if (!lockAspectRatio) return;
+    if (!lockAspectRatio) {
+      return;
+    }
 
-    const numericWidth = Number(value);
+    const numericWidth =
+      Number(value);
 
     if (
       numericWidth > 0 &&
@@ -204,20 +362,28 @@ export default function ImageResizer() {
         String(
           Math.max(
             1,
-            Math.round(numericWidth / aspectRatio),
+            Math.round(
+              numericWidth /
+                aspectRatio,
+            ),
           ),
         ),
       );
     }
   }
 
-  function updateHeight(value: string) {
+  function updateHeight(
+    value: string,
+  ) {
     setHeight(value);
     clearResult();
 
-    if (!lockAspectRatio) return;
+    if (!lockAspectRatio) {
+      return;
+    }
 
-    const numericHeight = Number(value);
+    const numericHeight =
+      Number(value);
 
     if (
       numericHeight > 0 &&
@@ -228,7 +394,10 @@ export default function ImageResizer() {
         String(
           Math.max(
             1,
-            Math.round(numericHeight * aspectRatio),
+            Math.round(
+              numericHeight *
+                aspectRatio,
+            ),
           ),
         ),
       );
@@ -237,105 +406,377 @@ export default function ImageResizer() {
 
   async function resizeImage() {
     if (!file) {
-      setError("Please select an image first.");
+      setError(
+        "Please select an image first.",
+      );
+
       return;
     }
 
-    const targetWidth = Number(width);
-    const targetHeight = Number(height);
+    const targetWidth =
+      Number(width);
+
+    const targetHeight =
+      Number(height);
 
     if (
-      !Number.isFinite(targetWidth) ||
-      !Number.isFinite(targetHeight) ||
+      !Number.isFinite(
+        targetWidth,
+      ) ||
+      !Number.isFinite(
+        targetHeight,
+      ) ||
       targetWidth < 1 ||
       targetHeight < 1
     ) {
       setError(
         "Please enter valid width and height values.",
       );
+
       return;
     }
 
-    if (targetWidth > 10000 || targetHeight > 10000) {
+    if (
+      !Number.isInteger(
+        targetWidth,
+      ) ||
+      !Number.isInteger(
+        targetHeight,
+      )
+    ) {
       setError(
-        "For browser performance, width and height cannot exceed 10,000 pixels.",
+        "Width and height must be whole numbers.",
       );
+
+      return;
+    }
+
+    if (
+      targetWidth > 10000 ||
+      targetHeight > 10000
+    ) {
+      setError(
+        "Width and height cannot exceed 10,000 pixels.",
+      );
+
       return;
     }
 
     setError("");
     setIsResizing(true);
+    setProgress(5);
     clearResult();
 
     try {
-      const image = new Image();
-      const imageUrl = URL.createObjectURL(file);
+      const sessionId =
+        getSessionId();
 
-      await new Promise<void>((resolve, reject) => {
-        image.onload = () => resolve();
-        image.onerror = () =>
-          reject(new Error("Unable to read image."));
-        image.src = imageUrl;
-      });
+      /*
+       * 1. Ask backend for an R2 upload URL.
+       */
 
-      URL.revokeObjectURL(imageUrl);
+      const presignResponse =
+        await fetch(
+          `${API_BASE_URL}/uploads/presign`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              filename: file.name,
+              contentType: file.type,
+              size: file.size,
+              tool: "image-resizer",
+              sessionId,
+            }),
+          },
+        );
 
-      const canvas = document.createElement("canvas");
+      const presign =
+        await parseApiResponse<PresignResponse>(
+          presignResponse,
+        );
 
-      canvas.width = targetWidth;
-      canvas.height = targetHeight;
-
-      const context = canvas.getContext("2d");
-
-      if (!context) {
+      if (!presign.data) {
         throw new Error(
-          "Your browser does not support image resizing.",
+          "The upload URL was not returned.",
         );
       }
 
-      context.imageSmoothingEnabled = true;
-      context.imageSmoothingQuality = "high";
+      setProgress(15);
 
-      context.drawImage(
-        image,
-        0,
-        0,
-        targetWidth,
-        targetHeight,
-      );
+      /*
+       * 2. Upload directly to R2.
+       */
 
-      const outputType = getOutputType(file.type);
+      const uploadResponse =
+        await fetch(
+          presign.data.uploadUrl,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type":
+                file.type,
+            },
+            body: file,
+          },
+        );
 
-      const blob = await new Promise<Blob | null>(
-        (resolve) => {
-          canvas.toBlob(
-            resolve,
-            outputType,
-            outputType === "image/png" ? undefined : 0.92,
-          );
-        },
-      );
-
-      if (!blob) {
-        throw new Error("Unable to create resized image.");
+      if (!uploadResponse.ok) {
+        throw new Error(
+          `Image upload failed (${uploadResponse.status}).`,
+        );
       }
 
-      const url = URL.createObjectURL(blob);
+      setProgress(35);
 
-      resultUrlRef.current = url;
+      /*
+       * 3. Confirm the uploaded file.
+       */
+
+      const confirmResponse =
+        await fetch(
+          `${API_BASE_URL}/uploads/confirm`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              objectKey:
+                presign.data.objectKey,
+              filename: file.name,
+              contentType: file.type,
+              size: file.size,
+              tool: "image-resizer",
+              sessionId,
+            }),
+          },
+        );
+
+      const confirmation =
+        await parseApiResponse<ConfirmResponse>(
+          confirmResponse,
+        );
+
+      if (!confirmation.data?.fileId) {
+        throw new Error(
+          "The uploaded file could not be confirmed.",
+        );
+      }
+
+      setProgress(45);
+
+      /*
+       * 4. Create the processing job.
+       */
+
+      const jobResponse =
+        await fetch(
+          `${API_BASE_URL}/jobs`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+            body: JSON.stringify({
+              tool: "image-resizer",
+              fileId:
+                confirmation.data.fileId,
+              sessionId,
+              options: {
+                resize: {
+                  width:
+                    targetWidth,
+                  height:
+                    targetHeight,
+                  fit: "contain",
+                },
+              },
+            }),
+          },
+        );
+
+      const job =
+        await parseApiResponse<JobResponse>(
+          jobResponse,
+        );
+
+      if (!job.data?.jobId) {
+        throw new Error(
+          "The processing job could not be created.",
+        );
+      }
+
+      /*
+       * 5. Poll the processing job.
+       */
+
+      const jobId =
+        job.data.jobId;
+
+      let completedJob:
+        | JobResponse
+        | null = null;
+
+      const maxAttempts = 120;
+
+      for (
+        let attempt = 0;
+        attempt < maxAttempts;
+        attempt++
+      ) {
+        await new Promise(
+          (resolve) =>
+            setTimeout(
+              resolve,
+              attempt === 0
+                ? 500
+                : 1000,
+            ),
+        );
+
+        const statusResponse =
+          await fetch(
+            `${API_BASE_URL}/jobs/${jobId}`,
+            {
+              method: "GET",
+              cache: "no-store",
+            },
+          );
+
+        const status =
+          await parseApiResponse<JobResponse>(
+            statusResponse,
+          );
+
+        if (!status.data) {
+          throw new Error(
+            "The server returned an invalid job status.",
+          );
+        }
+
+        const currentJob =
+          status.data;
+
+        if (
+          currentJob.status ===
+          "failed"
+        ) {
+          throw new Error(
+            currentJob.error
+              ?.message ||
+              "Image resizing failed.",
+          );
+        }
+
+        if (
+          currentJob.status ===
+          "completed"
+        ) {
+          completedJob =
+            currentJob;
+
+          setProgress(100);
+
+          break;
+        }
+
+        const backendProgress =
+          currentJob.progress ?? 0;
+
+        setProgress(
+          Math.min(
+            95,
+            45 +
+              Math.round(
+                backendProgress *
+                  0.5,
+              ),
+          ),
+        );
+      }
+
+      if (!completedJob) {
+        throw new Error(
+          "The image is taking longer than expected. Please try again.",
+        );
+      }
+
+      if (
+        !completedJob.outputFileId
+      ) {
+        throw new Error(
+          "The resize completed but no output file was returned.",
+        );
+      }
+
+      /*
+       * 6. Download the generated output.
+       *
+       * The backend currently produces:
+       * outputs/{jobId}/resized.webp
+       *
+       * We use the download endpoint rather than
+       * trying to access R2 directly from the browser.
+       */
+
+      const downloadResponse =
+  await fetch(
+    `${API_BASE_URL}/files/${encodeURIComponent(
+      completedJob.outputFileId,
+    )}/download`,
+    {
+      method: "GET",
+    },
+  );
+
+      if (!downloadResponse.ok) {
+        throw new Error(
+          `Unable to retrieve the resized image (${downloadResponse.status}).`,
+        );
+      }
+
+      const outputBlob =
+        await downloadResponse.blob();
+
+      if (
+        outputBlob.size === 0
+      ) {
+        throw new Error(
+          "The server returned an empty image.",
+        );
+      }
+
+      const outputUrl =
+        URL.createObjectURL(
+          outputBlob,
+        );
+
+      resultUrlRef.current =
+        outputUrl;
 
       setResult({
-        blob,
-        url,
+        url: outputUrl,
         width: targetWidth,
         height: targetHeight,
-        size: blob.size,
+        size: outputBlob.size,
+        filename: `resized-${targetWidth}x${targetHeight}.webp`,
       });
     } catch (resizeError) {
-      console.error(resizeError);
+      console.error(
+        "Image resize failed:",
+        resizeError,
+      );
 
       setError(
-        "Something went wrong while resizing the image. Please try another image.",
+        resizeError instanceof Error
+          ? resizeError.message
+          : "Something went wrong while resizing the image. Please try again.",
       );
     } finally {
       setIsResizing(false);
@@ -343,24 +784,23 @@ export default function ImageResizer() {
   }
 
   function downloadResult() {
-    if (!result || !file) return;
+    if (!result) {
+      return;
+    }
 
-    const extension = getExtension(result.blob.type);
-
-    const originalName = file.name.replace(
-      /\.[^/.]+$/,
-      "",
-    );
-
-    const downloadName = `${originalName}-${result.width}x${result.height}.${extension}`;
-
-    const link = document.createElement("a");
+    const link =
+      document.createElement("a");
 
     link.href = result.url;
-    link.download = downloadName;
+    link.download =
+      result.filename;
 
-    document.body.appendChild(link);
+    document.body.appendChild(
+      link,
+    );
+
     link.click();
+
     link.remove();
   }
 
@@ -368,8 +808,12 @@ export default function ImageResizer() {
     clearResult();
 
     if (previewUrlRef.current) {
-      URL.revokeObjectURL(previewUrlRef.current);
-      previewUrlRef.current = null;
+      URL.revokeObjectURL(
+        previewUrlRef.current,
+      );
+
+      previewUrlRef.current =
+        null;
     }
 
     setFile(null);
@@ -380,6 +824,7 @@ export default function ImageResizer() {
     setHeight("");
     setLockAspectRatio(true);
     setError("");
+    setProgress(0);
   }
 
   return (
@@ -397,7 +842,9 @@ export default function ImageResizer() {
         <div
           role="button"
           tabIndex={0}
-          onClick={() => inputRef.current?.click()}
+          onClick={() =>
+            inputRef.current?.click()
+          }
           onKeyDown={(event) => {
             if (
               event.key === "Enter" ||
@@ -407,8 +854,12 @@ export default function ImageResizer() {
               inputRef.current?.click();
             }
           }}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
+          onDragOver={
+            handleDragOver
+          }
+          onDragLeave={
+            handleDragLeave
+          }
           onDrop={handleDrop}
           className={[
             "group relative flex min-h-[290px] cursor-pointer sm:min-h-[320px]",
@@ -461,7 +912,7 @@ export default function ImageResizer() {
             <span className="mt-5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
               {isDragging
                 ? "Release to upload"
-                : "Private browser processing"}
+                : "Secure cloud processing"}
             </span>
 
             <h3 className="mt-4 text-[1.25rem] font-black tracking-[-0.025em] text-slate-950 sm:text-2xl">
@@ -471,8 +922,8 @@ export default function ImageResizer() {
             </h3>
 
             <p className="mt-3 max-w-md text-[13px] leading-6 text-slate-500 sm:text-sm">
-              Drag and drop your image here, or choose
-              one from your device.
+              Drag and drop your image here,
+              or choose one from your device.
             </p>
 
             <button
@@ -496,7 +947,7 @@ export default function ImageResizer() {
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-6">
             <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:rounded-3xl">
               <div className="flex min-h-[270px] items-center justify-center p-3 sm:min-h-[420px] sm:p-4">
-                {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={previewUrl}
                   alt={`Preview of ${file.name}`}
@@ -510,9 +961,12 @@ export default function ImageResizer() {
                 </p>
 
                 <p className="mt-1 text-xs text-slate-500">
-                  {originalWidth} × {originalHeight} px
+                  {originalWidth} ×{" "}
+                  {originalHeight} px
                   {" • "}
-                  {formatFileSize(file.size)}
+                  {formatFileSize(
+                    file.size,
+                  )}
                 </p>
               </div>
             </div>
@@ -527,7 +981,8 @@ export default function ImageResizer() {
               </h3>
 
               <p className="mt-2 text-[13px] leading-6 text-slate-500 sm:text-sm">
-                Enter the exact pixel dimensions you need.
+                Enter the exact pixel dimensions
+                you need.
               </p>
 
               <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -542,7 +997,9 @@ export default function ImageResizer() {
                     max="10000"
                     value={width}
                     onChange={(event) =>
-                      updateWidth(event.target.value)
+                      updateWidth(
+                        event.target.value,
+                      )
                     }
                     className="mt-2 min-h-12 w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                   />
@@ -559,7 +1016,9 @@ export default function ImageResizer() {
                     max="10000"
                     value={height}
                     onChange={(event) =>
-                      updateHeight(event.target.value)
+                      updateHeight(
+                        event.target.value,
+                      )
                     }
                     className="mt-2 min-h-12 w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                   />
@@ -569,7 +1028,10 @@ export default function ImageResizer() {
               <button
                 type="button"
                 onClick={() =>
-                  setLockAspectRatio((current) => !current)
+                  setLockAspectRatio(
+                    (current) =>
+                      !current,
+                  )
                 }
                 className={[
                   "mt-4 flex min-h-14 w-full items-center justify-between rounded-2xl",
@@ -608,6 +1070,29 @@ export default function ImageResizer() {
                 </span>
               </button>
 
+              {isResizing && (
+                <div className="mt-5">
+                  <div className="mb-2 flex items-center justify-between text-xs font-semibold text-slate-500">
+                    <span>
+                      Processing image...
+                    </span>
+
+                    <span>
+                      {progress}%
+                    </span>
+                  </div>
+
+                  <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+                    <div
+                      className="h-full rounded-full bg-blue-600 transition-all duration-500"
+                      style={{
+                        width: `${progress}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+
               <button
                 type="button"
                 onClick={resizeImage}
@@ -620,7 +1105,8 @@ export default function ImageResizer() {
                       className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"
                       aria-hidden="true"
                     />
-                    Resizing...
+
+                    Processing...
                   </>
                 ) : (
                   "Resize image"
@@ -651,24 +1137,34 @@ export default function ImageResizer() {
 
                   <div className="mt-4 flex flex-wrap gap-2">
                     <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">
-                      Original: {originalWidth} ×{" "}
+                      Original:{" "}
+                      {originalWidth} ×{" "}
                       {originalHeight}
                     </span>
 
                     <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">
-                      New: {result.width} ×{" "}
+                      New:{" "}
+                      {result.width} ×{" "}
                       {result.height}
                     </span>
 
                     <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">
-                      {formatFileSize(result.size)}
+                      {formatFileSize(
+                        result.size,
+                      )}
+                    </span>
+
+                    <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">
+                      WebP
                     </span>
                   </div>
                 </div>
 
                 <button
                   type="button"
-                  onClick={downloadResult}
+                  onClick={
+                    downloadResult
+                  }
                   className="inline-flex min-h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 active:scale-[0.98] sm:w-auto"
                 >
                   <svg
@@ -684,18 +1180,20 @@ export default function ImageResizer() {
                       strokeLinejoin="round"
                       d="M12 4v11m0 0 4-4m-4 4-4-4"
                     />
+
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       d="M5 20h14"
                     />
                   </svg>
+
                   Download
                 </button>
               </div>
 
               <div className="mt-5 overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
-                {/* eslint-disable-next-line @next/next/no-img-element -- local blob preview */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={result.url}
                   alt={`Resized image at ${result.width} by ${result.height} pixels`}
@@ -717,14 +1215,21 @@ export default function ImageResizer() {
                 !
               </span>
 
-              <p className="pt-0.5 leading-6">{error}</p>
+              <p className="pt-0.5 leading-6">
+                {error}
+              </p>
             </div>
           )}
 
           <p className="flex items-center justify-center gap-2 text-center text-[11px] leading-5 text-slate-500 sm:text-xs">
-            <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
-            Images are resized locally in your browser. Your
-            selected image is not uploaded to the iclaude server.
+            <span
+              aria-hidden="true"
+              className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"
+            />
+
+            Images are securely uploaded for
+            processing and automatically processed
+            by iclaude.
           </p>
         </div>
       )}
