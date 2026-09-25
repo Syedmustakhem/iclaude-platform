@@ -83,7 +83,11 @@ function SearchIcon() {
   );
 }
 
-function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
+function ArrowIcon({
+  className = "h-4 w-4",
+}: {
+  className?: string;
+}) {
   return (
     <svg
       viewBox="0 0 20 20"
@@ -119,7 +123,11 @@ function SparkIcon() {
   );
 }
 
-function ToolLibraryIcon({ type }: { type: "image" | "pdf" | "video" }) {
+function ToolLibraryIcon({
+  type,
+}: {
+  type: "image" | "pdf" | "video";
+}) {
   if (type === "pdf") {
     return (
       <svg
@@ -152,7 +160,13 @@ function ToolLibraryIcon({ type }: { type: "image" | "pdf" | "video" }) {
         strokeLinejoin="round"
         aria-hidden="true"
       >
-        <rect x="3" y="5" width="13" height="14" rx="2.5" />
+        <rect
+          x="3"
+          y="5"
+          width="13"
+          height="14"
+          rx="2.5"
+        />
         <path d="m16 10 5-3v10l-5-3z" />
       </svg>
     );
@@ -169,7 +183,13 @@ function ToolLibraryIcon({ type }: { type: "image" | "pdf" | "video" }) {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <rect
+        x="3"
+        y="3"
+        width="18"
+        height="18"
+        rx="3"
+      />
       <circle cx="8.5" cy="8.5" r="1.5" />
       <path d="m5.5 18 5.5-5 3.5 3 2-2 2 2" />
     </svg>
@@ -199,6 +219,7 @@ function CategorySection({
             aria-hidden="true"
             className="absolute -right-24 -top-28 h-72 w-72 rounded-full bg-white/70 blur-3xl"
           />
+
           <div
             aria-hidden="true"
             className="absolute -bottom-32 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-white/50 blur-3xl"
@@ -210,6 +231,7 @@ function CategorySection({
                 <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-950 text-xs text-white">
                   {config.icon}
                 </span>
+
                 {config.eyebrow}
               </div>
 
@@ -227,7 +249,9 @@ function CategorySection({
 
             <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/90 bg-white/80 px-4 py-2.5 text-sm font-bold text-slate-700 shadow-sm backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              {tools.length} {tools.length === 1 ? "tool" : "tools"} ready
+
+              {tools.length}{" "}
+              {tools.length === 1 ? "tool" : "tools"} ready
             </div>
           </div>
         </div>
@@ -249,7 +273,10 @@ function CategorySection({
 
 export default function ToolsDirectory() {
   const availableTools = getAvailableTools();
-  const [activeCategory, setActiveCategory] = useState<CategoryId>("all");
+
+  const [activeCategory, setActiveCategory] =
+    useState<CategoryId>("all");
+
   const [query, setQuery] = useState("");
 
   const normalizedQuery = query.trim().toLowerCase();
@@ -258,10 +285,12 @@ export default function ToolsDirectory() {
     return availableTools.filter((tool) => {
       const matchesCategory =
         activeCategory === "all" ||
-        categoryConfig.find((config) => config.id === activeCategory)
-          ?.category === tool.category;
+        categoryConfig.find(
+          (config) => config.id === activeCategory,
+        )?.category === tool.category;
 
       if (!matchesCategory) return false;
+
       if (!normalizedQuery) return true;
 
       const searchableText = [
@@ -282,7 +311,11 @@ export default function ToolsDirectory() {
 
       return searchableText.includes(normalizedQuery);
     });
-  }, [activeCategory, availableTools, normalizedQuery]);
+  }, [
+    activeCategory,
+    availableTools,
+    normalizedQuery,
+  ]);
 
   const featuredTools = availableTools.slice(0, 3);
 
@@ -297,16 +330,19 @@ export default function ToolsDirectory() {
   );
 
   const hasSearch = normalizedQuery.length > 0;
+
   const showingFilteredResults =
     hasSearch || activeCategory !== "all";
 
   return (
     <main className="overflow-hidden bg-white">
+      {/* HERO */}
       <section className="relative isolate overflow-hidden bg-slate-950">
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(59,130,246,0.25),transparent_31%),radial-gradient(circle_at_82%_12%,rgba(6,182,212,0.18),transparent_30%),radial-gradient(circle_at_50%_100%,rgba(99,102,241,0.2),transparent_36%)]"
         />
+
         <div
           aria-hidden="true"
           className="absolute inset-0 opacity-[0.07]"
@@ -316,10 +352,12 @@ export default function ToolsDirectory() {
             backgroundSize: "48px 48px",
           }}
         />
+
         <div
           aria-hidden="true"
           className="absolute left-[8%] top-24 h-44 w-44 rounded-full bg-blue-500/20 blur-3xl"
         />
+
         <div
           aria-hidden="true"
           className="absolute bottom-0 right-[8%] h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl"
@@ -332,6 +370,7 @@ export default function ToolsDirectory() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-cyan-400" />
               </span>
+
               {availableTools.length} tools available
             </div>
 
@@ -355,14 +394,20 @@ export default function ToolsDirectory() {
                 </span>
 
                 <span className="flex-1">
-                  <span className="sr-only">Search tools</span>
+                  <span className="sr-only">
+                    Search tools
+                  </span>
+
                   <input
                     type="search"
                     value={query}
-                    onChange={(event) => setQuery(event.target.value)}
+                    onChange={(event) =>
+                      setQuery(event.target.value)
+                    }
                     placeholder="Search a tool, file type or task..."
                     className="w-full bg-transparent text-sm font-semibold text-white outline-none placeholder:text-slate-500"
                   />
+
                   <span className="mt-0.5 block text-xs text-slate-500">
                     Try “compress”, “resize”, “PDF” or “video”
                   </span>
@@ -381,26 +426,34 @@ export default function ToolsDirectory() {
               </label>
             </div>
 
+            {/* Category counters */}
             <div className="iclaude-reveal iclaude-delay-4 mx-auto mt-10 grid max-w-4xl grid-cols-2 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-xl sm:grid-cols-4">
               {[
                 ["all", categoryCounts.all, "Tools"],
-                ["images", categoryCounts.images, "Image"],
+                ["images", categoryCounts.images, "Images"],
                 ["pdf", categoryCounts.pdf, "PDF"],
                 ["video", categoryCounts.video, "Video"],
               ].map(([id, count, label], index) => (
                 <button
                   key={id}
                   type="button"
-                  onClick={() => setActiveCategory(id as CategoryId)}
+                  onClick={() =>
+                    setActiveCategory(id as CategoryId)
+                  }
                   className={`px-3 py-5 transition ${
-                    index > 0 ? "border-l border-white/10" : ""
+                    index > 0
+                      ? "border-l border-white/10"
+                      : ""
                   } ${
                     activeCategory === id
                       ? "bg-white/[0.08]"
                       : "hover:bg-white/[0.04]"
                   }`}
                 >
-                  <p className="text-2xl font-black text-white">{count}</p>
+                  <p className="text-2xl font-black text-white">
+                    {count}
+                  </p>
+
                   <p className="mt-1 text-xs font-medium text-slate-400 sm:text-sm">
                     {label}
                   </p>
@@ -417,7 +470,9 @@ export default function ToolsDirectory() {
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-bold text-slate-300 transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 hover:text-white"
               >
                 <span>{config.icon}</span>
+
                 {config.label}
+
                 <ArrowIcon className="h-3.5 w-3.5" />
               </Link>
             ))}
@@ -427,14 +482,19 @@ export default function ToolsDirectory() {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       </section>
 
+      {/* CATEGORY NAVIGATION */}
       <nav
         aria-label="Tool categories"
-        className="sticky top-[72px] z-30 border-b border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl"
+        className="sticky top-[74px] z-30 border-b border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl lg:top-[78px]"
       >
         <div className="iclaude-container overflow-x-auto">
           <div className="flex min-w-max items-center justify-center gap-1 py-3">
             {[
-              { id: "all" as const, label: "All tools", count: categoryCounts.all },
+              {
+                id: "all" as const,
+                label: "All tools",
+                count: categoryCounts.all,
+              },
               ...categoryConfig.map((config) => ({
                 id: config.id,
                 label: config.shortLabel,
@@ -444,15 +504,20 @@ export default function ToolsDirectory() {
               <button
                 key={item.id}
                 type="button"
-                onClick={() => setActiveCategory(item.id)}
+                onClick={() =>
+                  setActiveCategory(item.id)
+                }
                 className={`rounded-xl px-4 py-2.5 text-sm font-bold transition ${
                   activeCategory === item.id
                     ? "bg-slate-950 text-white shadow-sm"
                     : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
                 }`}
-                aria-pressed={activeCategory === item.id}
+                aria-pressed={
+                  activeCategory === item.id
+                }
               >
                 {item.label}
+
                 <span
                   className={`ml-2 text-xs ${
                     activeCategory === item.id
@@ -468,49 +533,59 @@ export default function ToolsDirectory() {
         </div>
       </nav>
 
-      {!showingFilteredResults && featuredTools.length > 0 && (
-        <section className="bg-slate-50/70">
-          <div className="iclaude-container py-20 sm:py-24">
-            <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
-                  Start here
-                </p>
-                <h2 className="mt-2 text-3xl font-black tracking-[-0.035em] text-slate-950 sm:text-4xl">
-                  Popular file tools
-                </h2>
-                <p className="mt-3 max-w-2xl leading-7 text-slate-600">
-                  Jump directly into some of the tools available on iclaude.
-                </p>
+      {/* FEATURED TOOLS */}
+      {!showingFilteredResults &&
+        featuredTools.length > 0 && (
+          <section className="bg-slate-50/70">
+            <div className="iclaude-container py-20 sm:py-24">
+              <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
+                    Start here
+                  </p>
+
+                  <h2 className="mt-2 text-3xl font-black tracking-[-0.035em] text-slate-950 sm:text-4xl">
+                    Popular file tools
+                  </h2>
+
+                  <p className="mt-3 max-w-2xl leading-7 text-slate-600">
+                    Jump directly into some of the tools available on iclaude.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveCategory("all")
+                  }
+                  className="inline-flex w-fit items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700"
+                >
+                  View everything
+                  <ArrowIcon className="h-4 w-4" />
+                </button>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setActiveCategory("all")}
-                className="inline-flex w-fit items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700"
-              >
-                View everything
-                <ArrowIcon className="h-4 w-4" />
-              </button>
-            </div>
+              <div className="grid gap-6 md:grid-cols-3">
+                {featuredTools.map((tool, index) => (
+                  <div
+                    key={tool.slug}
+                    className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white p-1 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                  >
+                    <div className="absolute right-5 top-5 z-10 rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-500 shadow-sm backdrop-blur">
+                      {index === 0
+                        ? "Featured"
+                        : "Popular"}
+                    </div>
 
-            <div className="grid gap-6 md:grid-cols-3">
-              {featuredTools.map((tool, index) => (
-                <div
-                  key={tool.slug}
-                  className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white p-1 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-                >
-                  <div className="absolute right-5 top-5 z-10 rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-500 shadow-sm backdrop-blur">
-                    {index === 0 ? "Featured" : "Popular"}
+                    <ToolCard tool={tool} />
                   </div>
-                  <ToolCard tool={tool} />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )}
 
+      {/* ALL TOOLS */}
       <section
         id="all"
         aria-labelledby="all-tools-heading"
@@ -521,7 +596,10 @@ export default function ToolsDirectory() {
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-700">
                 <SparkIcon />
-                {showingFilteredResults ? "Filtered results" : "Tool library"}
+
+                {showingFilteredResults
+                  ? "Filtered results"
+                  : "Tool library"}
               </div>
 
               <h2
@@ -533,7 +611,9 @@ export default function ToolsDirectory() {
                   : activeCategory === "all"
                     ? "All available tools"
                     : categoryConfig.find(
-                          (config) => config.id === activeCategory,
+                          (config) =>
+                            config.id ===
+                            activeCategory,
                         )?.label}
               </h2>
 
@@ -542,7 +622,9 @@ export default function ToolsDirectory() {
                   ? "Try a different search term or browse another category."
                   : showingFilteredResults
                     ? `${filteredTools.length} ${
-                        filteredTools.length === 1 ? "tool" : "tools"
+                        filteredTools.length === 1
+                          ? "tool"
+                          : "tools"
                       } match your current selection.`
                     : "Choose exactly what you need and get straight to the task without unnecessary steps."}
               </p>
@@ -564,6 +646,7 @@ export default function ToolsDirectory() {
 
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-bold text-slate-700">
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
+
                 {filteredTools.length} available
               </span>
             </div>
@@ -585,13 +668,16 @@ export default function ToolsDirectory() {
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-slate-500 shadow-sm ring-1 ring-slate-200">
                 <SearchIcon />
               </div>
+
               <h3 className="mt-6 text-xl font-black text-slate-950">
                 No matching tools yet
               </h3>
+
               <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
                 We couldn’t find a tool matching that search. Clear the search
                 or explore another category.
               </p>
+
               <button
                 type="button"
                 onClick={() => {
@@ -608,24 +694,30 @@ export default function ToolsDirectory() {
         </div>
       </section>
 
+      {/* CATEGORY SECTIONS */}
       {!showingFilteredResults &&
         categoryConfig.map((config) => (
           <CategorySection
             key={config.category}
             config={config}
-            tools={getAvailableToolsByCategory(config.category)}
+            tools={getAvailableToolsByCategory(
+              config.category,
+            )}
           />
         ))}
 
+      {/* HOW IT WORKS */}
       <section className="border-t border-slate-200 bg-slate-50/70">
         <div className="iclaude-container py-20 sm:py-24">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-600">
               How it works
             </p>
+
             <h2 className="mt-3 text-3xl font-black tracking-[-0.035em] text-slate-950 sm:text-4xl">
               Simple by design.
             </h2>
+
             <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
               Pick a tool, add your file and complete the task. Every tool is
               designed around a focused workflow.
@@ -662,16 +754,22 @@ export default function ToolsDirectory() {
                   icon: "✓",
                 },
               ].map((step) => (
-                <div key={step.number} className="relative text-center">
+                <div
+                  key={step.number}
+                  className="relative text-center"
+                >
                   <div className="relative z-10 mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 bg-white text-lg font-black text-blue-600 shadow-lg shadow-slate-200/60">
                     {step.icon}
                   </div>
+
                   <p className="mt-6 text-xs font-black uppercase tracking-[0.16em] text-blue-600">
                     Step {step.number}
                   </p>
+
                   <h3 className="mt-2 text-lg font-black text-slate-950">
                     {step.title}
                   </h3>
+
                   <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-slate-600">
                     {step.description}
                   </p>
@@ -682,6 +780,7 @@ export default function ToolsDirectory() {
         </div>
       </section>
 
+      {/* VALUE PROPS */}
       <section className="border-t border-slate-200 bg-white">
         <div className="iclaude-container py-14">
           <div className="grid gap-4 sm:grid-cols-3">
@@ -709,8 +808,12 @@ export default function ToolsDirectory() {
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-lg shadow-sm ring-1 ring-slate-200">
                   {item.icon}
                 </div>
+
                 <div>
-                  <h3 className="font-bold text-slate-950">{item.title}</h3>
+                  <h3 className="font-bold text-slate-950">
+                    {item.title}
+                  </h3>
+
                   <p className="mt-1 text-sm leading-6 text-slate-600">
                     {item.text}
                   </p>
@@ -721,40 +824,52 @@ export default function ToolsDirectory() {
         </div>
       </section>
 
+      {/* CTA */}
       <section className="relative overflow-hidden bg-slate-950">
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.2),transparent_45%)]"
         />
+
         <div className="iclaude-container relative py-20 sm:py-24">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-xl text-white shadow-xl backdrop-blur">
               ✦
             </div>
+
             <p className="mt-7 text-sm font-bold uppercase tracking-[0.18em] text-blue-300">
               iclaude tools
             </p>
+
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl">
               Find a tool.
-              <span className="block text-slate-400">Finish the task.</span>
+              <span className="block text-slate-400">
+                Finish the task.
+              </span>
             </h2>
+
             <p className="mx-auto mt-5 max-w-xl leading-7 text-slate-400">
               Everything is organized in one place so you can spend less time
               searching and more time getting things done.
             </p>
+
             <div className="mt-9 flex flex-wrap justify-center gap-3">
               <button
                 type="button"
                 onClick={() => {
                   setQuery("");
                   setActiveCategory("all");
+
                   document
                     .getElementById("all")
-                    ?.scrollIntoView({ behavior: "smooth" });
+                    ?.scrollIntoView({
+                      behavior: "smooth",
+                    });
                 }}
                 className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-slate-950 shadow-xl transition hover:-translate-y-1 hover:bg-slate-100"
               >
                 Explore all tools
+
                 <ArrowIcon className="h-4 w-4 rotate-90" />
               </button>
 
