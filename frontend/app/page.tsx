@@ -10,8 +10,13 @@ import {
   generatePageMetadata,
   generateWebsiteSchema,
 } from "@/lib/seo";
-import { tools } from "@/lib/tools";
-
+import {
+  getRequiredToolBySlug,
+  getAvailableTools,
+} from "@/lib/tools";
+import {
+  getToolBySlug,
+} from "@/lib/tools";
 export const metadata: Metadata = generatePageMetadata({
   title: "Free Online File Tools for Images, PDF & Video",
   description:
@@ -34,6 +39,9 @@ export const metadata: Metadata = generatePageMetadata({
 const popularToolSlugs = [
   "image-compressor",
   "image-resizer",
+  "jpg-to-png",
+  "png-to-jpg",
+  "heic-to-jpg",
   "remove-background",
   "pdf-to-word",
   "video-compressor",
@@ -167,7 +175,11 @@ const faqs = [
   },
 ];
 
-function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
+function ArrowIcon({
+  className = "h-4 w-4",
+}: {
+  className?: string;
+}) {
   return (
     <svg
       viewBox="0 0 20 20"
@@ -287,10 +299,14 @@ function GridIcon() {
 export default function HomePage() {
   const websiteSchema = generateWebsiteSchema();
   const organizationSchema = generateOrganizationSchema();
-  const popularTools = popularToolSlugs
-    .map((slug) => tools.find((tool) => tool.slug === slug))
-    .filter(Boolean);
-
+const popularTools = popularToolSlugs
+  .map((slug) => getToolBySlug(slug))
+  .filter((tool) => tool !== undefined)
+  .filter(
+    (tool) =>
+      tool.status === "available" &&
+      tool.indexable,
+  );
   return (
     <>
       <StructuredData data={websiteSchema} />

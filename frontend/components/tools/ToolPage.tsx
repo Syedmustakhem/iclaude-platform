@@ -11,7 +11,8 @@ import BackgroundRemover from "@/components/tools/BackgroundRemover";
 import PdfToWord from "@/components/tools/PdfToWord";
 import VideoCompressor from "@/components/tools/VideoCompressor";
 import ImageConverterTool from "@/components/tools/ImageConverterTool";
-
+import PngToJpg from "@/components/tools/PngToJpg";
+import HeicToJpg from "@/components/tools/HeicToJpg";
 import {
   generateBreadcrumbSchema,
   generateToolSchema,
@@ -58,7 +59,9 @@ export default function ToolPage({ tool }: ToolPageProps) {
   const toolSchema = generateToolSchema(tool);
 
   const relatedTools = getRelatedTools(tool).filter(
-    (relatedTool) => relatedTool.status === "available",
+    (relatedTool) =>
+      relatedTool.status === "available" &&
+      relatedTool.indexable,
   );
 
   return (
@@ -80,7 +83,9 @@ export default function ToolPage({ tool }: ToolPageProps) {
             className="absolute inset-0 -z-10"
           >
             <div className="absolute left-[-12%] top-[-30%] h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-3xl" />
+
             <div className="absolute right-[-12%] top-[-20%] h-[460px] w-[460px] rounded-full bg-cyan-400/10 blur-3xl" />
+
             <div className="absolute bottom-[-35%] left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-indigo-500/5 blur-3xl" />
           </div>
 
@@ -106,7 +111,9 @@ export default function ToolPage({ tool }: ToolPageProps) {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
 
-                  Free online tool
+                  {tool.status === "available"
+                    ? "Available tool"
+                    : "Coming soon"}
                 </div>
               </div>
 
@@ -123,7 +130,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
               </p>
 
               {/* Heading */}
-              <h1 className="iclaude-reveal iclaude-delay-2 mx-auto mt-3 max-w-4xl text-[2.45rem] leading-[1.02] font-black tracking-[-0.055em] text-slate-950 sm:text-5xl lg:text-7xl">
+              <h1 className="iclaude-reveal iclaude-delay-2 mx-auto mt-3 max-w-4xl text-[2.45rem] font-black leading-[1.02] tracking-[-0.055em] text-slate-950 sm:text-5xl lg:text-7xl">
                 {tool.name}
               </h1>
 
@@ -150,7 +157,9 @@ export default function ToolPage({ tool }: ToolPageProps) {
                   href="#tool"
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-950/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                 >
-                  Start using {tool.shortName}
+                  {tool.status === "available"
+                    ? `Start using ${tool.shortName}`
+                    : `${tool.shortName} is coming soon`}
                   <span aria-hidden="true">↓</span>
                 </Link>
 
@@ -208,42 +217,75 @@ export default function ToolPage({ tool }: ToolPageProps) {
                 </div>
 
                 <div className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-500 shadow-sm sm:flex">
-                  <span className="text-emerald-500">●</span>
-                  Ready to use
+                  <span
+                    className={
+                      tool.status === "available"
+                        ? "text-emerald-500"
+                        : "text-amber-500"
+                    }
+                  >
+                    ●
+                  </span>
+                  {tool.status === "available"
+                    ? "Ready to use"
+                    : "Coming soon"}
                 </div>
               </div>
 
               <div className="relative overflow-hidden rounded-[24px] border border-slate-200/90 bg-white p-1.5 shadow-[0_20px_60px_rgba(15,23,42,0.07)] sm:rounded-[30px] sm:p-3 sm:shadow-[0_25px_80px_rgba(15,23,42,0.08)]">
                 <div className="rounded-[19px] border border-slate-100 bg-slate-50/70 p-3 sm:rounded-[24px] sm:p-7">
-                  {tool.slug === "image-compressor" ? (
-  <ImageCompressor />
-) : tool.slug === "image-resizer" ? (
-  <ImageResizer />
-) : tool.slug === "remove-background" ? (
-  <BackgroundRemover />
-) : tool.slug === "pdf-to-word" ? (
-  <PdfToWord />
-) : tool.slug === "video-compressor" ? (
-  <VideoCompressor />
-) : tool.slug === "jpg-to-png" ? (
-  <ImageConverterTool type="jpg-to-png" />
-) : tool.slug === "png-to-jpg" ? (
-  <ImageConverterTool type="png-to-jpg" />
-) : tool.slug === "heic-to-jpg" ? (
-  <ImageConverterTool type="heic-to-jpg" />
-) : (
-  <UploadArea
-    acceptedFormats={tool.supportedFormats}
-    maxFileSizeMB={50}
-    multiple={false}
-  />
-)}
+                  {tool.status !== "available" ? (
+                    <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-center sm:p-10">
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-xl shadow-sm">
+                        ⏳
+                      </div>
+                      <h3 className="mt-4 text-xl font-black text-slate-950">
+                        {tool.name} is coming soon
+                      </h3>
+                      <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-slate-600">
+                        This tool is not available yet. Please return to the
+                        tools directory to use one of the currently available
+                        workflows.
+                      </p>
+                      <Link
+                        href="/tools/"
+                        className="mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-800"
+                      >
+                        Browse available tools
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  ) : tool.slug === "image-compressor" ? (
+                    <ImageCompressor />
+                  ) : tool.slug === "image-resizer" ? (
+                    <ImageResizer />
+                  ) : tool.slug === "remove-background" ? (
+                    <BackgroundRemover />
+                  ) : tool.slug === "pdf-to-word" ? (
+                    <PdfToWord />
+                  ) : tool.slug === "video-compressor" ? (
+                    <VideoCompressor />
+                  ) : tool.slug === "jpg-to-png" ? (
+                    <ImageConverterTool type="jpg-to-png" />
+                  ) : tool.slug === "png-to-jpg" ? (
+                    <PngToJpg />
+                  ) : tool.slug === "heic-to-jpg" ? (
+                    <HeicToJpg />
+                  ) : (
+                    <UploadArea
+                      acceptedFormats={tool.supportedFormats}
+                      maxFileSizeMB={50}
+                      multiple={false}
+                    />
+                  )}
                 </div>
               </div>
 
               <div className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-2 text-[11px] font-medium text-slate-400 sm:mt-4 sm:gap-x-6 sm:text-xs">
                 <span>Maximum file size: 50 MB</span>
+
                 <span className="hidden sm:inline">•</span>
+
                 <span>
                   Supported: {tool.supportedFormats.join(", ")}
                 </span>
@@ -558,6 +600,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
                         <span className="mr-3 text-xs text-blue-600">
                           {String(index + 1).padStart(2, "0")}
                         </span>
+
                         {item.question}
                       </span>
 

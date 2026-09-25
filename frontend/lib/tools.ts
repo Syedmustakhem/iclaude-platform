@@ -15,6 +15,9 @@ export type ToolDefinition = {
   category: ToolCategory;
   status: ToolStatus;
 
+  searchIntent: string[];
+  indexable: boolean;
+
   description: string;
   shortDescription: string;
 
@@ -55,6 +58,18 @@ export const tools: ToolDefinition[] = [
     shortName: "Compress Image",
     category: "Images",
     status: "available",
+
+    searchIntent: [
+      "compress image",
+      "image compressor",
+      "compress jpg",
+      "compress png",
+      "compress webp",
+      "reduce image size",
+      "reduce image file size",
+    ],
+
+    indexable: true,
 
     description:
       "Compress JPG, PNG and WebP images online to reduce file size while keeping practical image quality for websites, email, forms and everyday sharing.",
@@ -174,13 +189,153 @@ export const tools: ToolDefinition[] = [
       },
     ],
   },
+{
+  slug: "webp-to-jpg",
+  name: "WebP to JPG Converter",
+  shortName: "WebP to JPG",
+  category: "Images",
+  status: "available",
 
+  searchIntent: [
+    "webp to jpg",
+    "webp to jpeg",
+    "convert webp to jpg",
+    "convert webp to jpeg",
+    "webp jpg converter",
+    "image converter",
+  ],
+
+  indexable: true,
+
+  description:
+    "Convert WebP images to JPG format online for websites, uploads, sharing and workflows that require JPEG images.",
+
+  shortDescription:
+    "Convert WebP images to JPG with a simple browser-based workflow.",
+
+  seoTitle:
+    "WebP to JPG Converter Online — Convert WebP to JPG",
+
+  seoDescription:
+    "Convert WebP images to JPG online. Create JPG versions for websites, uploads, sharing and workflows that require JPEG images.",
+
+  keywords: [
+    "WebP to JPG",
+    "WebP to JPG converter",
+    "convert WebP to JPG",
+    "WebP to JPEG",
+    "convert WebP to JPEG",
+    "WebP JPG converter",
+    "image converter",
+  ],
+
+  icon: "webp-jpg",
+
+  href: "/webp-to-jpg/",
+
+  popularSearches: [
+    "WebP to JPG converter",
+    "convert WebP to JPG online",
+    "WebP to JPEG",
+    "change WebP to JPG",
+    "WebP JPG converter",
+  ],
+
+  supportedFormats: [
+    "WebP",
+    "JPG",
+    "JPEG",
+  ],
+
+  benefits: [
+    "Convert WebP images to JPG",
+    "Create JPG copies for compatibility",
+    "Useful for websites and uploads",
+    "Useful for sharing and documents",
+    "Simple browser-based workflow",
+  ],
+
+  relatedTools: [
+    "jpg-to-png",
+    "png-to-jpg",
+    "heic-to-jpg",
+    "image-compressor",
+    "image-resizer",
+  ],
+
+  content: {
+    introduction:
+      "WebP is a modern image format that can provide efficient web delivery, but some applications, websites and workflows still expect JPG or JPEG files. Converting WebP to JPG creates a widely compatible image copy.",
+
+    howItWorks: [
+      "Choose a WebP image.",
+      "Upload the image.",
+      "Convert the WebP image to JPG.",
+      "Preview the resulting image.",
+      "Download the JPG copy.",
+    ],
+
+    useCases: [
+      "Preparing WebP images for services that require JPG.",
+      "Creating JPG copies for document workflows.",
+      "Sharing WebP images with systems that expect JPEG.",
+      "Preparing images for uploads.",
+      "Creating compatible copies for everyday use.",
+    ],
+
+    tips: [
+      "JPG does not preserve transparency in the same way as formats that support alpha transparency.",
+      "Choose a suitable JPG quality level for your intended use.",
+      "Keep the original WebP when you may need the original format later.",
+      "Check the resulting file size before uploading it.",
+    ],
+  },
+
+  faq: [
+    {
+      question:
+        "What is a WebP to JPG converter?",
+      answer:
+        "It converts a WebP image into a JPG or JPEG image.",
+    },
+    {
+      question:
+        "Why convert WebP to JPG?",
+      answer:
+        "JPG is widely supported by websites, applications, document systems and upload services.",
+    },
+    {
+      question:
+        "Does WebP to JPG reduce image quality?",
+      answer:
+        "JPG encoding can introduce compression changes. The final result depends on the selected quality and the original image.",
+    },
+    {
+      question:
+        "Does JPG support transparency?",
+      answer:
+        "JPG does not preserve transparency in the same way as image formats that support transparent pixels.",
+    },
+  ],
+},
   {
     slug: "image-resizer",
     name: "Image Resizer",
     shortName: "Resize Image",
     category: "Images",
     status: "available",
+
+    searchIntent: [
+      "resize image",
+      "image resizer",
+      "resize photo",
+      "change image dimensions",
+      "resize jpg",
+      "resize png",
+      "resize webp",
+    ],
+
+    indexable: true,
 
     description:
       "Resize JPG, PNG and WebP images online by changing their width and height for websites, documents, forms, social media and other digital uses.",
@@ -307,6 +462,17 @@ export const tools: ToolDefinition[] = [
     category: "Images",
     status: "available",
 
+    searchIntent: [
+      "remove background",
+      "background remover",
+      "remove image background",
+      "remove photo background",
+      "transparent background",
+      "cut out image",
+    ],
+
+    indexable: true,
+
     description:
       "Remove backgrounds from JPG, PNG and WebP images online and isolate people, products or objects for designs, profiles, presentations and creative projects.",
 
@@ -429,6 +595,17 @@ export const tools: ToolDefinition[] = [
     category: "PDF",
     status: "available",
 
+    searchIntent: [
+      "pdf to word",
+      "pdf to word converter",
+      "convert pdf to word",
+      "pdf to docx",
+      "make pdf editable",
+      "pdf converter",
+    ],
+
+    indexable: true,
+
     description:
       "Convert PDF documents into editable Word-compatible documents for editing, reuse and document workflows.",
 
@@ -542,6 +719,17 @@ export const tools: ToolDefinition[] = [
     shortName: "Compress Video",
     category: "Video",
     status: "available",
+
+    searchIntent: [
+      "compress video",
+      "video compressor",
+      "compress mp4",
+      "reduce video size",
+      "reduce video file size",
+      "compress mov",
+    ],
+
+    indexable: true,
 
     description:
       "Compress MP4, MOV, WebM and MKV videos online to reduce file size for sharing, storage and online publishing while balancing size and visual quality.",
@@ -666,6 +854,17 @@ export const tools: ToolDefinition[] = [
     category: "Images",
     status: "available",
 
+    searchIntent: [
+      "jpg to png",
+      "jpeg to png",
+      "convert jpg to png",
+      "convert jpeg to png",
+      "jpg png converter",
+      "image converter",
+    ],
+
+    indexable: true,
+
     description:
       "Convert JPG and JPEG images to PNG format online when you need a PNG version for editing, graphics, transparency workflows or digital projects.",
 
@@ -778,7 +977,18 @@ export const tools: ToolDefinition[] = [
     name: "PNG to JPG Converter",
     shortName: "PNG to JPG",
     category: "Images",
-    status: "coming-soon",
+    status: "available",
+
+    searchIntent: [
+      "png to jpg",
+      "png to jpeg",
+      "convert png to jpg",
+      "convert png to jpeg",
+      "png jpg converter",
+      "image converter",
+    ],
+
+    indexable: true,
 
     description:
       "Convert PNG images to JPG format online when you need smaller photographic files for websites, uploads, sharing and everyday digital use.",
@@ -891,7 +1101,18 @@ export const tools: ToolDefinition[] = [
     name: "HEIC to JPG Converter",
     shortName: "HEIC to JPG",
     category: "Images",
-    status: "coming-soon",
+    status: "available",
+
+    searchIntent: [
+      "heic to jpg",
+      "heic to jpeg",
+      "convert heic to jpg",
+      "heif to jpg",
+      "iphone photo to jpg",
+      "heic converter",
+    ],
+
+    indexable: true,
 
     description:
       "Convert HEIC images to JPG format for broader compatibility with websites, apps, documents, uploads and devices that do not accept HEIC files.",
@@ -1021,12 +1242,15 @@ export function getToolsByCategory(
 export function getRelatedTools(
   tool: ToolDefinition,
 ): ToolDefinition[] {
-  return tool.relatedTools
+  const relatedTools = tool.relatedTools
     .map((slug) => getToolBySlug(slug))
     .filter(
-      (related): related is ToolDefinition =>
-        Boolean(related),
+      (related): related is ToolDefinition => related !== undefined,
     );
+
+  return relatedTools.filter(
+    (related) => related.status === "available",
+  );
 }
 
 export function getAvailableTools(): ToolDefinition[] {
@@ -1048,6 +1272,38 @@ export function getAvailableToolsByCategory(
     (tool) =>
       tool.category === category &&
       tool.status === "available",
+  );
+}
+
+export function getIndexableTools(): ToolDefinition[] {
+  return tools.filter(
+    (tool) =>
+      tool.status === "available" &&
+      tool.indexable,
+  );
+}
+
+export function getIndexableToolsByCategory(
+  category: ToolCategory,
+): ToolDefinition[] {
+  return getIndexableTools().filter(
+    (tool) => tool.category === category,
+  );
+}
+
+export function getToolsBySearchIntent(
+  intent: string,
+): ToolDefinition[] {
+  const normalizedIntent = intent.trim().toLowerCase();
+
+  if (!normalizedIntent) {
+    return [];
+  }
+
+  return getIndexableTools().filter((tool) =>
+    tool.searchIntent.some(
+      (keyword) => keyword.toLowerCase() === normalizedIntent,
+    ),
   );
 }
 
