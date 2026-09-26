@@ -1,17 +1,14 @@
-import type { Metadata } from "next";
 
+import type { Metadata } from "next";
 import type { ToolDefinition } from "./tools";
 
 /* ============================================================
-   Site identity
+   Site identitys
    ============================================================ */
 
 export const SITE_URL = "https://iclaude.in";
-
 export const SITE_NAME = "iclaude";
-
 export const SITE_LOCALE = "en_IN";
-
 export const DEFAULT_OG_IMAGE = "/iclaude-og-image.png";
 
 /* ============================================================
@@ -40,14 +37,17 @@ export function absoluteUrl(path: string): string {
     return `${SITE_URL}/`;
   }
 
+  // Already an absolute URL
   if (/^https?:\/\//i.test(path)) {
     return path;
   }
 
+  // Normalize leading slashes
   const normalizedPath = `/${path.replace(/^\/+/, "")}`;
 
+  // Static assets should not receive trailing slashes
   const isAsset =
-    /\.(?:png|jpe?g|gif|svg|webp|ico|avif|pdf|txt|xml|json|webmanifest)$/i.test(
+    /\.(png|jpe?g|gif|svg|webp|ico|avif|pdf|txt|xml|json|webmanifest)$/i.test(
       normalizedPath,
     );
 
@@ -55,9 +55,12 @@ export function absoluteUrl(path: string): string {
     return `${SITE_URL}${normalizedPath}`;
   }
 
+  // Website pages use trailing slashes
   const pagePath = normalizedPath.replace(/\/+$/, "");
 
-  return pagePath === "" ? `${SITE_URL}/` : `${SITE_URL}${pagePath}/`;
+  return pagePath === ""
+    ? `${SITE_URL}/`
+    : `${SITE_URL}${pagePath}/`;
 }
 
 /* ============================================================
@@ -67,6 +70,7 @@ export function absoluteUrl(path: string): string {
 export const robotsConfig = {
   index: true,
   follow: true,
+
   googleBot: {
     index: true,
     follow: true,
@@ -96,15 +100,17 @@ function getOgImage(title: string) {
 /**
  * Generates complete metadata for an iclaude tool page.
  */
-export function generateToolMetadata(tool: ToolDefinition): Metadata {
+export function generateToolMetadata(
+  tool: ToolDefinition,
+): Metadata {
   const canonicalUrl = absoluteUrl(tool.href);
+
   const title = tool.seoTitle;
   const description = tool.seoDescription;
 
   return {
     title,
     description,
-
     keywords: tool.keywords,
 
     alternates: {
@@ -157,7 +163,6 @@ export function generatePageMetadata({
   return {
     title,
     description,
-
     keywords,
 
     alternates: {
@@ -192,7 +197,9 @@ export function generatePageMetadata({
 /**
  * Creates BreadcrumbList structured data.
  */
-export function generateBreadcrumbSchema(items: BreadcrumbItem[]) {
+export function generateBreadcrumbSchema(
+  items: BreadcrumbItem[],
+) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -220,20 +227,16 @@ export function generateToolSchema(tool: ToolDefinition) {
 
   return {
     "@context": "https://schema.org",
-
     "@type": "WebApplication",
 
     name: tool.name,
-
     url: toolUrl,
-
     description: tool.description,
 
     applicationCategory: "UtilitiesApplication",
-
     operatingSystem: "Web",
-
-    browserRequirements: "Requires a modern web browser",
+    browserRequirements:
+      "Requires a modern web browser",
 
     isAccessibleForFree: true,
 
@@ -252,7 +255,6 @@ export function generateToolSchema(tool: ToolDefinition) {
     },
 
     featureList: tool.benefits,
-
     keywords: tool.keywords.join(", "),
 
     mainEntityOfPage: {
@@ -272,11 +274,9 @@ export function generateToolSchema(tool: ToolDefinition) {
 export function generateWebsiteSchema() {
   return {
     "@context": "https://schema.org",
-
     "@type": "WebSite",
 
     name: SITE_NAME,
-
     url: `${SITE_URL}/`,
 
     description:
@@ -298,11 +298,9 @@ export function generateOrganizationSchema() {
 
   return {
     "@context": "https://schema.org",
-
     "@type": "Organization",
 
     name: SITE_NAME,
-
     url: `${SITE_URL}/`,
 
     logo: {
@@ -341,13 +339,10 @@ export function generateWebPageSchema({
 
   return {
     "@context": "https://schema.org",
-
     "@type": "WebPage",
 
     name,
-
     description,
-
     url: pageUrl,
 
     isPartOf: {
@@ -380,3 +375,4 @@ export function serializeStructuredData(
 ): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
+

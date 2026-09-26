@@ -2,7 +2,8 @@ export type ToolCategory =
   | "Images"
   | "PDF"
   | "Video"
-  | "AI";
+  | "AI"
+  | "Utilities";
 
 export type ToolStatus =
   | "available"
@@ -315,6 +316,153 @@ export const tools: ToolDefinition[] = [
         "Does JPG support transparency?",
       answer:
         "JPG does not preserve transparency in the same way as image formats that support transparent pixels.",
+    },
+  ],
+},
+
+{
+  slug: "qr-code-generator",
+  name: "QR Code Generator",
+  shortName: "QR Generator",
+  category: "Utilities",
+  status: "available",
+
+  searchIntent: [
+    "qr code generator",
+    "qr code generator online",
+    "create qr code",
+    "make qr code",
+    "free qr code generator",
+    "generate qr code",
+    "qr code maker",
+    "url qr code",
+    "wifi qr code",
+    "whatsapp qr code",
+    "upi qr code",
+  ],
+
+  indexable: true,
+
+  description:
+    "Create QR codes online for URLs, text, WhatsApp, Wi-Fi, email, phone numbers, UPI and contact information. Generate and download your QR code instantly.",
+
+  shortDescription:
+    "Create and download QR codes instantly for links, text, Wi-Fi, WhatsApp and more.",
+
+  seoTitle:
+    "QR Code Generator Online — Create Free QR Codes",
+
+  seoDescription:
+    "Create free QR codes online for URLs, text, WhatsApp, Wi-Fi, email, phone numbers, UPI and contact details. Generate and download QR codes instantly.",
+
+  keywords: [
+    "qr code generator",
+    "qr code generator online",
+    "free qr code generator",
+    "create qr code",
+    "make qr code",
+    "qr code maker",
+    "generate qr code",
+    "url qr code generator",
+    "wifi qr code generator",
+    "whatsapp qr code generator",
+    "upi qr code generator",
+  ],
+
+  icon: "qr-code",
+
+  href: "/qr-code-generator/",
+
+  popularSearches: [
+    "qr code generator",
+    "free qr code generator",
+    "create qr code online",
+    "make a qr code",
+    "qr code generator for URL",
+    "wifi qr code generator",
+    "whatsapp qr code",
+    "upi qr code generator",
+  ],
+
+  supportedFormats: [
+    "URL",
+    "Text",
+    "WhatsApp",
+    "Wi-Fi",
+    "Email",
+    "Phone",
+    "UPI",
+    "vCard",
+  ],
+
+  benefits: [
+    "Create QR codes instantly",
+    "Supports common QR code types",
+    "Download QR codes as images",
+    "Useful for links, Wi-Fi and contact details",
+    "Works on desktop and mobile",
+    "Simple browser-based workflow",
+  ],
+
+  relatedTools: [
+    "image-compressor",
+    "image-resizer",
+  ],
+
+  content: {
+    introduction:
+      "A QR code makes it easy to share information with a quick camera scan. Use this QR code generator to create codes for websites, text, Wi-Fi networks, WhatsApp, email, phone numbers, UPI and contact information.",
+
+    howItWorks: [
+      "Choose the type of QR code you want to create.",
+      "Enter the information you want to encode.",
+      "Generate the QR code instantly in your browser.",
+      "Preview the QR code and check that the information is correct.",
+      "Download the generated QR code.",
+    ],
+
+    useCases: [
+      "Sharing a website or landing page.",
+      "Creating Wi-Fi access QR codes.",
+      "Sharing WhatsApp contact links.",
+      "Creating QR codes for UPI payments.",
+      "Sharing email addresses and phone numbers.",
+      "Creating contact-card QR codes.",
+    ],
+
+    tips: [
+      "Test your QR code with a phone camera before printing or sharing it.",
+      "Use enough contrast between the QR code and its background.",
+      "Keep the QR code large enough to scan comfortably when printing.",
+      "Avoid placing important QR code areas too close to edges or other graphics.",
+    ],
+  },
+
+  faq: [
+    {
+      question: "Is the QR code generator free?",
+      answer:
+        "Yes. You can create QR codes without a paid account.",
+    },
+    {
+      question: "What can I create a QR code for?",
+      answer:
+        "You can create QR codes for URLs, text, Wi-Fi, WhatsApp, email, phone numbers, UPI and contact information.",
+    },
+    {
+      question: "Can I download my QR code?",
+      answer:
+        "Yes. The generated QR code can be downloaded from the tool.",
+    },
+    {
+      question: "Does QR generation require a backend?",
+      answer:
+        "No. QR codes can be generated directly in the browser for this tool.",
+    },
+    {
+      question: "Can I use the QR code on my phone?",
+      answer:
+        "Yes. The generator is designed to work on both desktop and mobile browsers.",
     },
   ],
 },

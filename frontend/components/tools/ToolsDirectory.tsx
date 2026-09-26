@@ -10,7 +10,12 @@ import {
   type ToolCategory,
 } from "@/lib/tools";
 
-type CategoryId = "all" | "images" | "pdf" | "video";
+type CategoryId =
+  | "all"
+  | "images"
+  | "pdf"
+  | "video"
+  | "utilities";
 
 type CategoryConfig = {
   id: Exclude<CategoryId, "all">;
@@ -64,6 +69,19 @@ const categoryConfig: CategoryConfig[] = [
       "from-cyan-500/[0.14] via-sky-500/[0.08] to-blue-500/[0.1]",
     accent: "text-cyan-600",
   },
+  {
+  id: "utilities",
+  category: "Utilities",
+  label: "Everyday tools",
+  shortLabel: "Utilities",
+  eyebrow: "EVERYDAY WORKSPACE",
+  description:
+    "Useful browser-based utilities for everyday tasks, sharing, calculations and digital workflows.",
+  icon: "⌘",
+  gradient:
+    "from-emerald-500/[0.14] via-teal-500/[0.08] to-cyan-500/[0.1]",
+  accent: "text-emerald-600",
+},
 ];
 
 function SearchIcon() {
@@ -320,12 +338,13 @@ export default function ToolsDirectory() {
   const featuredTools = availableTools.slice(0, 3);
 
   const categoryCounts = useMemo(
-    () => ({
-      all: availableTools.length,
-      images: getAvailableToolsByCategory("Images").length,
-      pdf: getAvailableToolsByCategory("PDF").length,
-      video: getAvailableToolsByCategory("Video").length,
-    }),
+  () => ({
+    all: availableTools.length,
+    images: getAvailableToolsByCategory("Images").length,
+    pdf: getAvailableToolsByCategory("PDF").length,
+    video: getAvailableToolsByCategory("Video").length,
+    utilities: getAvailableToolsByCategory("Utilities").length,
+  }),
     [availableTools],
   );
 
@@ -427,13 +446,14 @@ export default function ToolsDirectory() {
             </div>
 
             {/* Category counters */}
-            <div className="iclaude-reveal iclaude-delay-4 mx-auto mt-10 grid max-w-4xl grid-cols-2 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-xl sm:grid-cols-4">
+            <div className="iclaude-reveal iclaude-delay-4 mx-auto mt-10 grid max-w-5xl grid-cols-2 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-xl sm:grid-cols-5">
               {[
-                ["all", categoryCounts.all, "Tools"],
-                ["images", categoryCounts.images, "Images"],
-                ["pdf", categoryCounts.pdf, "PDF"],
-                ["video", categoryCounts.video, "Video"],
-              ].map(([id, count, label], index) => (
+  ["all", categoryCounts.all, "Tools"],
+  ["images", categoryCounts.images, "Images"],
+  ["pdf", categoryCounts.pdf, "PDF"],
+  ["video", categoryCounts.video, "Video"],
+  ["utilities", categoryCounts.utilities, "Utilities"],
+].map(([id, count, label], index) => (
                 <button
                   key={id}
                   type="button"
