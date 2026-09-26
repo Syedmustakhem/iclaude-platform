@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import type { ToolDefinition } from "./tools";
 
 /* ============================================================
-   Site identity
+   Site identityss
    ============================================================ */
 
 export const SITE_URL = "https://iclaude.in";
