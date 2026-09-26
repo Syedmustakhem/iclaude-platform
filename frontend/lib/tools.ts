@@ -487,7 +487,7 @@ export const tools: ToolDefinition[] = [
       "save youtube thumbnail",
     ],
 
-    indexable: false,
+    indexable: true,
 
     description:
       "Download YouTube video thumbnails in available image resolutions by entering a YouTube video URL.",
