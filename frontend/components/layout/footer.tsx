@@ -11,6 +11,7 @@ const toolLinks = [
   ["PDF to Word", "/pdf-to-word/"],
   ["Video Compressor", "/video-compressor/"],
   ["WebP to JPG", "/webp-to-jpg/"],
+  ["QR Code Generator", "/qr-code-generator/"],
 ];
 
 const categoryLinks = [
