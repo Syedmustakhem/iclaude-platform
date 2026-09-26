@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 import StructuredData from "@/components/seo/StructuredData";
 import ToolCard from "@/components/tools/ToolCard";
-
+import MonetagVignette from "@/components/ads/MonetagVignette";
 import {
   generateOrganizationSchema,
   generatePageMetadata,
@@ -571,8 +571,22 @@ const popularTools = popularToolSlugs
               ))}
             </div>
           </div>
-        </section>
+                </section>
 
+        {/* Monetag Vignette Advertisement */}
+        <section className="border-b border-slate-200 bg-white py-8 sm:py-10">
+          <div className="iclaude-container">
+            <div className="mb-3 text-center">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                Advertisement
+              </span>
+            </div>
+
+            <div className="flex justify-center">
+              <MonetagVignette />
+            </div>
+          </div>
+        </section>
 
         <section className="relative overflow-hidden bg-slate-950 py-24 text-white sm:py-32">
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">

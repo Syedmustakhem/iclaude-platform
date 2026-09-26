@@ -139,6 +139,22 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
 
+        {/* Monetag In-Page Push */}
+        <Script
+          id="monetag-ipp"
+          strategy="afterInteractive"
+        >{`
+          (function(s) {
+            s.dataset.zone = '11895151';
+            s.src = 'https://nap5k.com/tag.min.js';
+
+            ([document.documentElement, document.body]
+              .filter(Boolean)
+              .pop()
+              .appendChild(document.createElement('script')));
+          })(document.createElement('script'));
+        `}</Script>
+
         <Navbar />
 
         <div className="min-h-screen">
