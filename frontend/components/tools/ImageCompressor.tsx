@@ -58,6 +58,9 @@ type Preset = {
   quality: number;
   description: string;
 };
+
+type OutputFormat = "jpeg" | "png" | "webp";
+
 const API_BASE_URL = (
   process.env.NEXT_PUBLIC_API_URL ||
   "https://api.iclaude.in/api"
@@ -72,10 +75,26 @@ const ACCEPTED_TYPES = [
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
 const PRESETS: Preset[] = [
-  { label: "Light", quality: 0.45, description: "Smallest file" },
+  { label: "Light", quality: 0.9, description: "More detail" },
   { label: "Balanced", quality: 0.7, description: "Recommended" },
-  { label: "Quality", quality: 0.9, description: "More detail" },
+  { label: "Strong", quality: 0.45, description: "Smallest file" },
 ];
+
+const FORMAT_OPTIONS: {
+  value: OutputFormat;
+  label: string;
+  description: string;
+}[] = [
+  { value: "webp", label: "WebP", description: "Smaller file size" },
+  { value: "jpeg", label: "JPEG", description: "Widest support" },
+  { value: "png", label: "PNG", description: "Lossless (quality slider has no effect)" },
+];
+
+function defaultFormatFor(mimeType: string): OutputFormat {
+  if (mimeType === "image/png") return "png";
+  if (mimeType === "image/jpeg") return "jpeg";
+  return "webp";
+}
 
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 Bytes";
@@ -109,15 +128,14 @@ async function parseApiResponse<T>(response: Response): Promise<ApiResponse<T>> 
   return data;
 }
 
-function getOutputExtension(mimeType: string): string {
-  if (mimeType === "image/png") return "png";
-  if (mimeType === "image/webp") return "webp";
-  return "jpg";
+function getOutputExtension(format: OutputFormat): string {
+  if (format === "jpeg") return "jpg";
+  return format;
 }
 
-function getOutputName(originalName: string, mimeType: string): string {
+function getOutputName(originalName: string, format: OutputFormat): string {
   const base = originalName.replace(/\.[^/.]+$/, "");
-  return `${base}-compressed.${getOutputExtension(mimeType)}`;
+  return `${base}-compressed.${getOutputExtension(format)}`;
 }
 
 export default function ImageCompressor() {
@@ -128,6 +146,7 @@ export default function ImageCompressor() {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [quality, setQuality] = useState(0.7);
+  const [format, setFormat] = useState<OutputFormat>("webp");
   const [isDragging, setIsDragging] = useState(false);
   const [isCompressing, setIsCompressing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -170,6 +189,7 @@ export default function ImageCompressor() {
     previewUrlRef.current = url;
     setFile(selectedFile);
     setPreviewUrl(url);
+    setFormat(defaultFormatFor(selectedFile.type));
   }
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -201,6 +221,13 @@ export default function ImageCompressor() {
   function selectPreset(preset: Preset) {
     if (isCompressing) return;
     setQuality(preset.quality);
+    setError("");
+    clearResult();
+  }
+
+  function selectFormat(value: OutputFormat) {
+    if (isCompressing) return;
+    setFormat(value);
     setError("");
     clearResult();
   }
@@ -275,6 +302,7 @@ export default function ImageCompressor() {
           options: {
             compression: {
               quality: qualityPercent,
+              format,
             },
           },
         }),
@@ -348,7 +376,7 @@ export default function ImageCompressor() {
         originalSize: file.size,
         compressedSize: outputBlob.size,
         reduction,
-        filename: getOutputName(file.name, outputMimeType),
+        filename: getOutputName(file.name, format),
         mimeType: outputMimeType,
       });
       setProgress(100);
@@ -388,6 +416,7 @@ export default function ImageCompressor() {
     setStatusText("");
     setProgress(0);
     setQuality(0.7);
+    setFormat("webp");
     if (inputRef.current) inputRef.current.value = "";
   }
 
@@ -488,12 +517,12 @@ export default function ImageCompressor() {
                   max="1"
                   step="0.05"
                   value={quality}
-                  disabled={isCompressing}
+                  disabled={isCompressing || format === "png"}
                   onChange={(event) => {
                     setQuality(Number(event.target.value));
                     clearResult();
                   }}
-                  className="mt-5 w-full accent-blue-600"
+                  className="mt-5 w-full accent-blue-600 disabled:opacity-40"
                   aria-label="Compression quality"
                 />
 
@@ -502,6 +531,12 @@ export default function ImageCompressor() {
                   <span>Higher quality</span>
                 </div>
 
+                {format === "png" && (
+                  <p className="mt-2 text-[11px] font-medium text-amber-600">
+                    PNG output is lossless — the quality slider has no effect. Choose WebP or JPEG for size-based compression.
+                  </p>
+                )}
+
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   {PRESETS.map((preset) => {
                     const active = Math.abs(quality - preset.quality) < 0.001;
@@ -509,7 +544,7 @@ export default function ImageCompressor() {
                       <button
                         key={preset.label}
                         type="button"
-                        disabled={isCompressing}
+                        disabled={isCompressing || format === "png"}
                         onClick={() => selectPreset(preset)}
                         aria-pressed={active}
                         title={preset.description}
@@ -521,6 +556,33 @@ export default function ImageCompressor() {
                       >
                         <span className="block text-[11px] font-extrabold">{preset.label}</span>
                         <span className="mt-0.5 block text-[9px] font-medium opacity-70">{Math.round(preset.quality * 100)}%</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <span className="text-sm font-semibold text-slate-700">Output format</span>
+
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  {FORMAT_OPTIONS.map((option) => {
+                    const active = format === option.value;
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        disabled={isCompressing}
+                        onClick={() => selectFormat(option.value)}
+                        aria-pressed={active}
+                        title={option.description}
+                        className={`rounded-xl border px-2 py-2.5 text-center transition ${
+                          active
+                            ? "border-blue-200 bg-blue-50 text-blue-700 shadow-sm"
+                            : "border-transparent bg-slate-50 text-slate-500 hover:border-blue-100 hover:bg-blue-50/60 hover:text-blue-700"
+                        } disabled:cursor-not-allowed disabled:opacity-60`}
+                      >
+                        <span className="block text-[11px] font-extrabold">{option.label}</span>
                       </button>
                     );
                   })}
@@ -569,6 +631,7 @@ export default function ImageCompressor() {
                     <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">Original: {formatFileSize(result.originalSize)}</span>
                     <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">Compressed: {formatFileSize(result.compressedSize)}</span>
                     <span className="rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-bold text-emerald-700">{result.reduction.toFixed(1)}% smaller</span>
+                    <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">{format.toUpperCase()}</span>
                   </div>
                 </div>
                 <button type="button" onClick={downloadResult} className="inline-flex min-h-12 w-full shrink-0 items-center justify-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-800 sm:w-auto">
