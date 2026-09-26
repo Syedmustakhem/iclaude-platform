@@ -6,6 +6,10 @@ import Link from "next/link";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { useState } from "react";
 
+/* ============================================================
+   TOOL GROUPS
+   ============================================================ */
+
 const toolGroups = [
   {
     label: "Images",
@@ -30,8 +34,19 @@ const toolGroups = [
         href: "/qr-code-generator/",
         detail: "Create QR codes instantly",
       },
+      {
+        label: "OCR Image to Text",
+        href: "/ocr-image-to-text/",
+        detail: "Extract text from images",
+      },
+      {
+        label: "Image to Text",
+        href: "/image-to-text/",
+        detail: "Convert images into text",
+      },
     ],
   },
+
   {
     label: "Documents",
     items: [
@@ -40,8 +55,29 @@ const toolGroups = [
         href: "/pdf-to-word/",
         detail: "Make PDFs editable",
       },
+      {
+        label: "PDF to Excel",
+        href: "/pdf-to-excel/",
+        detail: "Convert PDFs into spreadsheets",
+      },
+      {
+        label: "PDF to JPG",
+        href: "/pdf-to-jpg/",
+        detail: "Convert PDF pages to images",
+      },
+      {
+        label: "JPG to PDF",
+        href: "/jpg-to-pdf/",
+        detail: "Convert images into PDF files",
+      },
+      {
+        label: "Screenshot to PDF",
+        href: "/screenshot-to-pdf/",
+        detail: "Turn screenshots into PDFs",
+      },
     ],
   },
+
   {
     label: "Video",
     items: [
@@ -49,6 +85,57 @@ const toolGroups = [
         label: "Video Compressor",
         href: "/video-compressor/",
         detail: "Reduce video file size",
+      },
+      {
+        label: "YouTube Thumbnail Downloader",
+        href: "/youtube-thumbnail-downloader/",
+        detail: "Download YouTube thumbnails",
+      },
+      {
+        label: "YouTube Video Downloader",
+        href: "/youtube-video-downloader/",
+        detail: "Download YouTube videos",
+      },
+      {
+        label: "Instagram Video Downloader",
+        href: "/instagram-video-downloader/",
+        detail: "Download Instagram videos",
+      },
+      {
+        label: "TikTok Video Downloader",
+        href: "/tiktok-video-downloader/",
+        detail: "Download TikTok videos",
+      },
+      {
+        label: "Video to GIF",
+        href: "/video-to-gif/",
+        detail: "Convert videos into GIFs",
+      },
+      {
+        label: "GIF to MP4",
+        href: "/gif-to-mp4/",
+        detail: "Convert GIFs into MP4 videos",
+      },
+    ],
+  },
+
+  {
+    label: "Audio & AI",
+    items: [
+      {
+        label: "Audio Cutter",
+        href: "/audio-cutter/",
+        detail: "Cut and trim audio files",
+      },
+      {
+        label: "Speech to Text",
+        href: "/speech-to-text/",
+        detail: "Convert speech into text",
+      },
+      {
+        label: "Text to Speech",
+        href: "/text-to-speech/",
+        detail: "Convert text into natural speech",
       },
     ],
   },
@@ -61,12 +148,17 @@ const navigation = [
   { label: "Contact", href: "/contact/" },
 ];
 
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
 const dropdownVariants: Variants = {
   hidden: {
     opacity: 0,
     y: -8,
     scale: 0.97,
   },
+
   visible: {
     opacity: 1,
     y: 0,
@@ -76,6 +168,7 @@ const dropdownVariants: Variants = {
       ease: [0.22, 1, 0.36, 1],
     },
   },
+
   exit: {
     opacity: 0,
     y: -6,
@@ -89,6 +182,7 @@ const dropdownVariants: Variants = {
 
 const groupVariants: Variants = {
   hidden: {},
+
   visible: {
     transition: {
       staggerChildren: 0.045,
@@ -101,6 +195,7 @@ const itemVariants: Variants = {
     opacity: 0,
     y: 5,
   },
+
   visible: {
     opacity: 1,
     y: 0,
@@ -116,6 +211,7 @@ const mobileContainerVariants: Variants = {
     opacity: 0,
     y: -8,
   },
+
   visible: {
     opacity: 1,
     y: 0,
@@ -125,6 +221,7 @@ const mobileContainerVariants: Variants = {
       staggerChildren: 0.045,
     },
   },
+
   exit: {
     opacity: 0,
     y: -6,
@@ -139,6 +236,7 @@ const mobileItemVariants: Variants = {
     opacity: 0,
     x: -8,
   },
+
   visible: {
     opacity: 1,
     x: 0,
@@ -148,6 +246,10 @@ const mobileItemVariants: Variants = {
     },
   },
 };
+
+/* ============================================================
+   ICONS
+   ============================================================ */
 
 function ArrowIcon({
   className = "h-4 w-4",
@@ -199,10 +301,12 @@ function MenuIcon() {
         d="M4 7h16"
         animate={{ rotate: 0, y: 0 }}
       />
+
       <motion.path
         d="M4 12h16"
         animate={{ opacity: 1 }}
       />
+
       <motion.path
         d="M4 17h16"
         animate={{ rotate: 0, y: 0 }}
@@ -227,11 +331,15 @@ function CloseIcon() {
         animate={{ pathLength: 1 }}
         transition={{ duration: 0.2 }}
       />
+
       <motion.path
         d="m18 6-12 12"
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={{ duration: 0.2, delay: 0.05 }}
+        transition={{
+          duration: 0.2,
+          delay: 0.05,
+        }}
       />
     </svg>
   );
@@ -240,7 +348,7 @@ function CloseIcon() {
 function ToolIcon({
   type,
 }: {
-  type: "image" | "document" | "video";
+  type: "image" | "document" | "video" | "audio";
 }) {
   if (type === "document") {
     return (
@@ -269,8 +377,32 @@ function ToolIcon({
         strokeWidth="1.7"
         aria-hidden="true"
       >
-        <rect x="3" y="6" width="13" height="12" rx="2" />
+        <rect
+          x="3"
+          y="6"
+          width="13"
+          height="12"
+          rx="2"
+        />
+
         <path d="m16 10 5-3v10l-5-3z" />
+      </svg>
+    );
+  }
+
+  if (type === "audio") {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        className="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        aria-hidden="true"
+      >
+        <path d="M9 18V6l10-2v12" />
+        <circle cx="6" cy="18" r="3" />
+        <circle cx="16" cy="16" r="3" />
       </svg>
     );
   }
@@ -284,12 +416,50 @@ function ToolIcon({
       strokeWidth="1.7"
       aria-hidden="true"
     >
-      <rect x="3" y="4" width="18" height="16" rx="2" />
-      <circle cx="8.5" cy="9" r="1.4" />
+      <rect
+        x="3"
+        y="4"
+        width="18"
+        height="16"
+        rx="2"
+      />
+
+      <circle
+        cx="8.5"
+        cy="9"
+        r="1.4"
+      />
+
       <path d="m21 15-5-5-7 7-2-2-4 4" />
     </svg>
   );
 }
+
+/* ============================================================
+   TOOL GROUP ICON TYPE
+   ============================================================ */
+
+function getToolIconType(
+  groupLabel: string,
+): "image" | "document" | "video" | "audio" {
+  if (groupLabel === "Documents") {
+    return "document";
+  }
+
+  if (groupLabel === "Video") {
+    return "video";
+  }
+
+  if (groupLabel === "Audio & AI") {
+    return "audio";
+  }
+
+  return "image";
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -300,12 +470,25 @@ export default function Navbar() {
     setToolsOpen(false);
   }
 
+  /*
+   * Keep the mobile list controlled.
+   *
+   * This prevents the mobile navbar from becoming an extremely
+   * long page now that many tools are being added.
+   */
+  const mobilePopularTools = toolGroups
+    .flatMap((group) => group.items)
+    .slice(0, 8);
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 shadow-[0_8px_30px_rgba(15,23,42,0.04)] backdrop-blur-2xl">
       <div className="iclaude-container">
         <div className="flex h-[76px] items-center justify-between gap-4">
 
-          {/* Logo */}
+          {/* ==================================================
+              LOGO
+              ================================================== */}
+
           <Link
             href="/"
             onClick={closeMenus}
@@ -351,16 +534,24 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop navigation */}
+          {/* ==================================================
+              DESKTOP NAVIGATION
+              ================================================== */}
+
           <nav
             aria-label="Main navigation"
             className="hidden items-center gap-1 md:flex"
           >
-            {/* Tools */}
+            {/* =================================================
+                TOOLS
+                ================================================= */}
+
             <div className="relative">
               <motion.button
                 type="button"
-                onClick={() => setToolsOpen((open) => !open)}
+                onClick={() =>
+                  setToolsOpen((open) => !open)
+                }
                 className="group relative inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-700 transition"
                 whileTap={{ scale: 0.97 }}
                 aria-expanded={toolsOpen}
@@ -400,84 +591,92 @@ export default function Navbar() {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="absolute left-1/2 top-[calc(100%+12px)] z-50 w-[560px] -translate-x-1/2 overflow-hidden rounded-[24px] border border-slate-200 bg-white p-3 shadow-[0_24px_80px_rgba(15,23,42,0.16)]"
+                    className="absolute left-1/2 top-[calc(100%+12px)] z-50 w-[700px] max-w-[calc(100vw-32px)] -translate-x-1/2 overflow-hidden rounded-[24px] border border-slate-200 bg-white p-3 shadow-[0_24px_80px_rgba(15,23,42,0.16)]"
                   >
-                    <motion.div
-                      variants={groupVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className="grid grid-cols-3 gap-2"
-                    >
-                      {toolGroups.map((group) => (
-                        <motion.div
-                          key={group.label}
-                          variants={itemVariants}
-                          className="rounded-2xl bg-slate-50 p-3"
-                        >
-                          <p className="px-2 text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
-                            {group.label}
-                          </p>
+                    {/* Scrollable tool area */}
+                    <div className="max-h-[min(70vh,620px)] overflow-y-auto overscroll-contain pr-1">
+                      <motion.div
+                        variants={groupVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="grid grid-cols-2 gap-2 lg:grid-cols-4"
+                      >
+                        {toolGroups.map((group) => (
+                          <motion.div
+                            key={group.label}
+                            variants={itemVariants}
+                            className="rounded-2xl bg-slate-50 p-3"
+                          >
+                            <p className="px-2 text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                              {group.label}
+                            </p>
 
-                          <div className="mt-2 space-y-1">
-                            {group.items.map((item) => (
-                              <motion.div
-                                key={item.href}
-                                variants={itemVariants}
-                              >
-                                <Link
-                                  href={item.href}
-                                  onClick={closeMenus}
-                                  className="group/item block rounded-xl p-2.5 transition"
+                            <div className="mt-2 space-y-1">
+                              {group.items.map((item) => (
+                                <motion.div
+                                  key={item.href}
+                                  variants={itemVariants}
                                 >
-                                  <motion.span
-                                    className="flex items-center gap-2 text-xs font-bold text-slate-800"
-                                    whileHover={{ x: 3 }}
-                                    transition={{
-                                      type: "spring",
-                                      stiffness: 400,
-                                      damping: 25,
-                                    }}
+                                  <Link
+                                    href={item.href}
+                                    onClick={closeMenus}
+                                    className="group/item block rounded-xl p-2.5 transition hover:bg-white"
                                   >
                                     <motion.span
-                                      className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-blue-600 shadow-sm"
-                                      whileHover={{
-                                        scale: 1.08,
-                                        rotate: -3,
-                                      }}
+                                      className="flex items-center gap-2 text-xs font-bold text-slate-800"
+                                      whileHover={{ x: 3 }}
                                       transition={{
                                         type: "spring",
                                         stiffness: 400,
-                                        damping: 18,
+                                        damping: 25,
                                       }}
                                     >
-                                      <ToolIcon
-                                        type={
-                                          group.label === "Documents"
-                                            ? "document"
-                                            : group.label === "Video"
-                                              ? "video"
-                                              : "image"
-                                        }
-                                      />
+                                      <motion.span
+                                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white text-blue-600 shadow-sm"
+                                        whileHover={{
+                                          scale: 1.08,
+                                          rotate: -3,
+                                        }}
+                                        transition={{
+                                          type: "spring",
+                                          stiffness: 400,
+                                          damping: 18,
+                                        }}
+                                      >
+                                        <ToolIcon
+                                          type={getToolIconType(
+                                            group.label,
+                                          )}
+                                        />
+                                      </motion.span>
+
+                                      <span>
+                                        {item.label}
+                                      </span>
                                     </motion.span>
 
-                                    {item.label}
-                                  </motion.span>
+                                    <span className="mt-1 block pl-9 text-[10px] leading-4 text-slate-500">
+                                      {item.detail}
+                                    </span>
+                                  </Link>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    </div>
 
-                                  <span className="mt-1 block pl-9 text-[10px] leading-4 text-slate-500">
-                                    {item.detail}
-                                  </span>
-                                </Link>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-
+                    {/* Complete toolbox CTA */}
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      initial={{
+                        opacity: 0,
+                        y: 8,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
                       transition={{
                         delay: 0.16,
                         duration: 0.2,
@@ -507,7 +706,10 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* Other links */}
+            {/* =================================================
+                OTHER LINKS
+                ================================================= */}
+
             {navigation.slice(1).map((item) => (
               <Link
                 key={item.href}
@@ -520,13 +722,18 @@ export default function Navbar() {
                   className="absolute bottom-1 left-4 right-4 h-[2px] origin-left rounded-full bg-blue-600"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{
+                    duration: 0.2,
+                  }}
                 />
               </Link>
             ))}
           </nav>
 
-          {/* Desktop CTA */}
+          {/* ==================================================
+              DESKTOP CTA
+              ================================================== */}
+
           <motion.div
             className="hidden md:block"
             whileHover={{
@@ -555,19 +762,31 @@ export default function Navbar() {
             </Link>
           </motion.div>
 
-          {/* Mobile menu button */}
+          {/* ==================================================
+              MOBILE MENU BUTTON
+              ================================================== */}
+
           <motion.button
             type="button"
-            onClick={() => setMobileOpen((open) => !open)}
+            onClick={() =>
+              setMobileOpen((open) => !open)
+            }
             className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm md:hidden"
             whileTap={{ scale: 0.9 }}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-label={
+              mobileOpen ? "Close menu" : "Open menu"
+            }
             aria-expanded={mobileOpen}
             aria-controls="mobile-navigation"
           >
-            <AnimatePresence mode="wait" initial={false}>
+            <AnimatePresence
+              mode="wait"
+              initial={false}
+            >
               <motion.span
-                key={mobileOpen ? "close" : "menu"}
+                key={
+                  mobileOpen ? "close" : "menu"
+                }
                 initial={{
                   opacity: 0,
                   rotate: -45,
@@ -587,13 +806,20 @@ export default function Navbar() {
                   duration: 0.16,
                 }}
               >
-                {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+                {mobileOpen ? (
+                  <CloseIcon />
+                ) : (
+                  <MenuIcon />
+                )}
               </motion.span>
             </AnimatePresence>
           </motion.button>
         </div>
 
-        {/* Mobile navigation */}
+        {/* ====================================================
+            MOBILE NAVIGATION
+            ==================================================== */}
+
         <AnimatePresence initial={false}>
           {mobileOpen && (
             <motion.div
@@ -624,6 +850,7 @@ export default function Navbar() {
                 exit="exit"
                 className="border-t border-slate-100 pb-5 pt-4"
               >
+                {/* Main links */}
                 <div className="grid gap-1 rounded-2xl border border-slate-200/80 bg-white p-2 shadow-[0_12px_35px_rgba(15,23,42,0.06)]">
                   {navigation.map((item) => (
                     <motion.div
@@ -648,19 +875,35 @@ export default function Navbar() {
                   ))}
                 </div>
 
-                {/* Mobile popular tools */}
+                {/* =================================================
+                    MOBILE POPULAR TOOLS
+
+                    Only a limited number are displayed here so
+                    adding more tools does not make the mobile
+                    navbar excessively long.
+                    ================================================= */}
+
                 <motion.div
                   variants={mobileItemVariants}
                   className="mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-3"
                 >
-                  <p className="px-2 text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
-                    Popular tools
-                  </p>
+                  <div className="flex items-center justify-between px-2">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
+                      Popular tools
+                    </p>
+
+                    <Link
+                      href="/tools/"
+                      onClick={closeMenus}
+                      className="text-[10px] font-bold text-blue-600"
+                    >
+                      View all
+                    </Link>
+                  </div>
 
                   <div className="mt-2 grid gap-1">
-                    {toolGroups
-                      .flatMap((group) => group.items)
-                      .map((item) => (
+                    {mobilePopularTools.map(
+                      (item) => (
                         <motion.div
                           key={item.href}
                           variants={mobileItemVariants}
@@ -673,11 +916,18 @@ export default function Navbar() {
                             {item.label}
                           </Link>
                         </motion.div>
-                      ))}
+                      ),
+                    )}
                   </div>
                 </motion.div>
 
-                <motion.div variants={mobileItemVariants}>
+                {/* =================================================
+                    MOBILE CTA
+                    ================================================= */}
+
+                <motion.div
+                  variants={mobileItemVariants}
+                >
                   <Link
                     href="/tools/"
                     onClick={closeMenus}

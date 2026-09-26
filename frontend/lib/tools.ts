@@ -3,7 +3,10 @@ export type ToolCategory =
   | "PDF"
   | "Video"
   | "AI"
-  | "Utilities";
+  | "Audio"
+  | "Text"
+  | "Utilities"
+  | "Social Media";
 
 export type ToolStatus =
   | "available"
@@ -466,6 +469,141 @@ export const tools: ToolDefinition[] = [
     },
   ],
 },
+  {
+    slug: "youtube-thumbnail-downloader",
+    name: "YouTube Thumbnail Downloader",
+    shortName: "YouTube Thumbnail",
+    category: "Social Media",
+    status: "available",
+
+    searchIntent: [
+      "youtube thumbnail downloader",
+      "download youtube thumbnail",
+      "youtube thumbnail download",
+      "youtube thumbnail downloader online",
+      "download youtube video thumbnail",
+      "youtube thumbnail image downloader",
+      "get youtube thumbnail",
+      "save youtube thumbnail",
+    ],
+
+    indexable: false,
+
+    description:
+      "Download YouTube video thumbnails in available image resolutions by entering a YouTube video URL.",
+
+    shortDescription:
+      "Download YouTube thumbnails quickly from a video URL.",
+
+    seoTitle:
+      "YouTube Thumbnail Downloader — Download HD Thumbnails",
+
+    seoDescription:
+      "Download YouTube video thumbnails online by entering a YouTube video URL. Get available thumbnail images in your browser.",
+
+    keywords: [
+      "youtube thumbnail downloader",
+      "download youtube thumbnail",
+      "youtube thumbnail download",
+      "youtube thumbnail downloader online",
+      "youtube thumbnail image",
+      "youtube thumbnail HD",
+      "youtube thumbnail full HD",
+      "get youtube thumbnail",
+      "save youtube thumbnail",
+    ],
+
+    icon: "youtube-thumbnail",
+
+    href: "/youtube-thumbnail-downloader/",
+
+    popularSearches: [
+      "youtube thumbnail downloader",
+      "download youtube thumbnail",
+      "youtube thumbnail download",
+      "youtube thumbnail HD",
+      "download YouTube thumbnail image",
+      "get YouTube thumbnail",
+    ],
+
+    supportedFormats: [
+      "JPG",
+      "JPEG",
+      "PNG",
+      "WebP",
+    ],
+
+    benefits: [
+      "Download YouTube thumbnail images",
+      "Works from a YouTube video URL",
+      "Preview available thumbnail images",
+      "Download thumbnail images directly",
+      "Simple browser-based workflow",
+      "No video download required",
+    ],
+
+    relatedTools: [
+      "image-compressor",
+      "image-resizer",
+      "webp-to-jpg",
+    ],
+
+    content: {
+      introduction:
+        "YouTube videos use thumbnail images to represent their content. A YouTube thumbnail downloader can help retrieve the available thumbnail image associated with a public YouTube video for legitimate personal, design or reference purposes.",
+
+      howItWorks: [
+        "Copy the URL of a YouTube video.",
+        "Paste the video URL into the downloader.",
+        "The tool identifies the associated thumbnail images.",
+        "Preview the available thumbnail resolution.",
+        "Download the thumbnail image you need.",
+      ],
+
+      useCases: [
+        "Saving a thumbnail for personal reference.",
+        "Reviewing thumbnail designs.",
+        "Creating design references.",
+        "Preparing images for legitimate content workflows.",
+        "Downloading an available thumbnail image from a video you manage.",
+      ],
+
+      tips: [
+        "Use the original YouTube video URL whenever possible.",
+        "Check the image resolution before downloading.",
+        "Respect copyright and the creator's rights when reusing thumbnails.",
+        "Use downloaded thumbnails only where you have appropriate permission.",
+      ],
+    },
+
+    faq: [
+      {
+        question: "What is a YouTube thumbnail downloader?",
+        answer:
+          "A YouTube thumbnail downloader retrieves an available thumbnail image associated with a YouTube video URL.",
+      },
+      {
+        question: "How do I download a YouTube thumbnail?",
+        answer:
+          "Enter a valid YouTube video URL into the tool, preview the available thumbnail image and download the resolution you need.",
+      },
+      {
+        question: "Can I download HD YouTube thumbnails?",
+        answer:
+          "The available resolution depends on the thumbnail images provided for the YouTube video.",
+      },
+      {
+        question: "Do I need to download the YouTube video?",
+        answer:
+          "No. A thumbnail downloader is designed to retrieve the thumbnail image rather than download the video itself.",
+      },
+      {
+        question: "Can I reuse downloaded YouTube thumbnails?",
+        answer:
+          "Thumbnail images may be protected by copyright. Make sure you have the appropriate rights or permission before reusing someone else's thumbnail.",
+      },
+    ],
+  },
   {
     slug: "image-resizer",
     name: "Image Resizer",
