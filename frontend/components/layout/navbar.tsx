@@ -303,9 +303,26 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
 
+  /**
+   * Which mobile tool category is expanded.
+   *
+   * Collapsed (null) by default so the mobile menu
+   * opens compact instead of rendering every tool
+   * card from every category all at once.
+   */
+  const [expandedGroup, setExpandedGroup] = useState<
+    string | null
+  >(null);
+
   function closeMenus() {
     setMobileOpen(false);
     setToolsOpen(false);
+  }
+
+  function toggleGroup(label: string) {
+    setExpandedGroup((current) =>
+      current === label ? null : label,
+    );
   }
 
   useEffect(() => {
@@ -328,14 +345,44 @@ export default function Navbar() {
     };
   }, []);
 
+  /**
+   * Scroll lock while the mobile menu is open.
+   *
+   * A bare `overflow: hidden` on body still lets iOS
+   * Safari rubber-band/bounce-scroll behind a fixed
+   * overlay, which reads as stutter. Pinning body to
+   * `position: fixed` at its current scroll offset
+   * (and restoring it on close) avoids that.
+   */
   useEffect(() => {
-    document.body.style.overflow = mobileOpen
-      ? "hidden"
-      : "";
+    if (!mobileOpen) {
+      return;
+    }
+
+    const scrollY = window.scrollY;
+    const body = document.body;
+
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
 
     return () => {
-      document.body.style.overflow = "";
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
+
+      window.scrollTo(0, scrollY);
     };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen) {
+      setExpandedGroup(null);
+    }
   }, [mobileOpen]);
 
   return (
@@ -586,127 +633,212 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile navigation */}
+          {/*
+            Mobile navigation.
+
+            Animates via CSS grid-template-rows
+            (0fr -> 1fr) instead of max-height. A
+            grid-rows transition only ever animates
+            between those two keyframes regardless of
+            actual content height, so it stays smooth
+            no matter how tall the menu content is,
+            unlike animating max-height across an
+            arbitrary large value, which is what
+            caused the lag.
+          */}
           <div
             id="mobile-navigation"
-            className={`overflow-hidden transition-[max-height,opacity,transform] duration-300 ease-out md:hidden ${
+            className={`grid transition-[grid-template-rows] duration-300 ease-out md:hidden ${
               mobileOpen
-                ? "max-h-[calc(100vh-74px)] translate-y-0 overflow-y-auto opacity-100"
-                : "pointer-events-none max-h-0 -translate-y-2 opacity-0"
+                ? "grid-rows-[1fr]"
+                : "grid-rows-[0fr]"
             }`}
           >
-            <nav
-              aria-label="Mobile navigation"
-              className="border-t border-slate-100 pb-5 pt-3"
-            >
-              <div className="grid gap-1 rounded-[22px] border border-slate-200/80 bg-white p-2 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={closeMenus}
-                    className="group flex min-h-12 items-center justify-between rounded-xl px-3.5 py-3 text-sm font-semibold text-slate-700 outline-none transition duration-200 hover:bg-slate-50 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.985]"
-                  >
-                    <span>{item.label}</span>
+            <div className="overflow-hidden">
+              <div className="max-h-[calc(100dvh-74px)] overflow-y-auto overscroll-contain">
+                <nav
+                  aria-label="Mobile navigation"
+                  className="border-t border-slate-100 pb-5 pt-3"
+                >
+                  <div className="grid gap-1 rounded-[22px] border border-slate-200/80 bg-white p-2 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={closeMenus}
+                        className="group flex min-h-12 items-center justify-between rounded-xl px-3.5 py-3 text-sm font-semibold text-slate-700 outline-none transition duration-200 hover:bg-slate-50 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.985]"
+                      >
+                        <span>{item.label}</span>
 
-                    <span className="text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-blue-500">
-                      <ArrowIcon />
-                    </span>
-                  </Link>
-                ))}
-              </div>
+                        <span className="text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-blue-500">
+                          <ArrowIcon />
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
 
-              <div className="mt-3 overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50/90 p-3 shadow-[0_14px_40px_rgba(15,23,42,0.05)]">
-                <div className="flex items-end justify-between px-2">
-                  <div>
-                    <p className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-blue-600">
-                      <SparkIcon />
-                      Quick access
-                    </p>
+                  <div className="mt-3 overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50/90 p-3 shadow-[0_14px_40px_rgba(15,23,42,0.05)]">
+                    <div className="flex items-end justify-between px-2">
+                      <div>
+                        <p className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.16em] text-blue-600">
+                          <SparkIcon />
+                          Quick access
+                        </p>
 
-                    <p className="mt-1 text-sm font-extrabold tracking-tight text-slate-950">
-                      Popular tools
-                    </p>
+                        <p className="mt-1 text-sm font-extrabold tracking-tight text-slate-950">
+                          Popular tools
+                        </p>
+                      </div>
+
+                      <Link
+                        href="/tools/"
+                        onClick={closeMenus}
+                        className="rounded-md px-1 py-1 text-[11px] font-bold text-slate-500 outline-none transition hover:text-blue-600 focus-visible:ring-2 focus-visible:ring-blue-500"
+                      >
+                        View all
+                      </Link>
+                    </div>
+
+                    {/*
+                      Accordion: each category is
+                      collapsed by default. Tapping a
+                      header expands just that one
+                      category instead of the mobile
+                      menu rendering every tool card
+                      from every category at once.
+                    */}
+                    <div className="mt-3 space-y-2">
+                      {toolGroups.map((group) => {
+                        const isExpanded =
+                          expandedGroup ===
+                          group.label;
+
+                        return (
+                          <div
+                            key={group.label}
+                            className="overflow-hidden rounded-[18px] border border-slate-200/80 bg-white"
+                          >
+                            <button
+                              type="button"
+                              onClick={() =>
+                                toggleGroup(
+                                  group.label,
+                                )
+                              }
+                              aria-expanded={
+                                isExpanded
+                              }
+                              className="flex min-h-14 w-full items-center justify-between gap-2 px-3 py-3 text-left outline-none transition duration-200 active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-blue-500"
+                            >
+                              <span className="flex items-center gap-2.5">
+                                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-950 text-blue-300">
+                                  <ToolIcon
+                                    type={
+                                      group.type
+                                    }
+                                    className="h-[18px] w-[18px]"
+                                  />
+                                </span>
+
+                                <span>
+                                  <span className="block text-xs font-extrabold text-slate-900">
+                                    {group.label}
+                                  </span>
+
+                                  <span className="mt-0.5 block text-[10px] leading-4 text-slate-500">
+                                    {
+                                      group.description
+                                    }
+                                  </span>
+                                </span>
+                              </span>
+
+                              <span
+                                className={`shrink-0 text-slate-400 transition-transform duration-200 ${
+                                  isExpanded
+                                    ? "rotate-180"
+                                    : ""
+                                }`}
+                              >
+                                <ChevronIcon
+                                  open={
+                                    isExpanded
+                                  }
+                                />
+                              </span>
+                            </button>
+
+                            <div
+                              className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+                                isExpanded
+                                  ? "grid-rows-[1fr]"
+                                  : "grid-rows-[0fr]"
+                              }`}
+                            >
+                              <div className="overflow-hidden">
+                                <div className="grid grid-cols-1 gap-2 px-3 pb-3 sm:grid-cols-2">
+                                  {group.items.map(
+                                    (item) => (
+                                      <Link
+                                        key={
+                                          item.href
+                                        }
+                                        href={
+                                          item.href
+                                        }
+                                        onClick={
+                                          closeMenus
+                                        }
+                                        className="group flex min-h-[60px] items-center gap-3 rounded-[16px] border border-slate-200/80 bg-slate-50/60 px-3 py-2.5 outline-none transition duration-200 hover:border-blue-200 hover:bg-white focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.985]"
+                                      >
+                                        <span className="min-w-0">
+                                          <span className="block truncate text-xs font-extrabold text-slate-900">
+                                            {
+                                              item.label
+                                            }
+                                          </span>
+
+                                          <span className="mt-0.5 block truncate text-[10px] leading-4 text-slate-500">
+                                            {
+                                              item.detail
+                                            }
+                                          </span>
+                                        </span>
+
+                                        <span className="ml-auto shrink-0 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-blue-500">
+                                          <ArrowIcon className="h-3.5 w-3.5" />
+                                        </span>
+                                      </Link>
+                                    ),
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   <Link
                     href="/tools/"
                     onClick={closeMenus}
-                    className="rounded-md px-1 py-1 text-[11px] font-bold text-slate-500 outline-none transition hover:text-blue-600 focus-visible:ring-2 focus-visible:ring-blue-500"
+                    className="group mt-3 flex min-h-12 items-center justify-center gap-2 rounded-[18px] bg-slate-950 px-4 py-3.5 text-sm font-extrabold text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] outline-none transition duration-300 hover:bg-blue-600 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-[0.985]"
                   >
-                    View all
+                    <span>Explore the complete toolbox</span>
+
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">
+                      <ArrowIcon />
+                    </span>
                   </Link>
-                </div>
 
-                <div className="mt-3 space-y-4">
-                  {toolGroups.map((group) => (
-                    <div key={group.label}>
-                      <div className="mb-2 flex items-center gap-2 px-1">
-                        <span className="text-blue-600">
-                          <ToolIcon
-                            type={group.type}
-                            className="h-4 w-4"
-                          />
-                        </span>
-
-                        <span className="text-[10px] font-black uppercase tracking-[0.14em] text-slate-500">
-                          {group.label}
-                        </span>
-                      </div>
-
-                      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                        {group.items.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={closeMenus}
-                            className="group flex min-h-[68px] items-center gap-3 rounded-[18px] border border-slate-200/80 bg-white px-3 py-2.5 shadow-sm outline-none transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md focus-visible:ring-2 focus-visible:ring-blue-500 active:scale-[0.985]"
-                          >
-                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-950 text-blue-300 transition duration-200 group-hover:bg-blue-600 group-hover:text-white">
-                              <ToolIcon
-                                type={group.type}
-                                className="h-[18px] w-[18px]"
-                              />
-                            </span>
-
-                            <span className="min-w-0">
-                              <span className="block truncate text-xs font-extrabold text-slate-900">
-                                {item.label}
-                              </span>
-
-                              <span className="mt-0.5 block truncate text-[10px] leading-4 text-slate-500">
-                                {item.detail}
-                              </span>
-                            </span>
-
-                            <span className="ml-auto shrink-0 text-slate-300 transition duration-200 group-hover:translate-x-0.5 group-hover:text-blue-500">
-                              <ArrowIcon className="h-3.5 w-3.5" />
-                            </span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                  <p className="mt-3 text-center text-[10px] font-semibold text-slate-400">
+                    Fast tools&nbsp; • &nbsp;Simple workflow&nbsp; • &nbsp;Built for
+                    everyday files
+                  </p>
+                </nav>
               </div>
-
-              <Link
-                href="/tools/"
-                onClick={closeMenus}
-                className="group mt-3 flex min-h-12 items-center justify-center gap-2 rounded-[18px] bg-slate-950 px-4 py-3.5 text-sm font-extrabold text-white shadow-[0_14px_30px_rgba(15,23,42,0.18)] outline-none transition duration-300 hover:bg-blue-600 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:scale-[0.985]"
-              >
-                <span>Explore the complete toolbox</span>
-
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowIcon />
-                </span>
-              </Link>
-
-              <p className="mt-3 text-center text-[10px] font-semibold text-slate-400">
-                Fast tools&nbsp; • &nbsp;Simple workflow&nbsp; • &nbsp;Built for
-                everyday files
-              </p>
-            </nav>
+            </div>
           </div>
         </div>
       </div>
