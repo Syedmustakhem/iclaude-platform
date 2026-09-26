@@ -58,6 +58,8 @@ type JobResponse = {
   };
 };
 
+type OutputFormat = "jpeg" | "png" | "webp";
+
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://127.0.0.1:8787/api";
@@ -69,6 +71,22 @@ const ACCEPTED_TYPES = [
 ];
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
+
+const FORMAT_OPTIONS: {
+  value: OutputFormat;
+  label: string;
+  description: string;
+}[] = [
+  { value: "webp", label: "WebP", description: "Smaller file size" },
+  { value: "jpeg", label: "JPEG", description: "Widest support" },
+  { value: "png", label: "PNG", description: "Lossless, supports transparency" },
+];
+
+function defaultFormatFor(mimeType: string): OutputFormat {
+  if (mimeType === "image/png") return "png";
+  if (mimeType === "image/jpeg") return "jpeg";
+  return "webp";
+}
 
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 Bytes";
@@ -131,6 +149,15 @@ async function parseApiResponse<T>(
   return data;
 }
 
+function getOutputName(
+  originalName: string,
+  format: OutputFormat,
+): string {
+  const base = originalName.replace(/\.[^/.]+$/, "");
+  const extension = format === "jpeg" ? "jpg" : format;
+  return `${base}-resized.${extension}`;
+}
+
 export default function ImageResizer() {
   const inputRef =
     useRef<HTMLInputElement>(null);
@@ -161,6 +188,9 @@ export default function ImageResizer() {
 
   const [lockAspectRatio, setLockAspectRatio] =
     useState(true);
+
+  const [format, setFormat] =
+    useState<OutputFormat>("webp");
 
   const [isDragging, setIsDragging] =
     useState(false);
@@ -286,6 +316,7 @@ export default function ImageResizer() {
 
     setFile(selectedFile);
     setPreviewUrl(url);
+    setFormat(defaultFormatFor(selectedFile.type));
 
     loadImageDimensions(
       selectedFile,
@@ -404,6 +435,12 @@ export default function ImageResizer() {
     }
   }
 
+  function selectFormat(value: OutputFormat) {
+    if (isResizing) return;
+    setFormat(value);
+    clearResult();
+  }
+
   async function resizeImage() {
     if (!file) {
       setError(
@@ -471,10 +508,6 @@ export default function ImageResizer() {
       const sessionId =
         getSessionId();
 
-      /*
-       * 1. Ask backend for an R2 upload URL.
-       */
-
       const presignResponse =
         await fetch(
           `${API_BASE_URL}/uploads/presign`,
@@ -507,10 +540,6 @@ export default function ImageResizer() {
 
       setProgress(15);
 
-      /*
-       * 2. Upload directly to R2.
-       */
-
       const uploadResponse =
         await fetch(
           presign.data.uploadUrl,
@@ -531,10 +560,6 @@ export default function ImageResizer() {
       }
 
       setProgress(35);
-
-      /*
-       * 3. Confirm the uploaded file.
-       */
 
       const confirmResponse =
         await fetch(
@@ -570,10 +595,6 @@ export default function ImageResizer() {
 
       setProgress(45);
 
-      /*
-       * 4. Create the processing job.
-       */
-
       const jobResponse =
         await fetch(
           `${API_BASE_URL}/jobs`,
@@ -595,6 +616,7 @@ export default function ImageResizer() {
                   height:
                     targetHeight,
                   fit: "contain",
+                  format,
                 },
               },
             }),
@@ -611,10 +633,6 @@ export default function ImageResizer() {
           "The processing job could not be created.",
         );
       }
-
-      /*
-       * 5. Poll the processing job.
-       */
 
       const jobId =
         job.data.jobId;
@@ -715,25 +733,15 @@ export default function ImageResizer() {
         );
       }
 
-      /*
-       * 6. Download the generated output.
-       *
-       * The backend currently produces:
-       * outputs/{jobId}/resized.webp
-       *
-       * We use the download endpoint rather than
-       * trying to access R2 directly from the browser.
-       */
-
       const downloadResponse =
-  await fetch(
-    `${API_BASE_URL}/files/${encodeURIComponent(
-      completedJob.outputFileId,
-    )}/download`,
-    {
-      method: "GET",
-    },
-  );
+        await fetch(
+          `${API_BASE_URL}/files/${encodeURIComponent(
+            completedJob.outputFileId,
+          )}/download`,
+          {
+            method: "GET",
+          },
+        );
 
       if (!downloadResponse.ok) {
         throw new Error(
@@ -765,7 +773,7 @@ export default function ImageResizer() {
         width: targetWidth,
         height: targetHeight,
         size: outputBlob.size,
-        filename: `resized-${targetWidth}x${targetHeight}.webp`,
+        filename: getOutputName(file.name, format),
       });
     } catch (resizeError) {
       console.error(
@@ -823,6 +831,7 @@ export default function ImageResizer() {
     setWidth("");
     setHeight("");
     setLockAspectRatio(true);
+    setFormat("webp");
     setError("");
     setProgress(0);
   }
@@ -1070,6 +1079,42 @@ export default function ImageResizer() {
                 </span>
               </button>
 
+              <div className="mt-5">
+                <span className="text-xs font-bold text-slate-600">
+                  Output format
+                </span>
+
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {FORMAT_OPTIONS.map((option) => {
+                    const active = format === option.value;
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        disabled={isResizing}
+                        onClick={() => selectFormat(option.value)}
+                        aria-pressed={active}
+                        title={option.description}
+                        className={[
+                          "rounded-xl border px-2 py-2.5 text-center transition",
+                          active
+                            ? "border-blue-200 bg-blue-50 text-blue-700 shadow-sm"
+                            : "border-transparent bg-slate-50 text-slate-500 hover:border-blue-100 hover:bg-blue-50/60 hover:text-blue-700",
+                          "disabled:cursor-not-allowed disabled:opacity-60",
+                        ].join(" ")}
+                      >
+                        <span className="block text-[11px] font-extrabold">
+                          {option.label}
+                        </span>
+                        <span className="mt-0.5 block text-[9px] font-medium opacity-70">
+                          {option.description}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {isResizing && (
                 <div className="mt-5">
                   <div className="mb-2 flex items-center justify-between text-xs font-semibold text-slate-500">
@@ -1155,7 +1200,7 @@ export default function ImageResizer() {
                     </span>
 
                     <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">
-                      WebP
+                      {format.toUpperCase()}
                     </span>
                   </div>
                 </div>
