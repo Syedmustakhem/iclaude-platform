@@ -1,12 +1,16 @@
+
 import type { MetadataRoute } from "next";
+
 import { SITE_URL } from "@/lib/seo";
-import { tools } from "@/lib/tools";
+import { getIndexableTools } from "@/lib/tools";
 import { guides } from "@/lib/guides";
 
 export const dynamic = "force-static";
 
 function pageUrl(path: string): string {
-  if (!path || path === "/") return `${SITE_URL}/`;
+  if (!path || path === "/") {
+    return `${SITE_URL}/`;
+  }
 
   const normalizedPath = `/${path.replace(/^\/+/, "")}`;
   const cleanPath = normalizedPath.replace(/\/+$/, "");
@@ -62,14 +66,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const toolPages: MetadataRoute.Sitemap = tools
-    .filter((tool) => tool.status === "available")
-    .map((tool) => ({
+  /*
+   * Only genuinely indexable tools belong in the sitemap.
+   *
+   * Registry rule:
+   * available + indexable=true → sitemap
+   * coming-soon / indexable=false → excluded
+   */
+  const toolPages: MetadataRoute.Sitemap = getIndexableTools().map(
+    (tool) => ({
       url: pageUrl(tool.href),
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.9,
-    }));
+    }),
+  );
 
   const guidePages: MetadataRoute.Sitemap = guides.map((guide) => ({
     url: pageUrl(`/guides/${guide.slug}`),
@@ -80,3 +91,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...staticPages, ...toolPages, ...guidePages];
 }
+

@@ -12,6 +12,7 @@ const toolLinks = [
   ["Video Compressor", "/video-compressor/"],
   ["WebP to JPG", "/webp-to-jpg/"],
   ["QR Code Generator", "/qr-code-generator/"],
+  ["YouTube Thumbnail Downloader", "/youtube-thumbnail-downloader/"],
 ];
 
 const categoryLinks = [

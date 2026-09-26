@@ -4,52 +4,40 @@ import type { Metadata } from "next";
 
 import StructuredData from "@/components/seo/StructuredData";
 import ToolCard from "@/components/tools/ToolCard";
-import MonetagVignette from "@/components/ads/MonetagVignette";
+
 import {
   generateOrganizationSchema,
   generatePageMetadata,
   generateWebsiteSchema,
 } from "@/lib/seo";
-import {
-  getRequiredToolBySlug,
-  getAvailableTools,
-} from "@/lib/tools";
-import {
-  getToolBySlug,
-} from "@/lib/tools";
+import { tools } from "@/lib/tools";
+
 export const metadata: Metadata = generatePageMetadata({
-  title: "Free Online Tools for Images, PDF, Video & More",
+  title: "Free Online File Tools for Images, PDF & Video",
   description:
-  "Free online tools to compress, resize, convert and transform images, PDFs, videos and everyday digital files.",
+    "Compress, resize, convert and transform your files with fast, focused online tools for images, PDFs and videos.",
   path: "/",
- keywords: [
-  "free online tools",
-  "online file tools",
-  "image compressor",
-  "image resizer",
-  "background remover",
-  "PDF to Word converter",
-  "video compressor",
-  "QR code generator",
-  "free QR code generator",
-  "QR code maker",
-  "create QR code online",
-  "compress image online",
-  "resize image online",
-  "convert PDF online",
-],
+  keywords: [
+    "free online tools",
+    "online file tools",
+    "image compressor",
+    "image resizer",
+    "background remover",
+    "PDF to Word converter",
+    "video compressor",
+    "compress image online",
+    "resize image online",
+    "convert PDF online",
+  ],
 });
 
 const popularToolSlugs = [
   "image-compressor",
   "image-resizer",
-  "jpg-to-png",
-  "png-to-jpg",
-  "heic-to-jpg",
   "remove-background",
   "pdf-to-word",
   "video-compressor",
-   "qr-code-generator",
+  "youtube-thumbnail-downloader",
 ];
 
 const workflowGroups = [
@@ -74,17 +62,6 @@ const workflowGroups = [
     accent: "cyan",
     tools: ["Compress video", "Reduce file size", "Share with ease"],
   },
-  {
-  title: "QR tools",
-  description: "Create QR codes for links, sharing and everyday use.",
-  href: "/qr-code-generator/",
-  accent: "emerald",
-  tools: [
-    "Generate QR codes",
-    "Create codes from links",
-    "Download QR images",
-  ],
-},
 ];
 
 const nextWorkflows = [
@@ -123,12 +100,12 @@ const fileMoments = [
     icon: "video",
   },
   {
-  title: "Share a link with a QR code",
-  text: "Create a QR code from a URL or text and download it for sharing, printing or scanning.",
-  label: "Generate a QR code",
-  href: "/qr-code-generator/",
-  icon: "qr",
-},
+    title: "Save a YouTube thumbnail",
+    text: "Get an available thumbnail image from a YouTube video URL for reference or legitimate content workflows.",
+    label: "Download a thumbnail",
+    href: "/youtube-thumbnail-downloader/",
+    icon: "image",
+  },
 ];
 
 const platformPrinciples = [
@@ -168,7 +145,7 @@ const faqs = [
   {
     question: "What can I do with iclaude?",
     answer:
-      "You can currently compress images and videos, resize images, remove image backgrounds and convert PDFs to editable Word-compatible documents.",
+      "You can currently use iclaude for image, PDF and video workflows, plus utilities such as the YouTube Thumbnail Downloader. Each available tool has its own focused workflow.",
   },
   {
     question: "Do I need to install software?",
@@ -198,6 +175,7 @@ const faqs = [
   },
 ];
 
+
 function ArrowIcon({
   className = "h-4 w-4",
 }: {
@@ -210,8 +188,6 @@ function ArrowIcon({
       fill="none"
       stroke="currentColor"
       strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
       aria-hidden="true"
     >
       <path d="M4 10h11" />
@@ -219,6 +195,8 @@ function ArrowIcon({
     </svg>
   );
 }
+
+
 
 function SparkIcon() {
   return (
@@ -322,14 +300,10 @@ function GridIcon() {
 export default function HomePage() {
   const websiteSchema = generateWebsiteSchema();
   const organizationSchema = generateOrganizationSchema();
-const popularTools = popularToolSlugs
-  .map((slug) => getToolBySlug(slug))
-  .filter((tool) => tool !== undefined)
-  .filter(
-    (tool) =>
-      tool.status === "available" &&
-      tool.indexable,
-  );
+  const popularTools = popularToolSlugs
+    .map((slug) => tools.find((tool) => tool.slug === slug))
+    .filter(Boolean);
+
   return (
     <>
       <StructuredData data={websiteSchema} />
@@ -431,102 +405,47 @@ const popularTools = popularToolSlugs
                       </div>
 
                       <div className="mt-6 rounded-[22px] border border-slate-200 bg-white p-3 shadow-sm">
-  <div className="flex items-center justify-between px-1">
-    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">
-      Popular workflows
-    </p>
+                        <div className="flex items-center justify-between px-1">
+                          <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Popular workflows</p>
+                          <span className="text-[10px] font-bold text-blue-600">5 tools</span>
+                        </div>
 
-    <span className="text-[10px] font-bold text-blue-600">
-      6 tools
-    </span>
-  </div>
+                        <div className="mt-3 grid gap-2">
+                          {[
+                            ["Image Compressor", "Reduce image file size", ImageIcon, "bg-blue-50 text-blue-600"],
+                            ["Image Resizer", "Resize images quickly", GridIcon, "bg-violet-50 text-violet-600"],
+                            ["PDF to Word", "Make documents editable", FileIcon, "bg-amber-50 text-amber-600"],
+                            ["Video Compressor", "Reduce video file size", VideoIcon, "bg-cyan-50 text-cyan-600"],
+                          ].map(([title, detail, Icon, tone]) => {
+                            const WorkflowIcon = Icon as typeof ImageIcon;
+                            return (
+                              <div key={String(title)} className="group flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-3 transition duration-300 hover:border-blue-100 hover:bg-white hover:shadow-sm">
+                                <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${String(tone)}`}>
+                                  <WorkflowIcon />
+                                </span>
+                                <div className="min-w-0 flex-1">
+                                  <p className="truncate text-xs font-extrabold text-slate-900">{String(title)}</p>
+                                  <p className="mt-0.5 truncate text-[10px] text-slate-500">{String(detail)}</p>
+                                </div>
+                                <ArrowIcon className="h-3.5 w-3.5 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-blue-500" />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
 
-  <div className="mt-3 grid gap-2">
-    {[
-      [
-        "Image Compressor",
-        "Reduce image file size",
-        ImageIcon,
-        "bg-blue-50 text-blue-600",
-      ],
-      [
-        "Image Resizer",
-        "Resize images quickly",
-        GridIcon,
-        "bg-violet-50 text-violet-600",
-      ],
-      [
-        "PDF to Word",
-        "Make documents editable",
-        FileIcon,
-        "bg-amber-50 text-amber-600",
-      ],
-      [
-        "Video Compressor",
-        "Reduce video file size",
-        VideoIcon,
-        "bg-cyan-50 text-cyan-600",
-      ],
-      [
-        "QR Code Generator",
-        "Create QR codes instantly",
-        GridIcon,
-        "bg-emerald-50 text-emerald-600",
-      ],
-    ].map(([title, detail, Icon, tone]) => {
-      const WorkflowIcon = Icon as typeof ImageIcon;
-
-      return (
-        <div
-          key={String(title)}
-          className="group flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-3 transition duration-300 hover:border-blue-100 hover:bg-white hover:shadow-sm"
-        >
-          <span
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${String(
-              tone,
-            )}`}
-          >
-            <WorkflowIcon />
-          </span>
-
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-xs font-extrabold text-slate-900">
-              {String(title)}
-            </p>
-
-            <p className="mt-0.5 truncate text-[10px] text-slate-500">
-              {String(detail)}
-            </p>
-          </div>
-
-          <ArrowIcon />
-        </div>
-      );
-    })}
-  </div>
-</div>
-
-                     <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-  {[
-    ["Images", "3 tools"],
-    ["PDF", "1 tool"],
-    ["Video", "1 tool"],
-    ["Utilities", "1 tool"],
-  ].map(([label, detail]) => (
-    <div
-      key={label}
-      className="rounded-xl border border-slate-200 bg-white px-3 py-2.5"
-    >
-      <p className="text-[10px] font-extrabold text-slate-900">
-        {label}
-      </p>
-
-      <p className="mt-0.5 text-[9px] text-slate-500">
-        {detail}
-      </p>
-    </div>
-  ))}
-</div>
+                      <div className="mt-3 grid grid-cols-3 gap-2">
+                        {[
+                          ["Images", "3 tools"],
+                          ["PDF", "1 tool"],
+                          ["Video", "1 tool"],
+                        ].map(([label, detail]) => (
+                          <div key={label} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+                            <p className="text-[10px] font-extrabold text-slate-900">{label}</p>
+                            <p className="mt-0.5 text-[9px] text-slate-500">{detail}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -573,7 +492,6 @@ const popularTools = popularToolSlugs
                 "Convert PDF to Word",
                 "Compress video",
                 "Prepare files faster",
-                "Generate QR codes",
               ].map((item, index) => (
                 <span
                   key={`${item}-${index}`}
@@ -650,22 +568,8 @@ const popularTools = popularToolSlugs
               ))}
             </div>
           </div>
-                </section>
-
-        {/* Monetag Vignette Advertisement */}
-        <section className="border-b border-slate-200 bg-white py-8 sm:py-10">
-          <div className="iclaude-container">
-            <div className="mb-3 text-center">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                Advertisement
-              </span>
-            </div>
-
-            <div className="flex justify-center">
-              <MonetagVignette />
-            </div>
-          </div>
         </section>
+
 
         <section className="relative overflow-hidden bg-slate-950 py-24 text-white sm:py-32">
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
