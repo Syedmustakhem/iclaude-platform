@@ -1257,7 +1257,7 @@ export const tools: ToolDefinition[] = [
     {
       question: "What is a JPG to PDF converter?",
       answer:
-        "A JPG to PDF converter changes JPG or JPEG images into PDF documents.",
+        "A JPG to PDF converter changes JPG or JPEG images into PDF documents..",
     },
     {
       question: "Can I convert JPG to PDF online?",
