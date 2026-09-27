@@ -947,4 +947,73 @@ button:disabled {
   .iclaude-faq > div {
     padding: 17px 18px 18px;
   }
+}@keyframes iclaude-gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
+.iclaude-gradient-animate {
+  background-size: 220% auto;
+  animation: iclaude-gradient-pan 7s ease-in-out infinite;
+}
+.iclaude-btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.iclaude-btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+.iclaude-btn-shine:hover::after {
+  left: 130%;
+}
+@keyframes iclaude-hero-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.iclaude-hero-float {
+  animation: iclaude-hero-float 7s ease-in-out infinite;
+}
+@keyframes iclaude-faq-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+details.iclaude-faq[open] > p {
+  animation: iclaude-faq-in 0.35s ease both;
+}
+.iclaude-scroll-reveal {
+  opacity: 0;
+}
+.iclaude-scroll-reveal.is-visible {
+  animation: iclaude-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.iclaude-marquee:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .iclaude-gradient-animate,
+  .iclaude-hero-float {
+    animation: none;
+  }
+  .iclaude-btn-shine::after {
+    display: none;
+  }
+  details.iclaude-faq[open] > p {
+    animation: none;
+  }
+  .iclaude-scroll-reveal {
+    opacity: 1;
+    animation: none;
+  }
+}
+

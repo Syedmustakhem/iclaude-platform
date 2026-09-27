@@ -62,7 +62,7 @@ const categoryConfig: CategoryConfig[] = [
     shortLabel: "Video",
     eyebrow: "VIDEO WORKSPACE",
     description:
-      "Reduce video file sizes and prepare videos for sharing, uploading and storage.",
+      "Trim, compress and convert videos right in your browser — your files never leave your device.",
     icon: "▶",
     gradient:
       "from-cyan-500/[0.14] via-sky-500/[0.08] to-blue-500/[0.1]",
