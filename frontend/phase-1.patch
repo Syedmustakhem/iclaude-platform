@@ -1,0 +1,600 @@
+From 4040f050c19c944c13d118a82d62caf67eb77542 Mon Sep 17 00:00:00 2001
+From: Muse <muse@iclaude.in>
+Date: Sun, 27 Sep 2026 16:20:46 +0000
+Subject: [PATCH] Phase 1 SEO fixes (P1-P8): restore /jpg-to-png route,
+ FAQ/Article schema, metadata cleanup
+
+- P1: rename app/jpg to png -> app/jpg-to-png (fixes 404; route was unreachable due to space in segment)
+- P2: youtube-thumbnail-downloader robots index:false -> index:true (registry already marked indexable)
+- P3: add generateFAQSchema() to lib/seo; render FAQPage JSON-LD on all 13 tool pages (ToolPage + 3 custom pages)
+- P4: add generateArticleSchema() to lib/seo; datePublished/dateModified on guides; Article JSON-LD on both guides
+- P5: remove duplicate WebSite/Organization JSON-LD from homepage and about/contact/privacy/terms (layout already injects once)
+- P6: merge-pdf: demote duplicated wrapper H1 to H2 (single H1 per page)
+- P7: add og:image to /tools/ metadata; de-duplicate About/Contact titles
+- P8: retitle QR generator to target UPI/WiFi/WhatsApp queries
+
+Verified: tsc clean, eslint unchanged (3 pre-existing errors), next build OK (27 routes), built HTML assertions pass.
+---
+ frontend/app/about/page.tsx                   |  8 +-
+ frontend/app/contact/page.tsx                 |  8 +-
+ .../guides/how-to-compress-an-image/page.tsx  | 10 ++
+ .../how-to-reduce-jpg-file-size/page.tsx      | 10 ++
+ frontend/app/jpg-to-pdf/page.tsx              | 10 ++
+ .../app/{jpg to png => jpg-to-png}/page.tsx   |  0
+ frontend/app/merge-pdf/page.tsx               |  4 +-
+ frontend/app/page.tsx                         |  8 --
+ frontend/app/privacy/page.tsx                 |  6 --
+ frontend/app/qr-code-generator/page.tsx       | 10 ++
+ frontend/app/terms/page.tsx                   |  6 --
+ frontend/app/tools/page.tsx                   |  8 ++
+ .../app/youtube-thumbnail-downloader/page.tsx | 12 ++-
+ frontend/components/tools/ToolPage.tsx        |  4 +
+ frontend/lib/guides.ts                        |  6 ++
+ frontend/lib/seo.ts                           | 99 +++++++++++++++++++
+ frontend/lib/tools.ts                         |  2 +-
+ 17 files changed, 173 insertions(+), 38 deletions(-)
+ rename frontend/app/{jpg to png => jpg-to-png}/page.tsx (100%)
+
+diff --git a/frontend/app/about/page.tsx b/frontend/app/about/page.tsx
+index fb41f79..3ac39eb 100644
+--- a/frontend/app/about/page.tsx
++++ b/frontend/app/about/page.tsx
+@@ -1,14 +1,12 @@
+ import type { Metadata } from "next";
+ import Link from "next/link";
+ 
+-import StructuredData from "@/components/seo/StructuredData";
+ import {
+-  generateOrganizationSchema,
+   generatePageMetadata,
+ } from "@/lib/seo";
+ 
+ export const metadata: Metadata = generatePageMetadata({
+-  title: "About iclaude — Simple Online Tools for Everyday Files",
++  title: "About Us — Simple Online Tools for Everyday Files",
+   description:
+     "Learn about iclaude, a growing collection of focused online tools for images, PDFs, videos and everyday digital file tasks.",
+   path: "/about/",
+@@ -119,12 +117,8 @@ function CheckIcon() {
+ }
+ 
+ export default function AboutPage() {
+-  const organizationSchema = generateOrganizationSchema();
+-
+   return (
+     <>
+-      <StructuredData data={organizationSchema} />
+-
+       <main className="overflow-hidden bg-white">
+         {/* =========================================================
+             HERO
+diff --git a/frontend/app/contact/page.tsx b/frontend/app/contact/page.tsx
+index 229ce20..0387b76 100644
+--- a/frontend/app/contact/page.tsx
++++ b/frontend/app/contact/page.tsx
+@@ -1,14 +1,12 @@
+ import type { Metadata } from "next";
+ import Link from "next/link";
+ 
+-import StructuredData from "@/components/seo/StructuredData";
+ import {
+-  generateOrganizationSchema,
+   generatePageMetadata,
+ } from "@/lib/seo";
+ 
+ export const metadata: Metadata = generatePageMetadata({
+-  title: "Contact iclaude — Get Help With Our Online Tools",
++  title: "Contact Us — Help With Our Online Tools",
+   description:
+     "Contact iclaude for questions, feedback, bug reports or help using our online image, PDF and video tools.",
+   path: "/contact/",
+@@ -101,12 +99,8 @@ function CheckIcon() {
+ }
+ 
+ export default function ContactPage() {
+-  const organizationSchema = generateOrganizationSchema();
+-
+   return (
+     <>
+-      <StructuredData data={organizationSchema} />
+-
+       <main className="overflow-hidden bg-white">
+         {/* =========================================================
+             HERO
+diff --git a/frontend/app/guides/how-to-compress-an-image/page.tsx b/frontend/app/guides/how-to-compress-an-image/page.tsx
+index 0abd974..af57755 100644
+--- a/frontend/app/guides/how-to-compress-an-image/page.tsx
++++ b/frontend/app/guides/how-to-compress-an-image/page.tsx
+@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/seo/Breadcrumbs";
+ import StructuredData from "@/components/seo/StructuredData";
+ 
+ import {
++  generateArticleSchema,
+   generateBreadcrumbSchema,
+   generatePageMetadata,
+   generateWebPageSchema,
+@@ -40,10 +41,19 @@ export default function HowToCompressAnImagePage() {
+     path: `/guides/${guide.slug}/`,
+   });
+ 
++  const articleSchema = generateArticleSchema({
++    headline: guide.title,
++    description: guide.description,
++    path: `/guides/${guide.slug}/`,
++    datePublished: guide.datePublished,
++    dateModified: guide.dateModified,
++  });
++
+   return (
+     <>
+       <StructuredData data={breadcrumbSchema} />
+       <StructuredData data={webPageSchema} />
++      <StructuredData data={articleSchema} />
+ 
+       <Breadcrumbs items={breadcrumbs} />
+ 
+diff --git a/frontend/app/guides/how-to-reduce-jpg-file-size/page.tsx b/frontend/app/guides/how-to-reduce-jpg-file-size/page.tsx
+index 6ee1583..81f8557 100644
+--- a/frontend/app/guides/how-to-reduce-jpg-file-size/page.tsx
++++ b/frontend/app/guides/how-to-reduce-jpg-file-size/page.tsx
+@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/seo/Breadcrumbs";
+ import StructuredData from "@/components/seo/StructuredData";
+ 
+ import {
++  generateArticleSchema,
+   generateBreadcrumbSchema,
+   generatePageMetadata,
+   generateWebPageSchema,
+@@ -40,10 +41,19 @@ export default function HowToReduceJpgFileSizePage() {
+     path: `/guides/${guide.slug}/`,
+   });
+ 
++  const articleSchema = generateArticleSchema({
++    headline: guide.title,
++    description: guide.description,
++    path: `/guides/${guide.slug}/`,
++    datePublished: guide.datePublished,
++    dateModified: guide.dateModified,
++  });
++
+   return (
+     <>
+       <StructuredData data={breadcrumbSchema} />
+       <StructuredData data={webPageSchema} />
++      <StructuredData data={articleSchema} />
+ 
+       <Breadcrumbs items={breadcrumbs} />
+ 
+diff --git a/frontend/app/jpg-to-pdf/page.tsx b/frontend/app/jpg-to-pdf/page.tsx
+index 26dcd36..3118c08 100644
+--- a/frontend/app/jpg-to-pdf/page.tsx
++++ b/frontend/app/jpg-to-pdf/page.tsx
+@@ -3,6 +3,7 @@ import type { Metadata } from "next";
+ import JpgToPdf from "../../components/tools/JpgToPdf";
+ import {
+   generateBreadcrumbSchema,
++  generateFAQSchema,
+   generateToolMetadata,
+   generateToolSchema,
+   serializeStructuredData,
+@@ -31,6 +32,8 @@ export default function JpgToPdfPage() {
+ 
+   const toolSchema = generateToolSchema(tool);
+ 
++  const faqSchema = generateFAQSchema(tool);
++
+   return (
+     <main className="min-h-screen bg-white">
+       <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+@@ -218,6 +221,13 @@ export default function JpgToPdfPage() {
+           __html: serializeStructuredData(toolSchema),
+         }}
+       />
++
++      <script
++        type="application/ld+json"
++        dangerouslySetInnerHTML={{
++          __html: serializeStructuredData(faqSchema),
++        }}
++      />
+     </main>
+   );
+ }
+\ No newline at end of file
+diff --git a/frontend/app/jpg to png/page.tsx b/frontend/app/jpg-to-png/page.tsx
+similarity index 100%
+rename from frontend/app/jpg to png/page.tsx
+rename to frontend/app/jpg-to-png/page.tsx
+diff --git a/frontend/app/merge-pdf/page.tsx b/frontend/app/merge-pdf/page.tsx
+index d34dd93..f442d9f 100644
+--- a/frontend/app/merge-pdf/page.tsx
++++ b/frontend/app/merge-pdf/page.tsx
+@@ -80,9 +80,9 @@ export default function MergePdfPage() {
+               Free online PDF tool
+             </div>
+ 
+-            <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
++            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+               {tool.name}
+-            </h1>
++            </h2>
+ 
+             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+               {tool.description}
+diff --git a/frontend/app/page.tsx b/frontend/app/page.tsx
+index aadfc20..552a512 100644
+--- a/frontend/app/page.tsx
++++ b/frontend/app/page.tsx
+@@ -2,13 +2,10 @@ import Image from "next/image";
+ import Link from "next/link";
+ import type { Metadata } from "next";
+ 
+-import StructuredData from "@/components/seo/StructuredData";
+ import ToolCard from "@/components/tools/ToolCard";
+ 
+ import {
+-  generateOrganizationSchema,
+   generatePageMetadata,
+-  generateWebsiteSchema,
+ } from "@/lib/seo";
+ import { tools } from "@/lib/tools";
+ 
+@@ -332,17 +329,12 @@ function GridIcon() {
+ }
+ 
+ export default function HomePage() {
+-  const websiteSchema = generateWebsiteSchema();
+-  const organizationSchema = generateOrganizationSchema();
+   const popularTools = popularToolSlugs
+     .map((slug) => tools.find((tool) => tool.slug === slug))
+     .filter(Boolean);
+ 
+   return (
+     <>
+-      <StructuredData data={websiteSchema} />
+-      <StructuredData data={organizationSchema} />
+-
+       <main className="overflow-hidden">
+         <section className="relative isolate overflow-hidden bg-[#f8fbff]">
+           <div className="pointer-events-none absolute inset-0 -z-20" aria-hidden="true">
+diff --git a/frontend/app/privacy/page.tsx b/frontend/app/privacy/page.tsx
+index 5c1fc5a..4a14154 100644
+--- a/frontend/app/privacy/page.tsx
++++ b/frontend/app/privacy/page.tsx
+@@ -1,10 +1,8 @@
+ import type { Metadata } from "next";
+ import Link from "next/link";
+ import {
+-  generateOrganizationSchema,
+   generatePageMetadata,
+ } from "@/lib/seo";
+-import StructuredData from "@/components/seo/StructuredData";
+ 
+ export const metadata: Metadata = generatePageMetadata({
+   title: "Privacy Policy — iclaude",
+@@ -72,12 +70,8 @@ function SectionHeader({
+ }
+ 
+ export default function PrivacyPage() {
+-  const organizationSchema = generateOrganizationSchema();
+-
+   return (
+     <>
+-      <StructuredData data={organizationSchema} />
+-
+       <main className="overflow-hidden bg-white">
+         {/* Hero */}
+         <section className="relative border-b border-slate-200 bg-slate-950 text-white">
+diff --git a/frontend/app/qr-code-generator/page.tsx b/frontend/app/qr-code-generator/page.tsx
+index 1a7a1a1..d1b9079 100644
+--- a/frontend/app/qr-code-generator/page.tsx
++++ b/frontend/app/qr-code-generator/page.tsx
+@@ -5,6 +5,7 @@ import QRCodeGenerator from "../../components/tools/QrCodeGenerator";
+ import {
+   absoluteUrl,
+   generateBreadcrumbSchema,
++  generateFAQSchema,
+   generateToolMetadata,
+   generateToolSchema,
+   generateWebPageSchema,
+@@ -42,6 +43,8 @@ export default function QRCodeGeneratorPage() {
+ 
+   const toolSchema = generateToolSchema(tool);
+ 
++  const faqSchema = generateFAQSchema(tool);
++
+   const webPageSchema = generateWebPageSchema({
+     name: tool.name,
+     description: tool.description,
+@@ -382,6 +385,13 @@ export default function QRCodeGeneratorPage() {
+           __html: serializeStructuredData(webPageSchema),
+         }}
+       />
++
++      <script
++        type="application/ld+json"
++        dangerouslySetInnerHTML={{
++          __html: serializeStructuredData(faqSchema),
++        }}
++      />
+     </main>
+   );
+ }
+diff --git a/frontend/app/terms/page.tsx b/frontend/app/terms/page.tsx
+index d3afe82..24ed10c 100644
+--- a/frontend/app/terms/page.tsx
++++ b/frontend/app/terms/page.tsx
+@@ -2,10 +2,8 @@ import type { Metadata } from "next";
+ import Link from "next/link";
+ 
+ import {
+-  generateOrganizationSchema,
+   generatePageMetadata,
+ } from "@/lib/seo";
+-import StructuredData from "@/components/seo/StructuredData";
+ 
+ export const metadata: Metadata = generatePageMetadata({
+   title: "Terms of Service — iclaude",
+@@ -86,12 +84,8 @@ function Bullet({
+ }
+ 
+ export default function TermsPage() {
+-  const organizationSchema = generateOrganizationSchema();
+-
+   return (
+     <>
+-      <StructuredData data={organizationSchema} />
+-
+       <main className="overflow-hidden bg-white">
+         {/* Hero */}
+         <section className="relative border-b border-slate-200 bg-slate-950 text-white">
+diff --git a/frontend/app/tools/page.tsx b/frontend/app/tools/page.tsx
+index 3483494..63d0497 100644
+--- a/frontend/app/tools/page.tsx
++++ b/frontend/app/tools/page.tsx
+@@ -15,6 +15,14 @@ export const metadata: Metadata = {
+       "Compress, resize, convert and transform files with fast, focused online tools.",
+     url: "/tools/",
+     type: "website",
++    images: [
++      {
++        url: "/iclaude-og-image.png",
++        width: 1200,
++        height: 630,
++        alt: "iclaude — Free online tools for images, PDF and video",
++      },
++    ],
+   },
+ };
+ 
+diff --git a/frontend/app/youtube-thumbnail-downloader/page.tsx b/frontend/app/youtube-thumbnail-downloader/page.tsx
+index cc1ba2a..2d34b97 100644
+--- a/frontend/app/youtube-thumbnail-downloader/page.tsx
++++ b/frontend/app/youtube-thumbnail-downloader/page.tsx
+@@ -4,6 +4,7 @@ import YouTubeThumbnailDownloader from "../../components/tools/YouTubeThumbnailD
+ import {
+   absoluteUrl,
+   generateBreadcrumbSchema,
++  generateFAQSchema,
+   generateToolSchema,
+   serializeStructuredData,
+ } from "../../lib/seo";
+@@ -21,7 +22,7 @@ export const metadata: Metadata = {
+   },
+ 
+   robots: {
+-    index: false,
++    index: true,
+     follow: true,
+   },
+ 
+@@ -68,6 +69,8 @@ export default function YouTubeThumbnailDownloaderPage() {
+ 
+   const toolSchema = generateToolSchema(tool);
+ 
++  const faqSchema = generateFAQSchema(tool);
++
+   return (
+     <main className="min-h-screen bg-white">
+       <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+@@ -228,6 +231,13 @@ export default function YouTubeThumbnailDownloaderPage() {
+           __html: serializeStructuredData(toolSchema),
+         }}
+       />
++
++      <script
++        type="application/ld+json"
++        dangerouslySetInnerHTML={{
++          __html: serializeStructuredData(faqSchema),
++        }}
++      />
+     </main>
+   );
+ }
+\ No newline at end of file
+diff --git a/frontend/components/tools/ToolPage.tsx b/frontend/components/tools/ToolPage.tsx
+index 8921ece..6ec8432 100644
+--- a/frontend/components/tools/ToolPage.tsx
++++ b/frontend/components/tools/ToolPage.tsx
+@@ -16,6 +16,7 @@ import PngToJpg from "@/components/tools/PngToJpg";
+ import HeicToJpg from "@/components/tools/HeicToJpg";
+ import {
+   generateBreadcrumbSchema,
++  generateFAQSchema,
+   generateToolSchema,
+   generateWebPageSchema,
+ } from "@/lib/seo";
+@@ -59,6 +60,8 @@ export default function ToolPage({ tool }: ToolPageProps) {
+ 
+   const toolSchema = generateToolSchema(tool);
+ 
++  const faqSchema = generateFAQSchema(tool);
++
+   const relatedTools = getRelatedTools(tool).filter(
+     (relatedTool) =>
+       relatedTool.status === "available" &&
+@@ -70,6 +73,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
+       <StructuredData data={breadcrumbSchema} />
+       <StructuredData data={webPageSchema} />
+       <StructuredData data={toolSchema} />
++      <StructuredData data={faqSchema} />
+ 
+       <Breadcrumbs items={breadcrumbs} />
+ 
+diff --git a/frontend/lib/guides.ts b/frontend/lib/guides.ts
+index aacd868..eb94ee3 100644
+--- a/frontend/lib/guides.ts
++++ b/frontend/lib/guides.ts
+@@ -5,6 +5,8 @@ export type GuideDefinition = {
+   category: "Images" | "PDF" | "Video" | "General";
+   readTime: string;
+   publishedLabel: string;
++  datePublished: string;
++  dateModified: string;
+   keywords: string[];
+   excerpt: string;
+   intro: string;
+@@ -26,6 +28,8 @@ export const guides: GuideDefinition[] = [
+     category: "Images",
+     readTime: "6 min read",
+     publishedLabel: "Image guide",
++    datePublished: "2026-09-20",
++    dateModified: "2026-09-27",
+     keywords: [
+       "how to compress an image",
+       "compress image online",
+@@ -119,6 +123,8 @@ export const guides: GuideDefinition[] = [
+     category: "Images",
+     readTime: "6 min read",
+     publishedLabel: "JPG guide",
++    datePublished: "2026-09-20",
++    dateModified: "2026-09-27",
+     keywords: [
+       "how to reduce JPG file size",
+       "reduce JPG size",
+diff --git a/frontend/lib/seo.ts b/frontend/lib/seo.ts
+index 25860bd..7dcaf9d 100644
+--- a/frontend/lib/seo.ts
++++ b/frontend/lib/seo.ts
+@@ -361,6 +361,105 @@ export function generateWebPageSchema({
+   };
+ }
+ 
++/* ============================================================
++   FAQ structured data
++   ============================================================ */
++
++/**
++ * Creates FAQPage structured data from a tool's FAQ entries.
++ *
++ * Questions are deduplicated (case-insensitive, ignoring a
++ * trailing "+") because some pages render the FAQ list twice
++ * with slightly different markup.
++ */
++export function generateFAQSchema(tool: ToolDefinition) {
++  const seen = new Set<string>();
++
++  const mainEntity = tool.faq
++    .filter((item) => {
++      const key = item.question
++        .replace(/\+\s*$/, "")
++        .toLowerCase()
++        .trim();
++
++      if (seen.has(key)) {
++        return false;
++      }
++
++      seen.add(key);
++
++      return true;
++    })
++    .map((item) => ({
++      "@type": "Question",
++      name: item.question.replace(/\+\s*$/, "").trim(),
++      acceptedAnswer: {
++        "@type": "Answer",
++        text: item.answer,
++      },
++    }));
++
++  return {
++    "@context": "https://schema.org",
++    "@type": "FAQPage",
++    mainEntity,
++  };
++}
++
++/* ============================================================
++   Article structured data
++   ============================================================ */
++
++/**
++ * Creates Article structured data for guide pages.
++ */
++export function generateArticleSchema({
++  headline,
++  description,
++  path,
++  datePublished,
++  dateModified,
++}: {
++  headline: string;
++  description: string;
++  path: string;
++  datePublished: string;
++  dateModified: string;
++}) {
++  const pageUrl = absoluteUrl(path);
++
++  return {
++    "@context": "https://schema.org",
++    "@type": "Article",
++
++    headline,
++    description,
++    image: absoluteUrl(DEFAULT_OG_IMAGE),
++
++    author: {
++      "@type": "Organization",
++      name: SITE_NAME,
++      url: `${SITE_URL}/`,
++    },
++
++    publisher: {
++      "@type": "Organization",
++      name: SITE_NAME,
++      url: `${SITE_URL}/`,
++    },
++
++    datePublished,
++    dateModified,
++
++    mainEntityOfPage: {
++      "@type": "WebPage",
++      "@id": pageUrl,
++    },
++
++    inLanguage: SITE_LOCALE,
++  };
++}
++
+ /* ============================================================
+    Structured-data serialization
+    ============================================================ */
+diff --git a/frontend/lib/tools.ts b/frontend/lib/tools.ts
+index 1468fb2..2da8024 100644
+--- a/frontend/lib/tools.ts
++++ b/frontend/lib/tools.ts
+@@ -353,7 +353,7 @@ export const tools: ToolDefinition[] = [
+     "Create and download QR codes instantly for links, text, Wi-Fi, WhatsApp and more.",
+ 
+   seoTitle:
+-    "QR Code Generator Online — Create Free QR Codes",
++    "Free QR Code Generator — UPI, WiFi & WhatsApp QR Codes",
+ 
+   seoDescription:
+     "Create free QR codes online for URLs, text, WhatsApp, Wi-Fi, email, phone numbers, UPI and contact details. Generate and download QR codes instantly.",
+-- 
+2.43.0
+
