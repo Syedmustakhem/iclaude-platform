@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import StructuredData from "@/components/seo/StructuredData";
-
+import JpgToPdf from "@/components/tools/JpgToPdf";
 import ToolCard, { ToolIcon } from "@/components/tools/ToolCard";
 import UploadArea from "@/components/tools/UploadArea";
 import ImageCompressor from "@/components/tools/ImageCompressor";
@@ -274,6 +274,8 @@ export default function ToolPage({ tool }: ToolPageProps) {
                     <PngToJpg />
                   ) : tool.slug === "heic-to-jpg" ? (
                     <HeicToJpg />
+                    ) : tool.slug === "jpg-to-pdf" ? (
+  <JpgToPdf />
                   ) : (
                     <UploadArea
                       acceptedFormats={tool.supportedFormats}

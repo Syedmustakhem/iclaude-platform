@@ -1142,6 +1142,146 @@ export const tools: ToolDefinition[] = [
     ],
   },
   {
+  slug: "jpg-to-pdf",
+  name: "JPG to PDF Converter",
+  shortName: "JPG to PDF",
+  category: "PDF",
+  status: "available",
+
+  searchIntent: [
+    "jpg to pdf",
+    "jpg to pdf converter",
+    "convert jpg to pdf",
+    "jpeg to pdf",
+    "convert jpeg to pdf",
+    "image to pdf",
+    "images to pdf",
+    "jpg pdf converter",
+  ],
+
+  indexable: true,
+
+  description:
+    "Convert JPG and JPEG images to PDF online. Create PDF documents from images for sharing, printing, submissions and everyday document workflows.",
+
+  shortDescription:
+    "Convert JPG images into PDF documents quickly online.",
+
+  seoTitle:
+    "JPG to PDF Converter Online — Convert JPG to PDF",
+
+  seoDescription:
+    "Convert JPG and JPEG images to PDF online. Create PDF documents from images for sharing, printing, submissions and everyday document workflows.",
+
+  keywords: [
+    "JPG to PDF",
+    "JPG to PDF converter",
+    "convert JPG to PDF",
+    "JPEG to PDF",
+    "convert JPEG to PDF",
+    "image to PDF",
+    "images to PDF",
+    "JPG PDF converter",
+    "JPG to PDF online",
+    "free JPG to PDF converter",
+  ],
+
+  icon: "jpg-pdf",
+
+  href: "/jpg-to-pdf/",
+
+  popularSearches: [
+    "JPG to PDF converter",
+    "convert JPG to PDF online",
+    "JPEG to PDF",
+    "image to PDF",
+    "convert images to PDF",
+    "JPG PDF converter",
+    "free JPG to PDF converter",
+  ],
+
+  supportedFormats: [
+    "JPG",
+    "JPEG",
+    "PDF",
+  ],
+
+  benefits: [
+    "Convert JPG images to PDF",
+    "Convert JPEG images to PDF",
+    "Create PDF documents from images",
+    "Useful for forms and submissions",
+    "Useful for sharing and printing",
+    "Simple browser-based workflow",
+  ],
+
+  relatedTools: [
+    "image-compressor",
+    "image-resizer",
+    "png-to-jpg",
+    "pdf-to-word",
+    "merge-pdf",
+  ],
+
+  content: {
+    introduction:
+      "JPG images are commonly used for photographs and scanned documents, but many workflows require a PDF file instead. The iclaude JPG to PDF converter lets you turn JPG and JPEG images into PDF documents for sharing, printing, submissions and everyday document use.",
+
+    howItWorks: [
+      "Choose one or more JPG or JPEG images.",
+      "Upload the images to the JPG to PDF converter.",
+      "Arrange the images if the tool supports multiple images.",
+      "Create the PDF document.",
+      "Download the resulting PDF.",
+    ],
+
+    useCases: [
+      "Converting photos into PDF documents.",
+      "Preparing scanned images for submission.",
+      "Creating PDF documents from multiple JPG images.",
+      "Preparing images for printing.",
+      "Sharing image collections as a single PDF.",
+      "Creating documents from photographed pages.",
+    ],
+
+    tips: [
+      "Use clear, readable images for document workflows.",
+      "Check the image orientation before creating the PDF.",
+      "Review the resulting PDF before submitting or sharing it.",
+      "Keep the original JPG files when you may need them later.",
+      "Compress large images first when file-size limits are important.",
+    ],
+  },
+
+  faq: [
+    {
+      question: "What is a JPG to PDF converter?",
+      answer:
+        "A JPG to PDF converter changes JPG or JPEG images into PDF documents.",
+    },
+    {
+      question: "Can I convert JPG to PDF online?",
+      answer:
+        "Yes. The iclaude JPG to PDF tool is designed to convert JPG and JPEG images into PDF documents through a web browser.",
+    },
+    {
+      question: "Can I convert multiple JPG images into one PDF?",
+      answer:
+        "If the tool supports multiple image uploads, you can combine the selected JPG images into a single PDF document.",
+    },
+    {
+      question: "Does converting JPG to PDF improve image quality?",
+      answer:
+        "Converting JPG to PDF changes the document format. It does not restore image detail that was already lost in the original JPG.",
+    },
+    {
+      question: "Can I use JPG to PDF for scanned documents?",
+      answer:
+        "Yes. JPG images of scanned pages can be converted into PDF documents for sharing, storage and submission workflows.",
+    },
+  ],
+},
+  {
     slug: "video-compressor",
     name: "Video Compressor",
     shortName: "Compress Video",

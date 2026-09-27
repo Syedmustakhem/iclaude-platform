@@ -8,6 +8,7 @@ const toolLinks = [
   ["PNG to JPG", "/png-to-jpg/"],
   ["HEIC to JPG", "/heic-to-jpg/"],
   ["Remove Background", "/remove-background/"],
+  ["JPG to PDF", "/jpg-to-pdf/"],
   ["PDF to Word", "/pdf-to-word/"],
   ["Video Compressor", "/video-compressor/"],
   ["WebP to JPG", "/webp-to-jpg/"],
@@ -93,10 +94,11 @@ export default function Footer() {
                 Find the tool for your next file task.
               </h2>
 
-              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-400">
-                Compress, resize, convert and process common
-                digital files with simple online tools.
-              </p>
+              <p className="mt-2 max-w-2xl text-xs leading-6 text-slate-500">
+  Explore practical tools for image compression, image resizing,
+  image conversion, JPG to PDF conversion, background removal,
+  PDF conversion and video compression.
+</p>
             </div>
 
             <Link

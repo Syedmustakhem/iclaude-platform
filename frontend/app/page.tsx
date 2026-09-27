@@ -44,6 +44,7 @@ const popularToolSlugs = [
    "merge-pdf",
   "video-compressor",
   "youtube-thumbnail-downloader",
+   "jpg-to-pdf",
 ];
 
 const workflowGroups = [
@@ -118,6 +119,13 @@ const fileMoments = [
   href: "/merge-pdf/",
   icon: "document",
 },
+{
+  title: "Turn images into a PDF",
+  text: "Combine JPG images into a convenient PDF document for sharing, storing or submitting.",
+  label: "Convert JPG to PDF",
+  href: "/jpg-to-pdf/",
+  icon: "document",
+},
   {
     title: "Send a smaller video",
     text: "Reduce video file size before sharing, storing or publishing your next clip.",
@@ -170,9 +178,9 @@ const processSteps = [
 const faqs = [
  {
   question: "What can I do with iclaude?",
-  answer:
-    "You can currently use iclaude for image, PDF and video workflows, including image compression, image resizing, background removal, PDF merging, PDF to Word conversion, video compression and YouTube thumbnail downloading. Each available tool has its own focused workflow.",
-},
+ answer:
+  "You can currently use iclaude for image, PDF and video workflows, including image compression, image resizing, background removal, JPG to PDF conversion, PDF merging, PDF to Word conversion, video compression and YouTube thumbnail downloading. Each available tool has its own focused workflow.",
+ },
   {
     question: "Do I need to install software?",
     answer:
@@ -433,7 +441,7 @@ export default function HomePage() {
                       <div className="mt-6 rounded-[22px] border border-slate-200 bg-white p-3 shadow-sm">
                         <div className="flex items-center justify-between px-1">
                           <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Popular workflows</p>
-                          <span className="text-[10px] font-bold text-blue-600">7 tools</span>
+                          <span className="text-[10px] font-bold text-blue-600">8 tools</span>
                         </div>
 
                         <div className="mt-3 grid gap-2">
@@ -442,6 +450,8 @@ export default function HomePage() {
   ["Image Resizer", "Resize images quickly", GridIcon, "bg-violet-50 text-violet-600"],
   ["Merge PDF", "Combine PDF files", FileIcon, "bg-rose-50 text-rose-600"],
   ["PDF to Word", "Make documents editable", FileIcon, "bg-amber-50 text-amber-600"],
+    ["JPG to PDF", "Convert images to PDF", FileIcon, "bg-blue-50 text-blue-600"],
+
   ["Video Compressor", "Reduce video file size", VideoIcon, "bg-cyan-50 text-cyan-600"],
 ].map(([title, detail, Icon, tone]) => {
                             const WorkflowIcon = Icon as typeof ImageIcon;
@@ -464,7 +474,7 @@ export default function HomePage() {
                       <div className="mt-3 grid grid-cols-3 gap-2">
                         {[
                           ["Images", "3 tools"],
-                          ["PDF", "2 tools"],
+                          ["PDF", "3 tools"],
                           ["Video", "1 tool"],
                         ].map(([label, detail]) => (
                           <div key={label} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
@@ -538,7 +548,7 @@ export default function HomePage() {
           <div className="iclaude-container">
             <div className="grid overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50/80 sm:grid-cols-4">
               {[
-                ["07", "Live tools", "Ready to explore today"],
+                ["08", "Live tools", "Ready to explore today"],
                 ["04", "File moments", "Built around real tasks"],
                 ["03", "Core formats", "Images, PDF & video"],
               ].map(([value, label, detail], index) => (
