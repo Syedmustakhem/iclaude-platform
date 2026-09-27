@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  generateOrganizationSchema,
   generatePageMetadata,
 } from "@/lib/seo";
-import StructuredData from "@/components/seo/StructuredData";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Privacy Policy — iclaude",
@@ -72,12 +70,8 @@ function SectionHeader({
 }
 
 export default function PrivacyPage() {
-  const organizationSchema = generateOrganizationSchema();
-
   return (
     <>
-      <StructuredData data={organizationSchema} />
-
       <main className="overflow-hidden bg-white">
         {/* Hero */}
         <section className="relative border-b border-slate-200 bg-slate-950 text-white">

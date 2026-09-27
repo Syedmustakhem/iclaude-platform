@@ -362,6 +362,105 @@ export function generateWebPageSchema({
 }
 
 /* ============================================================
+   FAQ structured data
+   ============================================================ */
+
+/**
+ * Creates FAQPage structured data from a tool's FAQ entries.
+ *
+ * Questions are deduplicated (case-insensitive, ignoring a
+ * trailing "+") because some pages render the FAQ list twice
+ * with slightly different markup.
+ */
+export function generateFAQSchema(tool: ToolDefinition) {
+  const seen = new Set<string>();
+
+  const mainEntity = tool.faq
+    .filter((item) => {
+      const key = item.question
+        .replace(/\+\s*$/, "")
+        .toLowerCase()
+        .trim();
+
+      if (seen.has(key)) {
+        return false;
+      }
+
+      seen.add(key);
+
+      return true;
+    })
+    .map((item) => ({
+      "@type": "Question",
+      name: item.question.replace(/\+\s*$/, "").trim(),
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    }));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity,
+  };
+}
+
+/* ============================================================
+   Article structured data
+   ============================================================ */
+
+/**
+ * Creates Article structured data for guide pages.
+ */
+export function generateArticleSchema({
+  headline,
+  description,
+  path,
+  datePublished,
+  dateModified,
+}: {
+  headline: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  dateModified: string;
+}) {
+  const pageUrl = absoluteUrl(path);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+
+    headline,
+    description,
+    image: absoluteUrl(DEFAULT_OG_IMAGE),
+
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+    },
+
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+    },
+
+    datePublished,
+    dateModified,
+
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl,
+    },
+
+    inLanguage: SITE_LOCALE,
+  };
+}
+
+/* ============================================================
    Structured-data serialization
    ============================================================ */
 

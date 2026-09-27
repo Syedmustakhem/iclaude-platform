@@ -5,6 +5,8 @@ export type GuideDefinition = {
   category: "Images" | "PDF" | "Video" | "General";
   readTime: string;
   publishedLabel: string;
+  datePublished: string;
+  dateModified: string;
   keywords: string[];
   excerpt: string;
   intro: string;
@@ -26,6 +28,8 @@ export const guides: GuideDefinition[] = [
     category: "Images",
     readTime: "6 min read",
     publishedLabel: "Image guide",
+    datePublished: "2026-09-20",
+    dateModified: "2026-09-27",
     keywords: [
       "how to compress an image",
       "compress image online",
@@ -119,6 +123,8 @@ export const guides: GuideDefinition[] = [
     category: "Images",
     readTime: "6 min read",
     publishedLabel: "JPG guide",
+    datePublished: "2026-09-20",
+    dateModified: "2026-09-27",
     keywords: [
       "how to reduce JPG file size",
       "reduce JPG size",

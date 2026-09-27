@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import JpgToPdf from "../../components/tools/JpgToPdf";
 import {
   generateBreadcrumbSchema,
+  generateFAQSchema,
   generateToolMetadata,
   generateToolSchema,
   serializeStructuredData,
@@ -30,6 +31,8 @@ export default function JpgToPdfPage() {
   ]);
 
   const toolSchema = generateToolSchema(tool);
+
+  const faqSchema = generateFAQSchema(tool);
 
   return (
     <main className="min-h-screen bg-white">
@@ -216,6 +219,13 @@ export default function JpgToPdfPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: serializeStructuredData(toolSchema),
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeStructuredData(faqSchema),
         }}
       />
     </main>

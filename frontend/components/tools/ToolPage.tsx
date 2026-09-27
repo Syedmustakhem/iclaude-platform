@@ -16,6 +16,7 @@ import PngToJpg from "@/components/tools/PngToJpg";
 import HeicToJpg from "@/components/tools/HeicToJpg";
 import {
   generateBreadcrumbSchema,
+  generateFAQSchema,
   generateToolSchema,
   generateWebPageSchema,
 } from "@/lib/seo";
@@ -59,6 +60,8 @@ export default function ToolPage({ tool }: ToolPageProps) {
 
   const toolSchema = generateToolSchema(tool);
 
+  const faqSchema = generateFAQSchema(tool);
+
   const relatedTools = getRelatedTools(tool).filter(
     (relatedTool) =>
       relatedTool.status === "available" &&
@@ -70,6 +73,7 @@ export default function ToolPage({ tool }: ToolPageProps) {
       <StructuredData data={breadcrumbSchema} />
       <StructuredData data={webPageSchema} />
       <StructuredData data={toolSchema} />
+      <StructuredData data={faqSchema} />
 
       <Breadcrumbs items={breadcrumbs} />
 

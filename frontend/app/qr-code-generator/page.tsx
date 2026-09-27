@@ -5,6 +5,7 @@ import QRCodeGenerator from "../../components/tools/QrCodeGenerator";
 import {
   absoluteUrl,
   generateBreadcrumbSchema,
+  generateFAQSchema,
   generateToolMetadata,
   generateToolSchema,
   generateWebPageSchema,
@@ -41,6 +42,8 @@ export default function QRCodeGeneratorPage() {
   ]);
 
   const toolSchema = generateToolSchema(tool);
+
+  const faqSchema = generateFAQSchema(tool);
 
   const webPageSchema = generateWebPageSchema({
     name: tool.name,
@@ -380,6 +383,13 @@ export default function QRCodeGeneratorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: serializeStructuredData(webPageSchema),
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeStructuredData(faqSchema),
         }}
       />
     </main>

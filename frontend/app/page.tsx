@@ -2,13 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-import StructuredData from "@/components/seo/StructuredData";
 import ToolCard from "@/components/tools/ToolCard";
 
 import {
-  generateOrganizationSchema,
   generatePageMetadata,
-  generateWebsiteSchema,
 } from "@/lib/seo";
 import { tools } from "@/lib/tools";
 
@@ -332,17 +329,12 @@ function GridIcon() {
 }
 
 export default function HomePage() {
-  const websiteSchema = generateWebsiteSchema();
-  const organizationSchema = generateOrganizationSchema();
   const popularTools = popularToolSlugs
     .map((slug) => tools.find((tool) => tool.slug === slug))
     .filter(Boolean);
 
   return (
     <>
-      <StructuredData data={websiteSchema} />
-      <StructuredData data={organizationSchema} />
-
       <main className="overflow-hidden">
         <section className="relative isolate overflow-hidden bg-[#f8fbff]">
           <div className="pointer-events-none absolute inset-0 -z-20" aria-hidden="true">

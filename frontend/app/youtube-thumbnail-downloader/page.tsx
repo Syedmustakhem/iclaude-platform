@@ -4,6 +4,7 @@ import YouTubeThumbnailDownloader from "../../components/tools/YouTubeThumbnailD
 import {
   absoluteUrl,
   generateBreadcrumbSchema,
+  generateFAQSchema,
   generateToolSchema,
   serializeStructuredData,
 } from "../../lib/seo";
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   },
 
   robots: {
-    index: false,
+    index: true,
     follow: true,
   },
 
@@ -67,6 +68,8 @@ export default function YouTubeThumbnailDownloaderPage() {
   ]);
 
   const toolSchema = generateToolSchema(tool);
+
+  const faqSchema = generateFAQSchema(tool);
 
   return (
     <main className="min-h-screen bg-white">
@@ -226,6 +229,13 @@ export default function YouTubeThumbnailDownloaderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: serializeStructuredData(toolSchema),
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeStructuredData(faqSchema),
         }}
       />
     </main>
