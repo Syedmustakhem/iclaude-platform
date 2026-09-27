@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import StructuredData from "@/components/seo/StructuredData";
 import {
-  generateOrganizationSchema,
   generatePageMetadata,
 } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "Contact iclaude — Get Help With Our Online Tools",
+  title: "Contact Us — Help With Our Online Tools",
   description:
     "Contact iclaude for questions, feedback, bug reports or help using our online image, PDF and video tools.",
   path: "/contact/",
@@ -101,12 +99,8 @@ function CheckIcon() {
 }
 
 export default function ContactPage() {
-  const organizationSchema = generateOrganizationSchema();
-
   return (
     <>
-      <StructuredData data={organizationSchema} />
-
       <main className="overflow-hidden bg-white">
         {/* =========================================================
             HERO

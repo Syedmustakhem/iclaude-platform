@@ -353,7 +353,7 @@ export const tools: ToolDefinition[] = [
     "Create and download QR codes instantly for links, text, Wi-Fi, WhatsApp and more.",
 
   seoTitle:
-    "QR Code Generator Online — Create Free QR Codes",
+    "Free QR Code Generator — UPI, WiFi & WhatsApp QR Codes",
 
   seoDescription:
     "Create free QR codes online for URLs, text, WhatsApp, Wi-Fi, email, phone numbers, UPI and contact details. Generate and download QR codes instantly.",

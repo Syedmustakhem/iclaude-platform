@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import StructuredData from "@/components/seo/StructuredData";
 
 import {
+  generateArticleSchema,
   generateBreadcrumbSchema,
   generatePageMetadata,
   generateWebPageSchema,
@@ -40,10 +41,19 @@ export default function HowToReduceJpgFileSizePage() {
     path: `/guides/${guide.slug}/`,
   });
 
+  const articleSchema = generateArticleSchema({
+    headline: guide.title,
+    description: guide.description,
+    path: `/guides/${guide.slug}/`,
+    datePublished: guide.datePublished,
+    dateModified: guide.dateModified,
+  });
+
   return (
     <>
       <StructuredData data={breadcrumbSchema} />
       <StructuredData data={webPageSchema} />
+      <StructuredData data={articleSchema} />
 
       <Breadcrumbs items={breadcrumbs} />
 

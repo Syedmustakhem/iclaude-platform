@@ -80,9 +80,9 @@ export default function MergePdfPage() {
               Free online PDF tool
             </div>
 
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
               {tool.name}
-            </h1>
+            </h2>
 
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
               {tool.description}

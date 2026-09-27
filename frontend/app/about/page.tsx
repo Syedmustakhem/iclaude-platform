@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import StructuredData from "@/components/seo/StructuredData";
 import {
-  generateOrganizationSchema,
   generatePageMetadata,
 } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "About iclaude — Simple Online Tools for Everyday Files",
+  title: "About Us — Simple Online Tools for Everyday Files",
   description:
     "Learn about iclaude, a growing collection of focused online tools for images, PDFs, videos and everyday digital file tasks.",
   path: "/about/",
@@ -119,12 +117,8 @@ function CheckIcon() {
 }
 
 export default function AboutPage() {
-  const organizationSchema = generateOrganizationSchema();
-
   return (
     <>
-      <StructuredData data={organizationSchema} />
-
       <main className="overflow-hidden bg-white">
         {/* =========================================================
             HERO

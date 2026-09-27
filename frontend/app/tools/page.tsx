@@ -15,6 +15,14 @@ export const metadata: Metadata = {
       "Compress, resize, convert and transform files with fast, focused online tools.",
     url: "/tools/",
     type: "website",
+    images: [
+      {
+        url: "/iclaude-og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "iclaude — Free online tools for images, PDF and video",
+      },
+    ],
   },
 };
 
