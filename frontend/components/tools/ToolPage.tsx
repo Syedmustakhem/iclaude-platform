@@ -9,6 +9,7 @@ import ImageCompressor from "@/components/tools/ImageCompressor";
 import ImageResizer from "@/components/tools/ImageResizer";
 import BackgroundRemover from "@/components/tools/BackgroundRemover";
 import PdfToWord from "@/components/tools/PdfToWord";
+import PdfMerger from "@/components/tools/pdfmerger";
 import VideoCompressor from "@/components/tools/VideoCompressor";
 import ImageConverterTool from "@/components/tools/ImageConverterTool";
 import PngToJpg from "@/components/tools/PngToJpg";
@@ -263,6 +264,8 @@ export default function ToolPage({ tool }: ToolPageProps) {
                     <BackgroundRemover />
                   ) : tool.slug === "pdf-to-word" ? (
                     <PdfToWord />
+                  ) : tool.slug === "merge-pdf" ? (
+  <PdfMerger />  
                   ) : tool.slug === "video-compressor" ? (
                     <VideoCompressor />
                   ) : tool.slug === "jpg-to-png" ? (

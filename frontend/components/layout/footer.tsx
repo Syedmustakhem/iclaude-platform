@@ -11,6 +11,7 @@ const toolLinks = [
   ["PDF to Word", "/pdf-to-word/"],
   ["Video Compressor", "/video-compressor/"],
   ["WebP to JPG", "/webp-to-jpg/"],
+  ["Merge PDF", "/merge-pdf/"],
   ["QR Code Generator", "/qr-code-generator/"],
   ["YouTube Thumbnail Downloader", "/youtube-thumbnail-downloader/"],
 ];

@@ -47,36 +47,41 @@ const toolGroups = [
     ],
   },
 
-  {
-    label: "Documents",
-    items: [
-      {
-        label: "PDF to Word",
-        href: "/pdf-to-word/",
-        detail: "Make PDFs editable",
-      },
-      {
-        label: "PDF to Excel",
-        href: "/pdf-to-excel/",
-        detail: "Convert PDFs into spreadsheets",
-      },
-      {
-        label: "PDF to JPG",
-        href: "/pdf-to-jpg/",
-        detail: "Convert PDF pages to images",
-      },
-      {
-        label: "JPG to PDF",
-        href: "/jpg-to-pdf/",
-        detail: "Convert images into PDF files",
-      },
-      {
-        label: "Screenshot to PDF",
-        href: "/screenshot-to-pdf/",
-        detail: "Turn screenshots into PDFs",
-      },
-    ],
-  },
+{
+  label: "Documents",
+  items: [
+    {
+      label: "Merge PDF",
+      href: "/merge-pdf/",
+      detail: "Combine multiple PDF files",
+    },
+    {
+      label: "PDF to Word",
+      href: "/pdf-to-word/",
+      detail: "Make PDFs editable",
+    },
+    {
+      label: "PDF to Excel",
+      href: "/pdf-to-excel/",
+      detail: "Convert PDFs into spreadsheets",
+    },
+    {
+      label: "PDF to JPG",
+      href: "/pdf-to-jpg/",
+      detail: "Convert PDF pages to images",
+    },
+    {
+      label: "JPG to PDF",
+      href: "/jpg-to-pdf/",
+      detail: "Convert images into PDF files",
+    },
+    {
+      label: "Screenshot to PDF",
+      href: "/screenshot-to-pdf/",
+      detail: "Turn screenshots into PDFs",
+    },
+  ],
+},
 
   {
     label: "Video",
