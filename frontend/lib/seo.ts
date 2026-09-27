@@ -11,6 +11,15 @@ export const SITE_NAME = "iclaude";
 export const SITE_LOCALE = "en_IN";
 export const DEFAULT_OG_IMAGE = "/iclaude-og-image.png";
 
+/*
+ * Last date the site's content meaningfully changed (YYYY-MM-DD).
+ *
+ * Used for honest sitemap <lastmod> values. Bump this on deploy days
+ * when you actually change content — never stamp "today" automatically,
+ * or crawlers will learn to ignore your lastmod signal entirely.
+ */
+export const SITE_LAST_MODIFIED = "2026-09-28";
+
 /* ============================================================
    Types
    ============================================================ */
@@ -229,9 +238,11 @@ export function generateToolSchema(tool: ToolDefinition) {
     "@context": "https://schema.org",
     "@type": "WebApplication",
 
+    "@id": toolUrl,
     name: tool.name,
     url: toolUrl,
     description: tool.description,
+    inLanguage: SITE_LOCALE,
 
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Web",
@@ -457,6 +468,52 @@ export function generateArticleSchema({
     },
 
     inLanguage: SITE_LOCALE,
+  };
+}
+
+/* ============================================================
+   ItemList structured data
+   ============================================================ */
+
+/**
+ * Creates ItemList structured data for collection pages
+ * (e.g. the /tools/ directory or the homepage popular-tools section).
+ *
+ * Helps search engines understand the catalogue of tools as a
+ * structured list rather than loose links.
+ *
+ * Usage on a page:
+ *
+ *   <StructuredData data={generateItemListSchema(
+ *     tools.map((tool) => ({
+ *       name: tool.name,
+ *       url: tool.href,
+ *       description: tool.shortDescription,
+ *     })),
+ *   )} />
+ */
+export function generateItemListSchema(
+  items: {
+    name: string;
+    url: string;
+    description?: string;
+  }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+
+    numberOfItems: items.length,
+
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      ...(item.description
+        ? { description: item.description }
+        : {}),
+      item: absoluteUrl(item.url),
+    })),
   };
 }
 

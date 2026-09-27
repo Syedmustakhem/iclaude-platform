@@ -1789,6 +1789,145 @@ export const tools: ToolDefinition[] = [
       },
     ],
   },
+  {
+    slug: "video-studio",
+    name: "Video Studio — Trim, Compress & Convert",
+    shortName: "Video Studio",
+    category: "Video",
+    status: "available",
+
+    searchIntent: [
+      "trim video online",
+      "cut video online",
+      "compress video online",
+      "reduce video file size",
+      "convert video online",
+      "mp4 to webm",
+      "webm to mp4",
+      "video trimmer online free",
+      "video compressor online free",
+      "online video converter",
+    ],
+
+    indexable: true,
+
+    description:
+      "Trim, compress and convert videos right in your browser. Cut clips, shrink file sizes and switch between MP4 and WebM — no uploads, no sign-up.",
+
+    shortDescription:
+      "Trim, compress and convert videos in your browser.",
+
+    seoTitle:
+      "Video Studio — Free Online Video Trimmer, Compressor & Converter",
+
+    seoDescription:
+      "Trim, compress and convert videos online for free. Cut clips, reduce video file size and convert MP4 to WebM in your browser — your video never leaves your device.",
+
+    keywords: [
+      "trim video online",
+      "cut video online",
+      "compress video online",
+      "reduce video file size",
+      "convert video online",
+      "mp4 to webm converter",
+      "webm to mp4 converter",
+      "free video trimmer",
+      "online video compressor",
+      "video converter no upload",
+    ],
+
+    icon: "video-compress",
+
+    href: "/video-studio/",
+
+    popularSearches: [
+      "trim video online",
+      "compress video online",
+      "convert mp4 to webm",
+      "cut video clip free",
+      "reduce video size online",
+    ],
+
+    supportedFormats: [
+      "MP4",
+      "WebM",
+      "MOV",
+    ],
+
+    benefits: [
+      "Trim videos with frame-accurate or instant fast cuts",
+      "Compress videos with quality and resolution controls",
+      "Convert between MP4 and WebM formats",
+      "100% in-browser — videos never leave your device",
+      "No sign-up, no watermarks, no uploads",
+      "Free to use for everyday video tasks",
+    ],
+
+    relatedTools: [
+      "youtube-thumbnail-downloader",
+      "image-compressor",
+      "merge-pdf",
+    ],
+
+    content: {
+      introduction:
+        "Video Studio is a free in-browser video toolkit for everyday video tasks. Instead of uploading your footage to a server, everything runs on your own device using modern browser technology — trim the start and end of a clip, compress a video so it is easier to share, or convert between MP4 and WebM. Because nothing is uploaded, your private videos stay private.",
+
+      howItWorks: [
+        "Drop a video file into Video Studio — MP4, WebM, MOV and more are supported.",
+        "Choose Trim, Compress or Convert and adjust the settings for your task.",
+        "Press the action button and wait while your device processes the video.",
+      ],
+
+      useCases: [
+        "Cutting the start or end off a screen recording before sharing it.",
+        "Shrinking a large video so it fits an upload limit or sends faster.",
+        "Converting a WebM clip to MP4 for wider compatibility.",
+        "Preparing a short clip for social media or messaging apps.",
+      ],
+
+      tips: [
+        "Use Fast cut for instant trims when exact frame accuracy does not matter.",
+        "Choose Precise cut when the cut point must land on an exact frame.",
+        "Lower the quality slider gradually — small steps keep quality high while shrinking size.",
+        "720p is a good balance for sharing videos online.",
+        "Keep the tab open while processing; closing it stops the job.",
+      ],
+    },
+
+    faq: [
+      {
+        question: "Is Video Studio free?",
+        answer:
+          "Yes. Trimming, compressing and converting videos with Video Studio is free, with no sign-up and no watermarks.",
+      },
+      {
+        question: "Is my video uploaded anywhere?",
+        answer:
+          "No. Video Studio runs entirely in your browser using on-device processing. Your video file never leaves your device, which also means there are no upload waits.",
+      },
+      {
+        question: "Why does the video engine need to download first?",
+        answer:
+          "Video Studio uses a video processing engine (around 30 MB) that runs in your browser. It downloads once on first use and is then cached, so later visits start instantly.",
+      },
+      {
+        question: "What video formats are supported?",
+        answer:
+          "You can open common formats such as MP4, WebM and MOV. Trimmed and compressed videos are saved as MP4, and conversion supports MP4 and WebM output.",
+      },
+      {
+        question: "What is the difference between fast cut and precise cut?",
+        answer:
+          "Fast cut is instant because it copies the video data without re-encoding, but cuts can only land on keyframes. Precise cut re-encodes the clip so the cut lands on the exact frame you chose, which takes longer.",
+      },
+      {
+        question: "Why is processing slow on large videos?",
+        answer:
+          "All processing happens on your device, so speed depends on your phone or computer. Shorter clips, lower resolutions and fast cuts finish quickest. Very large 4K files can take a while on older devices.",
+      },
+    ],
+  },
 ];
 
 export function getToolBySlug(

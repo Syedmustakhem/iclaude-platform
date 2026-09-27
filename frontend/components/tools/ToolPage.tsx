@@ -11,6 +11,7 @@ import BackgroundRemover from "@/components/tools/BackgroundRemover";
 import PdfToWord from "@/components/tools/PdfToWord";
 import PdfMerger from "@/components/tools/pdfmerger";
 import VideoCompressor from "@/components/tools/VideoCompressor";
+import VideoStudio from "@/components/video-studio/VideoStudio";
 import ImageConverterTool from "@/components/tools/ImageConverterTool";
 import PngToJpg from "@/components/tools/PngToJpg";
 import HeicToJpg from "@/components/tools/HeicToJpg";
@@ -280,6 +281,8 @@ export default function ToolPage({ tool }: ToolPageProps) {
                     <HeicToJpg />
                     ) : tool.slug === "jpg-to-pdf" ? (
   <JpgToPdf />
+                  ) : tool.slug === "video-studio" ? (
+                    <VideoStudio />
                   ) : (
                     <UploadArea
                       acceptedFormats={tool.supportedFormats}
@@ -291,7 +294,13 @@ export default function ToolPage({ tool }: ToolPageProps) {
               </div>
 
               <div className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-2 text-[11px] font-medium text-slate-400 sm:mt-4 sm:gap-x-6 sm:text-xs">
-                <span>Maximum file size: 50 MB</span>
+                {tool.slug === "video-studio" ? (
+                  <span>
+                    Runs 100% in your browser — no file is uploaded
+                  </span>
+                ) : (
+                  <span>Maximum file size: 50 MB</span>
+                )}
 
                 <span className="hidden sm:inline">•</span>
 

@@ -12,6 +12,10 @@ type BreadcrumbsProps = {
 export default function Breadcrumbs({
   items,
 }: BreadcrumbsProps) {
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <nav
       aria-label="Breadcrumb"
@@ -28,7 +32,7 @@ export default function Breadcrumbs({
           return (
             <li
               key={`${item.name}-${index}`}
-              className="flex items-center gap-2"
+              className="flex min-w-0 items-center gap-2"
               itemProp="itemListElement"
               itemScope
               itemType="https://schema.org/ListItem"
@@ -37,18 +41,24 @@ export default function Breadcrumbs({
                 <Link
                   href={item.href}
                   itemProp="item"
-                  className="transition-colors hover:text-blue-600"
+                  className="min-w-0 transition-colors hover:text-blue-600"
                 >
-                  <span itemProp="name">
+                  <span
+                    itemProp="name"
+                    className="block truncate"
+                  >
                     {item.name}
                   </span>
                 </Link>
               ) : (
                 <span
                   itemProp="name"
+                  aria-current={
+                    isLast ? "page" : undefined
+                  }
                   className={
                     isLast
-                      ? "font-medium text-slate-700"
+                      ? "block truncate font-medium text-slate-700"
                       : undefined
                   }
                 >

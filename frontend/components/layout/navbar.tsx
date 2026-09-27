@@ -1,4 +1,3 @@
- 
 "use client";
 
 import Image from "next/image";
@@ -87,9 +86,9 @@ const toolGroups = [
     label: "Video",
     items: [
       {
-        label: "Video Compressor",
-        href: "/video-compressor/",
-        detail: "Reduce video file size",
+        label: "Video Studio",
+        href: "/video-studio/",
+        detail: "Trim, compress & convert videos",
       },
       {
         label: "YouTube Thumbnail Downloader",

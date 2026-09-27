@@ -10,11 +10,11 @@ const toolLinks = [
   ["Remove Background", "/remove-background/"],
   ["JPG to PDF", "/jpg-to-pdf/"],
   ["PDF to Word", "/pdf-to-word/"],
-  ["Video Compressor", "/video-compressor/"],
   ["WebP to JPG", "/webp-to-jpg/"],
   ["Merge PDF", "/merge-pdf/"],
   ["QR Code Generator", "/qr-code-generator/"],
   ["YouTube Thumbnail Downloader", "/youtube-thumbnail-downloader/"],
+  ["Video Studio", "/video-studio/"],
 ];
 
 const categoryLinks = [
@@ -97,7 +97,7 @@ export default function Footer() {
               <p className="mt-2 max-w-2xl text-xs leading-6 text-slate-500">
   Explore practical tools for image compression, image resizing,
   image conversion, JPG to PDF conversion, background removal,
-  PDF conversion and video compression.
+  PDF conversion and video trimming and compression.
 </p>
             </div>
 
@@ -254,7 +254,8 @@ export default function Footer() {
               <p className="mt-2 max-w-2xl text-xs leading-6 text-slate-500">
                 Explore practical tools for image compression,
                 image resizing, image conversion, background
-                removal, PDF conversion and video compression.
+                removal, PDF conversion and video trimming and
+                compression.
               </p>
             </div>
 
