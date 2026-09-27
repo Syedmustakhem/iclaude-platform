@@ -998,7 +998,149 @@ export const tools: ToolDefinition[] = [
       },
     ],
   },
+  {
+    slug: "merge-pdf",
+    name: "PDF Merger",
+    shortName: "Merge PDF",
+    category: "PDF",
+    status: "available",
 
+    searchIntent: [
+      "merge pdf",
+      "merge pdf files",
+      "combine pdf",
+      "combine pdf files",
+      "pdf merger",
+      "pdf merge",
+      "merge multiple pdfs",
+      "join pdf files",
+    ],
+
+    indexable: true,
+
+    description:
+      "Merge multiple PDF files into a single PDF online. Combine documents in your preferred order with a simple upload and download workflow.",
+
+    shortDescription:
+      "Combine multiple PDF files into one document.",
+
+    seoTitle:
+      "Merge PDF Online — Free PDF Merger",
+
+    seoDescription:
+      "Merge multiple PDF files into one document online. Combine PDF files in the order you choose with a simple and fast PDF merger.",
+
+    keywords: [
+      "merge PDF",
+      "PDF merger",
+      "merge PDF files",
+      "combine PDF",
+      "combine PDF files",
+      "PDF merge",
+      "merge multiple PDFs",
+      "join PDF files",
+      "merge PDFs online",
+      "free PDF merger",
+    ],
+
+    icon: "pdf-merge",
+
+    href: "/merge-pdf/",
+
+    popularSearches: [
+      "merge PDF online",
+      "merge PDF files",
+      "combine PDF files",
+      "PDF merger online",
+      "merge multiple PDFs",
+      "combine PDFs into one",
+      "free PDF merger",
+      "join PDF files",
+    ],
+
+    supportedFormats: [
+      "PDF",
+    ],
+
+    benefits: [
+      "Combine multiple PDF files into one document",
+      "Choose the order of PDF files",
+      "Useful for documents and reports",
+      "Simple upload and merge workflow",
+      "Download one combined PDF",
+      "Useful for everyday document management",
+    ],
+
+    relatedTools: [
+      "pdf-to-word",
+      "jpg-to-pdf",
+      "pdf-to-jpg",
+      "pdf-compressor",
+    ],
+
+    content: {
+      introduction:
+        "When several PDF files belong to the same document, report or submission, combining them into one file can make the final workflow easier. The iclaude PDF Merger lets you combine multiple PDF documents into a single PDF in the order you choose.",
+
+      howItWorks: [
+        "Select the PDF files you want to combine.",
+        "Upload the PDF files to the merger.",
+        "Arrange the files in the required order.",
+        "Start the PDF merging process.",
+        "Download the combined PDF document.",
+      ],
+
+      useCases: [
+        "Combining multiple documents into one PDF.",
+        "Joining reports and supporting documents.",
+        "Combining invoices and related paperwork.",
+        "Preparing documents for submission.",
+        "Combining project files into one document.",
+        "Creating a single PDF from multiple source files.",
+      ],
+
+      tips: [
+        "Arrange the PDFs in the order you want them to appear.",
+        "Check the final document after merging.",
+        "Keep the original PDF files when they may be needed separately.",
+        "Use clear file names to make document ordering easier.",
+        "Review the merged PDF before submitting or sharing it.",
+      ],
+    },
+
+    faq: [
+      {
+        question: "What does a PDF merger do?",
+        answer:
+          "A PDF merger combines multiple PDF files into a single PDF document.",
+      },
+      {
+        question: "Can I merge multiple PDF files?",
+        answer:
+          "Yes. The PDF merger is designed to combine multiple PDF documents into one file.",
+      },
+      {
+        question: "Can I choose the order of the PDFs?",
+        answer:
+          "Yes. Arrange the PDF files in the order you want before starting the merge process.",
+      },
+      {
+        question: "Will the original PDF files be changed?",
+        answer:
+          "The merge process creates a combined PDF. Your original PDF files remain available separately.",
+      },
+      {
+        question: "Can I use the PDF merger on mobile?",
+        answer:
+          "The tool is designed for modern web browsers and can be used on compatible mobile devices.",
+      },
+      {
+        question: "Is the PDF merger free?",
+        answer:
+          "The iclaude PDF merger is available as a free online tool.",
+      },
+    ],
+  },
   {
     slug: "video-compressor",
     name: "Video Compressor",

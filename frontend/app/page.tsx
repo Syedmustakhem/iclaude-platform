@@ -18,17 +18,22 @@ export const metadata: Metadata = generatePageMetadata({
     "Compress, resize, convert and transform your files with fast, focused online tools for images, PDFs and videos.",
   path: "/",
   keywords: [
-    "free online tools",
-    "online file tools",
-    "image compressor",
-    "image resizer",
-    "background remover",
-    "PDF to Word converter",
-    "video compressor",
-    "compress image online",
-    "resize image online",
-    "convert PDF online",
-  ],
+  "free online tools",
+  "online file tools",
+  "image compressor",
+  "image resizer",
+  "background remover",
+  "PDF to Word converter",
+  "PDF merger",
+  "merge PDF online",
+  "merge PDF files",
+  "video compressor",
+  "YouTube thumbnail downloader",
+  "download YouTube thumbnail",
+  "compress image online",
+  "resize image online",
+  "convert PDF online",
+],
 });
 
 const popularToolSlugs = [
@@ -36,6 +41,7 @@ const popularToolSlugs = [
   "image-resizer",
   "remove-background",
   "pdf-to-word",
+   "merge-pdf",
   "video-compressor",
   "youtube-thumbnail-downloader",
 ];
@@ -48,13 +54,17 @@ const workflowGroups = [
     accent: "blue",
     tools: ["Compress images", "Resize images", "Remove backgrounds"],
   },
-  {
-    title: "PDF tools",
-    description: "Turn fixed documents into files you can work with.",
-    href: "/pdf-to-word/",
-    accent: "violet",
-    tools: ["PDF to Word", "Editable documents", "Clear conversions"],
-  },
+ {
+  title: "PDF tools",
+  description: "Combine, convert and prepare PDF documents for your next task.",
+  href: "/merge-pdf/",
+  accent: "violet",
+  tools: [
+    "Merge PDF files",
+    "PDF to Word",
+    "Editable documents",
+  ],
+},
   {
     title: "Video tools",
     description: "Make videos easier to send, store and publish.",
@@ -65,9 +75,18 @@ const workflowGroups = [
 ];
 
 const nextWorkflows = [
-  { title: "PDF Editor", detail: "Edit PDF pages and text" },
-  { title: "Merge PDFs", detail: "Combine documents in order" },
-  { title: "Video Downloader", detail: "Save videos for your workflow" },
+  {
+    title: "PDF Editor",
+    detail: "Edit PDF pages and text",
+  },
+  {
+    title: "PDF Splitter",
+    detail: "Split documents into separate files",
+  },
+  {
+    title: "Video Downloader",
+    detail: "Save videos for your workflow",
+  },
 ];
 
 const fileMoments = [
@@ -92,6 +111,13 @@ const fileMoments = [
     href: "/pdf-to-word/",
     icon: "document",
   },
+  {
+  title: "Combine documents",
+  text: "Bring multiple PDF files together into one organized document.",
+  label: "Merge PDF files",
+  href: "/merge-pdf/",
+  icon: "document",
+},
   {
     title: "Send a smaller video",
     text: "Reduce video file size before sharing, storing or publishing your next clip.",
@@ -142,11 +168,11 @@ const processSteps = [
 ];
 
 const faqs = [
-  {
-    question: "What can I do with iclaude?",
-    answer:
-      "You can currently use iclaude for image, PDF and video workflows, plus utilities such as the YouTube Thumbnail Downloader. Each available tool has its own focused workflow.",
-  },
+ {
+  question: "What can I do with iclaude?",
+  answer:
+    "You can currently use iclaude for image, PDF and video workflows, including image compression, image resizing, background removal, PDF merging, PDF to Word conversion, video compression and YouTube thumbnail downloading. Each available tool has its own focused workflow.",
+},
   {
     question: "Do I need to install software?",
     answer:
@@ -407,16 +433,17 @@ export default function HomePage() {
                       <div className="mt-6 rounded-[22px] border border-slate-200 bg-white p-3 shadow-sm">
                         <div className="flex items-center justify-between px-1">
                           <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Popular workflows</p>
-                          <span className="text-[10px] font-bold text-blue-600">5 tools</span>
+                          <span className="text-[10px] font-bold text-blue-600">7 tools</span>
                         </div>
 
                         <div className="mt-3 grid gap-2">
                           {[
-                            ["Image Compressor", "Reduce image file size", ImageIcon, "bg-blue-50 text-blue-600"],
-                            ["Image Resizer", "Resize images quickly", GridIcon, "bg-violet-50 text-violet-600"],
-                            ["PDF to Word", "Make documents editable", FileIcon, "bg-amber-50 text-amber-600"],
-                            ["Video Compressor", "Reduce video file size", VideoIcon, "bg-cyan-50 text-cyan-600"],
-                          ].map(([title, detail, Icon, tone]) => {
+  ["Image Compressor", "Reduce image file size", ImageIcon, "bg-blue-50 text-blue-600"],
+  ["Image Resizer", "Resize images quickly", GridIcon, "bg-violet-50 text-violet-600"],
+  ["Merge PDF", "Combine PDF files", FileIcon, "bg-rose-50 text-rose-600"],
+  ["PDF to Word", "Make documents editable", FileIcon, "bg-amber-50 text-amber-600"],
+  ["Video Compressor", "Reduce video file size", VideoIcon, "bg-cyan-50 text-cyan-600"],
+].map(([title, detail, Icon, tone]) => {
                             const WorkflowIcon = Icon as typeof ImageIcon;
                             return (
                               <div key={String(title)} className="group flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-3 transition duration-300 hover:border-blue-100 hover:bg-white hover:shadow-sm">
@@ -437,7 +464,7 @@ export default function HomePage() {
                       <div className="mt-3 grid grid-cols-3 gap-2">
                         {[
                           ["Images", "3 tools"],
-                          ["PDF", "1 tool"],
+                          ["PDF", "2 tools"],
                           ["Video", "1 tool"],
                         ].map(([label, detail]) => (
                           <div key={label} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
@@ -488,6 +515,7 @@ export default function HomePage() {
                 "Prepare files faster",
                 "Compress images",
                 "Resize photos",
+                "Merge PDF files",
                 "Remove backgrounds",
                 "Convert PDF to Word",
                 "Compress video",
@@ -510,7 +538,7 @@ export default function HomePage() {
           <div className="iclaude-container">
             <div className="grid overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50/80 sm:grid-cols-4">
               {[
-                ["06", "Live tools", "Ready to explore today"],
+                ["07", "Live tools", "Ready to explore today"],
                 ["04", "File moments", "Built around real tasks"],
                 ["03", "Core formats", "Images, PDF & video"],
               ].map(([value, label, detail], index) => (
