@@ -621,14 +621,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ============ AD TAG (Monetag MultiTag, zone 288204) ============ */}
-        <Script
-          id="monetag-multitag"
-          src="https://quge5.com/88/tag.min.js"
-          data-zone="288204"
-          data-cfasync="false"
-          strategy="afterInteractive"
-        />
 
         {/* ============ HOW IT WORKS ============ */}
         <section id="how-it-works" className="scroll-mt-24 border-y border-slate-200/80 bg-[#f8fbff] py-20 sm:py-28">
