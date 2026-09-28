@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import type { Metadata } from "next";
+
 
 import ToolCard from "@/components/tools/ToolCard";
 import Reveal from "@/components/Reveal";
@@ -619,6 +621,14 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+{/* ============ AD TAG (nap5k, zone 11895151) ============ */}
+<Script
+  id="nap5k-ad-tag"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `(function(s){s.dataset.zone='11895151',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`,
+  }}
+/>
 
         {/* ============ HOW IT WORKS ============ */}
         <section id="how-it-works" className="scroll-mt-24 border-y border-slate-200/80 bg-[#f8fbff] py-20 sm:py-28">
