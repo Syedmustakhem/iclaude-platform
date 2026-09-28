@@ -35,6 +35,9 @@ export const metadata: Metadata = generatePageMetadata({
   "compress image online",
   "resize image online",
   "convert PDF online",
+  "ai image generator free",
+  "text to image ai",
+  "free ai image generator",
 ],
 });
 
@@ -47,6 +50,7 @@ const popularToolSlugs = [
   "jpg-to-pdf",
   "youtube-thumbnail-downloader",
   "video-studio",
+  "ai-image-generator",
 ];
 
 const marqueeItems = [
@@ -57,13 +61,14 @@ const marqueeItems = [
   "Convert PDF to Word",
   "JPG to PDF",
   "Download YouTube thumbnails",
+  "Generate AI images",
   "Trim videos",
   "Compress videos",
   "Prepare files faster",
 ];
 
 const stats = [
-  { value: 14, label: "Live tools", detail: "Ready to explore today" },
+  { value: 15, label: "Live tools", detail: "Ready to explore today" },
   { value: 6, label: "Task guides", detail: "Built around real tasks" },
   { value: 3, label: "Core formats", detail: "Images, PDF & more" },
   { value: "24/7", label: "Browser access", detail: "No desktop app required", accent: true },
@@ -75,7 +80,7 @@ const workflowGroups = [
     description: "Prepare photos and visuals for wherever they need to go.",
     href: "/image-compressor/",
     accent: "blue",
-    tools: ["Compress images", "Resize images", "Remove backgrounds"],
+    tools: ["Compress images", "Resize images", "Remove backgrounds", "AI image generator"],
   },
   {
     title: "PDF tools",
@@ -116,6 +121,13 @@ const fileMoments: {
     text: "Resize visuals for profiles, marketplaces, forms and social posts without a complicated editor.",
     label: "Resize an image",
     href: "/image-resizer/",
+    icon: "image",
+  },
+  {
+    title: "Create images from words",
+    text: "Describe anything and get an AI-generated image in under a minute — free, no sign-up.",
+    label: "Generate an image",
+    href: "/ai-image-generator/",
     icon: "image",
   },
   {
@@ -177,7 +189,7 @@ const faqs = [
   {
     question: "What can I do with iclaude?",
     answer:
-      "You can currently use iclaude for image, PDF, video and everyday file workflows, including image compression, image resizing, background removal, JPG to PDF conversion, PDF merging, PDF to Word conversion, QR code generation, YouTube thumbnail downloading, and video trimming, compression and conversion right in your browser. Each available tool has its own focused workflow.",
+      "You can currently use iclaude for image, PDF, video and everyday file workflows, including image compression, image resizing, background removal, free AI image generation from text prompts, JPG to PDF conversion, PDF merging, PDF to Word conversion, QR code generation, YouTube thumbnail downloading, and video trimming, compression and conversion right in your browser. Each available tool has its own focused workflow.",
   },
   {
     question: "Do I need to install software?",
@@ -210,6 +222,7 @@ const mockRows: { title: string; detail: string; Icon: typeof ImageIcon; tone: s
   { title: "Image Compressor", detail: "Reduce image file size", Icon: ImageIcon, tone: "bg-blue-50 text-blue-600" },
   { title: "Image Resizer", detail: "Resize images quickly", Icon: GridIcon, tone: "bg-violet-50 text-violet-600" },
   { title: "Remove Background", detail: "Clean cutouts in seconds", Icon: ImageIcon, tone: "bg-emerald-50 text-emerald-600" },
+  { title: "AI Image Generator", detail: "Text to image, free", Icon: SparkIcon, tone: "bg-fuchsia-50 text-fuchsia-600" },
   { title: "Merge PDF", detail: "Combine PDF files", Icon: FileIcon, tone: "bg-rose-50 text-rose-600" },
   { title: "PDF to Word", detail: "Make documents editable", Icon: FileIcon, tone: "bg-amber-50 text-amber-600" },
   { title: "JPG to PDF", detail: "Convert images to PDF", Icon: FileIcon, tone: "bg-cyan-50 text-cyan-600" },
@@ -462,7 +475,7 @@ export default function HomePage() {
                       <div className="mt-6 rounded-[22px] border border-slate-200 bg-white p-3 shadow-sm">
                         <div className="flex items-center justify-between px-1">
                           <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Popular workflows</p>
-                          <span className="text-[10px] font-bold text-blue-600">8 tools</span>
+                          <span className="text-[10px] font-bold text-blue-600">9 tools</span>
                         </div>
 
                         <div className="mt-3 grid gap-2">
@@ -483,7 +496,7 @@ export default function HomePage() {
 
                       <div className="mt-3 grid grid-cols-3 gap-2">
                         {[
-                          ["Images", "3 tools"],
+                          ["Images", "4 tools"],
                           ["PDF", "3 tools"],
                           ["Video & more", "2 tools"],
                         ].map(([label, detail]) => (

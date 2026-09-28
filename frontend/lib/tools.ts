@@ -1410,6 +1410,140 @@ export const tools: ToolDefinition[] = [
       },
     ],
   },
+  {
+    slug: "ai-image-generator",
+    name: "AI Image Generator — Free Text to Image",
+    shortName: "AI Image Generator",
+    category: "Images",
+    status: "available",
+
+    searchIntent: [
+      "ai image generator free",
+      "text to image free",
+      "ai image generator no signup",
+      "free ai image generator no login",
+      "generate image from text online",
+      "ai picture generator free",
+      "text to image ai free online",
+    ],
+
+    indexable: true,
+
+    description:
+      "Turn words into images with free AI image generation. Describe anything — photorealistic scenes, digital art, anime, watercolor — and download your image in seconds. No sign-up, 5 free images per day.",
+
+    shortDescription:
+      "Turn text prompts into AI-generated images, free.",
+
+    seoTitle:
+      "Free AI Image Generator — Text to Image Online, No Sign-Up",
+
+    seoDescription:
+      "Generate images from text for free with our AI image generator. Photorealistic, anime, digital art and more — no sign-up, 5 free images per day.",
+
+    keywords: [
+      "ai image generator free",
+      "text to image free",
+      "ai image generator no signup",
+      "free ai image generator",
+      "text to image ai",
+      "ai picture generator",
+      "generate image from text",
+      "free ai art generator",
+      "online ai image creator",
+      "ai image maker free",
+    ],
+
+    icon: "ai-image",
+
+    href: "/ai-image-generator/",
+
+    popularSearches: [
+      "ai image generator free",
+      "text to image",
+      "ai image generator no signup",
+      "free ai art generator",
+    ],
+
+    supportedFormats: [
+      "JPG",
+      "PNG",
+    ],
+
+    benefits: [
+      "Turn any text description into an image in seconds",
+      "Style presets: photorealistic, anime, watercolor, 3D render and more",
+      "Square, wide and tall sizes for social posts, wallpapers and thumbnails",
+      "Free — 5 AI images per day, no sign-up, no watermark",
+      "Repeat prompts are served instantly from cache",
+      "Download full-resolution JPG files",
+    ],
+
+    relatedTools: [
+      "image-compressor",
+      "image-resizer",
+      "remove-background",
+    ],
+
+    content: {
+      introduction:
+        "The AI Image Generator turns your words into pictures. Type a description of anything you can imagine — a fox in a snowy forest, a futuristic city, a logo idea — pick a style and size, and the AI renders it for you in under a minute. It is free to use with 5 images per day and no account needed, and every image downloads as a high-quality JPG you can use anywhere.",
+
+      howItWorks: [
+        "Describe the image you want in the prompt box — the more detail, the better the result.",
+        "Pick a style preset (photorealistic, anime, watercolor…) and a size (square, wide or tall).",
+        "Press Generate and wait up to a minute while the AI renders your image, then download it.",
+      ],
+
+      useCases: [
+        "Creating a thumbnail or hero image for a blog post or video.",
+        "Visualizing a logo or design idea before hiring a designer.",
+        "Making wallpapers, social media posts or presentation visuals.",
+        "Generating placeholder art for a website or app mockup.",
+      ],
+
+      tips: [
+        "Be specific: mention subject, setting, lighting and mood for best results.",
+        "Try the same prompt with different style presets to compare looks.",
+        "Wide size suits banners and thumbnails; tall suits phone wallpapers and stories.",
+        "If a generation looks off, rephrase the prompt and try again — small wording changes matter.",
+        "Generating the exact same prompt twice is instant thanks to caching.",
+      ],
+    },
+
+    faq: [
+      {
+        question: "Is the AI Image Generator free?",
+        answer:
+          "Yes. You get 5 free AI-generated images per day with no sign-up and no watermark. The counter resets daily.",
+      },
+      {
+        question: "Do I need an account?",
+        answer:
+          "No. Just type a prompt and generate — no login, no email, no app to install.",
+      },
+      {
+        question: "How long does generation take?",
+        answer:
+          "Usually 15 to 60 seconds, since images render on shared free infrastructure. If someone generated your exact prompt before, it loads instantly from cache.",
+      },
+      {
+        question: "Who owns the images I generate?",
+        answer:
+          "You do. Download and use them for personal or commercial projects freely.",
+      },
+      {
+        question: "What image sizes are available?",
+        answer:
+          "Square (1024 × 1024), wide (1280 × 720) and tall (768 × 1152) — covering posts, banners, thumbnails and wallpapers.",
+      },
+      {
+        question: "Why did my generation fail?",
+        answer:
+          "The free rendering service can get busy at peak times. Wait a moment and try again — retries are quick because partial results get cached.",
+      },
+    ],
+  },
 
   // ------------------------------------------------------------
   // TRAFFIC ENGINE — IMAGE CONVERSION
