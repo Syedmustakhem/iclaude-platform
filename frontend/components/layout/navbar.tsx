@@ -29,6 +29,12 @@ const toolGroups = [
         detail: "Clean image backgrounds",
       },
       {
+  label: "AI Image Generator",
+  href: "/ai-image-generator/",
+  detail: "Create images from text",
+},
+
+      {
         label: "QR Code Generator",
         href: "/qr-code-generator/",
         detail: "Create QR codes instantly",
