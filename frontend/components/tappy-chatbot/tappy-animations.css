@@ -1,0 +1,64 @@
+/* Tappy's moves — pure CSS animations on the mascot image.
+   The whole character wiggles/bobs, which reads as waving, nodding,
+   looking around and celebrating. */
+
+@keyframes tappy-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes tappy-wave {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-10deg); }
+  40% { transform: rotate(8deg); }
+  60% { transform: rotate(-6deg); }
+  80% { transform: rotate(4deg); }
+}
+
+@keyframes tappy-nod {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(3px) rotate(1.5deg); }
+}
+
+@keyframes tappy-celebrate {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(-6deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(-6px) rotate(6deg); }
+}
+
+@keyframes tappy-look {
+  0%, 100% { transform: rotateY(0deg); }
+  25% { transform: rotateY(-22deg); }
+  75% { transform: rotateY(22deg); }
+}
+
+/* idle: gentle floating */
+.tappy-bob {
+  animation: tappy-bob 3s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* greeting: happy wiggle */
+.tappy-wave {
+  animation: tappy-wave 0.7s ease-in-out 2;
+  transform-origin: bottom center;
+}
+
+/* thinking: slow nod while working */
+.tappy-nod {
+  animation: tappy-nod 1.2s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* happy jump when a result is ready */
+.tappy-celebrate {
+  animation: tappy-celebrate 0.6s ease-in-out 2;
+  transform-origin: bottom center;
+}
+
+/* confused head-turn when something fails */
+.tappy-look {
+  animation: tappy-look 1.6s ease-in-out 2;
+  transform-origin: center;
+}
