@@ -4,6 +4,7 @@ import Script from "next/script";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import StructuredData from "@/components/seo/StructuredData";
+import TappyChat from "@/components/tappy-chatbot/TappyChat";
 
 import {
   generateOrganizationSchema,
@@ -165,6 +166,9 @@ export default function RootLayout({
 
         <StructuredData data={websiteSchema} />
         <StructuredData data={organizationSchema} />
+
+        {/* Tappy chatbot — floats on every page */}
+        <TappyChat />
       </body>
     </html>
   );
